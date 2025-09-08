@@ -1,0 +1,149 @@
+/*
+Theme Name: emart
+
+Adding support for languages written in a Right To Left (RTL) direction is easy -
+it's just a matter of overwriting all the horizontal positioning attributes
+of your CSS stylesheet in a separate stylesheet file named rtl.css.
+
+https://codex.wordpress.org/Right-to-Left_Language_Support
+*/
+body {
+	direction: rtl;
+	unicode-bidi: embed;
+	text-align:right;
+
+}
+#aside-nav-wrapper{
+	left: auto;
+	right: 0px;
+	border-right: none;
+	border-left: 1px solid rgba(0,0,0,0.08);
+}
+#aside-nav-wrapper #navbar ul > li > a::before {
+	left: auto;
+	right: 0px;
+}
+#aside-nav-wrapper #navbar ul > li > a{
+	padding: 25px 60px 25px 5px;
+	text-align: right;
+}
+#aside-nav-wrapper #navbar ul > li > a .nav-icon {
+  transform: translateX(25px);
+}
+#aside-nav-wrapper #navbar ul ul {
+  left: auto;
+  right: calc( 100% + 10px );
+}
+#aside-nav-wrapper #navbar ul ul li:first-child::before {
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+  right: -8px;
+  left: auto;
+  content: "";
+  border-right: none;
+  border-top: 8px solid transparent;
+  border-left: 8px solid var(--nav-h-color);
+  border-bottom: 8px solid transparent;
+}
+#aside-nav-wrapper #navbar ul ul li a {
+  padding: 15px 30px 15px 5px;
+}
+.side-bar-icon{
+	left: 20px;
+	right: auto;
+}
+.side-bar-icon.active {
+  	left: 295px;
+  	right: auto;
+}
+div.sidewrapper.sidenav{
+	right: auto;
+	left: -35em;
+}
+div.sidewrapper.sidenav.active {
+	right: auto;
+	left: 0px;
+}
+#content.site-content {
+  position: relative;
+  margin-left: auto;
+  margin-right: 230px;
+}
+.widget ul li, .widget ol li{
+	padding-left: 10px;
+	padding-right: 30px;
+}
+.widget ul li::before, .widget ol li::before {
+	right: 5px;
+	left: auto;
+}
+#primary .content-post-wrap .img-box .post-format-icon{
+	left: auto;
+	right: 20px;
+}
+div.nav-links .nav-next {
+  text-align: left;
+  float: left;
+}
+div.nav-links .nav-previous{
+	float: right;
+}
+div.nav-links .nav-previous .fa-angle-double-left::before {
+  content: "\f101";
+}
+div.nav-links .nav-next .fa-angle-double-right::before {
+  content: "\f100";
+}
+#colophon.site-footer {
+  margin-right: 230px;
+  margin-left: auto;
+}
+
+.single-prev-next .align-right{
+	text-align: left!important;
+}
+.single-prev-next .align-left{
+	text-align: right!important;
+}
+.share-box h6{
+	padding-right: 0px;
+	padding-left: 20px;
+}
+.pcv-tags-list span{
+	margin-right: 0px;
+	padding-left: 10px;
+}
+.comment-form .col-xl-4 span.required{
+	left: 30px;
+	right: auto;
+}
+
+@media only screen and (max-width : 750px) {
+	#content.site-content{
+		margin-right: 0px!important;
+	}
+	#aside-nav-wrapper.fixed{
+		right: -230px;
+	}
+	#sidebar-actions-header.side-bar-icon {
+		left: auto;
+		right: 10px;
+	}
+	#sidebar-actions-header.side-bar-icon.active {
+  	left: auto;
+  	right: 230px;
+	}
+	#aside-nav-wrapper.fixed.active{
+		right: 0px;
+	}
+}
+
+.comment-meta .single-comment .comment{
+	padding-left: 0px;
+	padding-right: 20px;
+}
+.comment-meta .single-comment .comment .reply{
+	right: auto;
+	left: 0px;
+}

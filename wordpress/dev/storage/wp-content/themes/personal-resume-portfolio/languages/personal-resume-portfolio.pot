@@ -1,0 +1,88 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Personal Resume Portfolio\n"
+"POT-Creation-Date: 2025-05-14 19:10+0600\n"
+"PO-Revision-Date: 2025-05-14 19:10+0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: style.css\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: functions.php:24
+msgid "Default Header Image"
+msgstr ""
+
+#: functions.php:70
+msgid "Skip to content"
+msgstr ""
+
+#: functions.php:83
+msgid "Content Display Options"
+msgstr ""
+
+#: functions.php:85
+msgid ""
+"These options control how posts are displayed on blog, archive, and category "
+"pages."
+msgstr ""
+
+#: functions.php:93
+msgid "Show post excerpt?"
+msgstr ""
+
+#: functions.php:104
+msgid "Show author name"
+msgstr ""
+
+#: functions.php:114
+msgid "Show post date"
+msgstr ""
+
+#: functions.php:124
+msgid "Show categories"
+msgstr ""
+
+#: functions.php:134
+msgid "Show comment count"
+msgstr ""
+
+#. Theme Name of the plugin/theme
+msgid "Personal Resume Portfolio"
+msgstr ""
+
+#. Theme URI of the plugin/theme
+msgid "https://athemeart.com/downloads/resume-portfolio/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Showcase your professional profile with the Personal Resume Portfolio child "
+"theme — a simple, digital resume template designed to elevate your personal "
+"brand. Whether you're a graphic designer, writer, or freelancer, this "
+"creative layout helps you present your career summary, CV, and work history "
+"with clarity and style. Perfect for blogger profiles, curriculum vitae, and "
+"cover letters, this theme offers a clean space to highlight your skills, "
+"experience, and achievements. With sections for a skillset showcase and "
+"portfolio display, it's ideal for photographers, illustrators, marketers, "
+"and remote professionals looking to make an online impression."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "aThemeArt"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://athemeart.com/"
+msgstr ""

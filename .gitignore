@@ -1,0 +1,10 @@
+/.idea
+**/__pycache__/
+*.pyc
+**/.venv
+
+.env
+
+/database/storage/
+/shared/images
+/wordpress/storage
