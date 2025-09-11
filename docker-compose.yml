@@ -33,7 +33,7 @@ services:
     volumes:
       - ${DB_STORAGE}/storage:/var/lib/mysql
       - ${DB_STORAGE}/config/my.cnf:/etc/mysql/conf.d/my.cnf:ro
-      - ${DB_STORAGE}/init:/docker-entrypoint-initdb.d
+      - ${DB_STORAGE}/init-mysql:/docker-entrypoint-initdb.d
 
   wordpressapi:
     build:
@@ -74,3 +74,23 @@ services:
     depends_on:
       - wordpress
     restart: unless-stopped
+
+  postgres:
+    image: postgres:16
+    container_name: content_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: content_automation   # ← 엔트리포인트가 DB를 자동 생성
+      TZ: Asia/Seoul
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - ${DB_STORAGE}/pgdata:/var/lib/postgresql/data
+      - ${DB_STORAGE}/init-postgres:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d content_automation"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
