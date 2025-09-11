@@ -4726,3 +4726,1023 @@ WHERE prompts.id = %(id_1)s
  LIMIT %(param_1)s
 2025-09-08 23:42:31,775 [INFO] [cached since 67.13s ago] {'id_1': 6, 'param_1': 1}
 2025-09-08 23:42:31,775 [INFO] ROLLBACK
+2025-09-09 00:28:25,576 [INFO] SELECT DATABASE()
+2025-09-09 00:28:25,576 [INFO] [raw sql] {}
+2025-09-09 00:28:25,577 [INFO] SELECT @@sql_mode
+2025-09-09 00:28:25,577 [INFO] [raw sql] {}
+2025-09-09 00:28:25,578 [INFO] SELECT @@lower_case_table_names
+2025-09-09 00:28:25,578 [INFO] [raw sql] {}
+2025-09-09 00:28:25,579 [INFO] BEGIN (implicit)
+2025-09-09 00:28:25,579 [INFO] COMMIT
+2025-09-09 00:28:25,731 [INFO] BEGIN (implicit)
+2025-09-09 00:28:25,733 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 00:28:25,733 [INFO] [generated in 0.00029s] {'id_1': 1, 'param_1': 1}
+2025-09-09 00:28:25,741 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 00:28:25,742 [INFO] [generated in 0.00027s] {'id_1': 1, 'param_1': 1}
+2025-09-09 00:28:25,750 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 00:28:43,913 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 00:28:43,914 [INFO] AFC remote call 1 is done.
+2025-09-09 00:28:43,915 [INFO] [1] generated_content len=1745
+2025-09-09 00:28:43,915 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 00:28:43,915 [INFO] [cached since 15.61s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 00:28:43,916 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 00:28:59,282 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 00:28:59,284 [INFO] AFC remote call 1 is done.
+2025-09-09 00:28:59,284 [INFO] [2] fact_checked_text len=2535
+2025-09-09 00:28:59,285 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 00:28:59,285 [INFO] [cached since 30.98s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 00:28:59,291 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 00:29:01,221 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 00:29:01,222 [INFO] AFC remote call 1 is done.
+2025-09-09 00:29:01,223 [INFO] [genai:image] text part: 1. 화려한 K-POP 아이돌 그룹 멤버들이 날카로운 검을 들고 어둠 속에서 빛나는 붉은 눈으로 정면을 응시하는 모습을 담은 이미지를 생성하겠습니다. 각 멤버는 독특한 스타일의 전투복과 액세서리를 착용하고 있으며, 배경은 어둡지만 신비로운 분위기를 연출하여 '데몬 헌터'로서의 면모를 강조합니다.
+2. 강렬한 붉은 달빛 아래, K-POP 데몬 헌터스 멤버들이...
+2025-09-09 00:29:01,223 [WARNING] [genai:image] no images in response (attempt 1/6) → sleep 1.2s
+2025-09-09 00:29:02,419 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 00:29:07,044 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 00:29:08,083 [INFO] AFC remote call 1 is done.
+2025-09-09 00:29:08,264 [INFO] [genai:image] text part: 
+
+저는 화려한 K-POP 아이돌 그룹이 날카로운 무기를 들고 어두운 배경 앞에서 강렬한 포즈를 취하는 이미지를 생성하겠습니다. 멤버들은 각자의 개성을 드러내는 스타일리시한 의상을 입고 있으며, 비장하면서도 매혹적인 분위기를 연출합니다.
+
+...
+2025-09-09 00:29:08,464 [INFO] [image] saved: /tmp/generated-images/dfdbb65e-be3a-4234-ad7a-37d72c6d3af9.png (760865 bytes)
+2025-09-09 00:29:08,464 [INFO] [image] saved: /tmp/generated-images/d65d5014-e283-4f4b-9386-90522109f3a8.png (849301 bytes)
+2025-09-09 00:29:08,465 [INFO] [3] saved_image_paths=['/tmp/generated-images/dfdbb65e-be3a-4234-ad7a-37d72c6d3af9.png', '/tmp/generated-images/d65d5014-e283-4f4b-9386-90522109f3a8.png']
+2025-09-09 00:29:08,477 [WARNING] [upload] dfdbb65e-be3a-4234-ad7a-37d72c6d3af9.png failed attempt 1/3: All connection attempts failed
+2025-09-09 00:29:12,876 [WARNING] [upload] dfdbb65e-be3a-4234-ad7a-37d72c6d3af9.png failed attempt 2/3: All connection attempts failed
+2025-09-09 00:29:15,311 [WARNING] [upload] dfdbb65e-be3a-4234-ad7a-37d72c6d3af9.png failed attempt 3/3: All connection attempts failed
+2025-09-09 00:29:20,058 [INFO] ROLLBACK
+2025-09-09 00:41:54,235 [INFO] SELECT DATABASE()
+2025-09-09 00:41:54,235 [INFO] [raw sql] {}
+2025-09-09 00:41:54,236 [INFO] SELECT @@sql_mode
+2025-09-09 00:41:54,236 [INFO] [raw sql] {}
+2025-09-09 00:41:54,237 [INFO] SELECT @@lower_case_table_names
+2025-09-09 00:41:54,237 [INFO] [raw sql] {}
+2025-09-09 00:41:54,238 [INFO] BEGIN (implicit)
+2025-09-09 00:41:54,238 [INFO] COMMIT
+2025-09-09 00:41:54,336 [INFO] BEGIN (implicit)
+2025-09-09 00:41:54,338 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 00:41:54,338 [INFO] [generated in 0.00031s] {'id_1': 1, 'param_1': 1}
+2025-09-09 00:41:54,340 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 00:41:54,340 [INFO] [generated in 0.00023s] {'id_1': 1, 'param_1': 1}
+2025-09-09 00:41:54,341 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 00:42:08,075 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 00:42:08,077 [INFO] AFC remote call 1 is done.
+2025-09-09 00:42:08,078 [INFO] [1] generated_content len=1213
+2025-09-09 00:42:08,079 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 00:42:08,079 [INFO] [cached since 13.74s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 00:42:08,080 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 00:42:27,885 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 00:42:27,886 [INFO] AFC remote call 1 is done.
+2025-09-09 00:42:27,887 [INFO] [2] fact_checked_text len=1699
+2025-09-09 00:42:27,887 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 00:42:27,887 [INFO] [cached since 30.58s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 00:42:27,889 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 00:42:29,874 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 00:42:29,875 [INFO] AFC remote call 1 is done.
+2025-09-09 00:42:29,875 [INFO] [genai:image] text part: ## 이미지 1
+
+아이돌 그룹 멤버들이 화려한 무대 의상을 입고 있지만, 동시에 어둠 속에서 빛나는 무기 (칼, 활 등)를 들고 비장한 표정을 짓고 있는 모습으로 'K-POP 데몬 헌터스'의 콘셉트를 시각적으로 표현합니다. 배경은 붉은 달이 떠 있는 어두운 밤하늘 아래 고풍스러운 건축물들이 늘어선 거리로 설정하여 판타지적인 분위기를 더합니다.
+
+## 이미지...
+2025-09-09 00:42:29,875 [WARNING] [genai:image] no images in response (attempt 1/6) → sleep 1.6s
+2025-09-09 00:42:31,502 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 00:42:37,686 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 00:42:38,747 [INFO] AFC remote call 1 is done.
+2025-09-09 00:42:38,747 [INFO] [genai:image] text part: 1. 한 그룹의 K팝 아이돌들이 어두운 밤, 폐허가 된 도시를 배경으로 빛나는 무기를 들고 악마와 맞서 싸우는 역동적인 장면을 묘사합니다. 멤버들은 각자 개성 있는 전투복을 입고 있으며, 강렬한 눈빛과 결연한 표정을 짓고 있습니다. 주변에는 푸른색 에너지 파편들이 떠다니고, 긴장감 넘치는 분위기를 연출합니다.
+
+...
+2025-09-09 00:42:38,925 [INFO] [genai:image] text part: 
+
+2. 화려한 무대 의상을 입은 K팝 아이돌들이 밝은 조명 아래에서 강렬한 퍼포먼스를 펼치는 모습과 동시에, 그들의 등 뒤로 거대한 악마 형상이 어렴풋이 나타나는 장면을 연출합니다. 무대 위 아이돌들의 표정은 카리스마 넘치고, 악마 형상은 웅장하면서도 위협적인 분위기를 자아냅니다. 두 이미지를 대비시켜 'K-POP 데몬 헌터스' 콘셉트의 매력을 시각적으로...
+2025-09-09 00:42:39,212 [INFO] [image] saved: /app/images/156feee3-7972-46a9-9e47-58eae193b6e9.png (747632 bytes)
+2025-09-09 00:42:39,213 [INFO] [image] saved: /app/images/d06ba038-662c-4439-add6-75312b1913ae.png (1149150 bytes)
+2025-09-09 00:42:39,213 [INFO] [3] saved_image_paths=['/app/images/156feee3-7972-46a9-9e47-58eae193b6e9.png', '/app/images/d06ba038-662c-4439-add6-75312b1913ae.png']
+2025-09-09 00:42:39,223 [WARNING] [upload] 156feee3-7972-46a9-9e47-58eae193b6e9.png failed attempt 1/3: All connection attempts failed
+2025-09-09 00:42:40,673 [WARNING] [upload] 156feee3-7972-46a9-9e47-58eae193b6e9.png failed attempt 2/3: All connection attempts failed
+2025-09-09 00:42:42,937 [WARNING] [upload] 156feee3-7972-46a9-9e47-58eae193b6e9.png failed attempt 3/3: All connection attempts failed
+2025-09-09 00:42:47,488 [INFO] ROLLBACK
+2025-09-09 03:23:42,821 [INFO] SELECT DATABASE()
+2025-09-09 03:23:42,822 [INFO] [raw sql] {}
+2025-09-09 03:23:42,823 [INFO] SELECT @@sql_mode
+2025-09-09 03:23:42,823 [INFO] [raw sql] {}
+2025-09-09 03:23:42,823 [INFO] SELECT @@lower_case_table_names
+2025-09-09 03:23:42,824 [INFO] [raw sql] {}
+2025-09-09 03:23:42,825 [INFO] BEGIN (implicit)
+2025-09-09 03:23:42,825 [INFO] COMMIT
+2025-09-09 03:23:42,921 [INFO] BEGIN (implicit)
+2025-09-09 03:23:42,923 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:23:42,923 [INFO] [generated in 0.00032s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:23:42,925 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:23:42,925 [INFO] [generated in 0.00033s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:23:42,927 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:23:57,078 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:23:57,079 [INFO] AFC remote call 1 is done.
+2025-09-09 03:23:57,080 [INFO] [1] generated_content len=1382
+2025-09-09 03:23:57,080 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:23:57,081 [INFO] [cached since 14.16s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 03:23:57,082 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:24:15,693 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:24:15,695 [INFO] AFC remote call 1 is done.
+2025-09-09 03:24:15,695 [INFO] [2] fact_checked_text len=2511
+2025-09-09 03:24:15,695 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:24:15,696 [INFO] [cached since 29.45s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 03:24:15,697 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:24:36,653 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:24:37,658 [INFO] AFC remote call 1 is done.
+2025-09-09 03:24:37,658 [INFO] [genai:image] text part: 첫 번째 이미지는 화려한 무대 의상을 입고 강렬한 눈빛으로 정면을 응시하는 K-POP 아이돌 그룹 멤버들의 모습을 클로즈업하여 보여줍니다. 멤버들의 주변에는 어둠이 드리워져 있고, 옷이나 액세서리에는 퇴마 의식을 상징하는 문양이나 작은 무기들이 은은하게 빛나고 있습니다. 이 이미지는 낮에는 빛나는 아이돌이지만 밤에는 어둠과 싸우는 존재라는 콘셉트의 대비를 ...
+2025-09-09 03:24:37,798 [INFO] [genai:image] text part: 
+
+두 번째 이미지는 어두운 밤, 폐허가 된 듯한 배경 속에서 아이돌 멤버 몇 명이 빛나는 무기를 들고 악마와 맞서 싸우는 역동적인 장면을 묘사합니다. 악마는 형체를 알아보기 어렵지만 강력한 어둠의 기운을 뿜어내고 있고, 아이돌들의 표정은 비장함과 결의에 차 있습니다. 주변에는 푸른색 또는 보라색의 마법 주문이나 빛나는 잔해들이 떠다니며 판타지적인 분위기를...
+2025-09-09 03:24:37,981 [INFO] [image] saved: /app/images/619d59c9-6b34-4023-a960-80ac177b99be.png (679136 bytes)
+2025-09-09 03:24:37,981 [INFO] [image] saved: /app/images/928d76fe-646c-49b0-9bfb-37b5fddfab6e.png (820106 bytes)
+2025-09-09 03:24:37,982 [INFO] [3] saved_image_paths=['/app/images/619d59c9-6b34-4023-a960-80ac177b99be.png', '/app/images/928d76fe-646c-49b0-9bfb-37b5fddfab6e.png']
+2025-09-09 03:24:37,992 [WARNING] [upload] 619d59c9-6b34-4023-a960-80ac177b99be.png failed attempt 1/3: All connection attempts failed
+2025-09-09 03:24:42,982 [WARNING] [upload] 619d59c9-6b34-4023-a960-80ac177b99be.png failed attempt 2/3: All connection attempts failed
+2025-09-09 03:24:45,654 [WARNING] [upload] 619d59c9-6b34-4023-a960-80ac177b99be.png failed attempt 3/3: All connection attempts failed
+2025-09-09 03:24:50,528 [INFO] ROLLBACK
+2025-09-09 03:28:59,784 [INFO] SELECT DATABASE()
+2025-09-09 03:28:59,785 [INFO] [raw sql] {}
+2025-09-09 03:28:59,786 [INFO] SELECT @@sql_mode
+2025-09-09 03:28:59,786 [INFO] [raw sql] {}
+2025-09-09 03:28:59,786 [INFO] SELECT @@lower_case_table_names
+2025-09-09 03:28:59,787 [INFO] [raw sql] {}
+2025-09-09 03:28:59,787 [INFO] BEGIN (implicit)
+2025-09-09 03:28:59,788 [INFO] COMMIT
+2025-09-09 03:28:59,884 [INFO] BEGIN (implicit)
+2025-09-09 03:28:59,885 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:28:59,886 [INFO] [generated in 0.00028s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:28:59,887 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:28:59,887 [INFO] [generated in 0.00025s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:28:59,889 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:29:22,379 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:29:22,381 [INFO] AFC remote call 1 is done.
+2025-09-09 03:29:22,381 [INFO] [1] generated_content len=1741
+2025-09-09 03:29:22,382 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:29:22,382 [INFO] [cached since 19.28s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 03:29:22,383 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:29:46,167 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:29:46,168 [INFO] AFC remote call 1 is done.
+2025-09-09 03:29:46,168 [INFO] [2] fact_checked_text len=2518
+2025-09-09 03:29:46,169 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:29:46,169 [INFO] [cached since 39.83s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 03:29:46,170 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:29:52,640 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:29:53,667 [INFO] AFC remote call 1 is done.
+2025-09-09 03:29:53,667 [INFO] [genai:image] text part: 1. **첫 번째 이미지:** K-POP 아이돌 그룹 멤버들이 어두운 밤, 네온사인 빛 아래에서 빛나는 무기를 들고 악마와 맞서 싸우기 직전의 역동적인 모습을 담은 이미지를 생성합니다. 멤버들은 각자 개성 있는 전투복을 입고 있으며, 긴장감 넘치는 표정으로 정면을 응시합니다. 배경에는 부서진 건물 잔해와 푸른색, 붉은색 잔상이 SF 영화의 한 장면처럼 펼쳐...
+2025-09-09 03:29:53,867 [INFO] [genai:image] text part: 
+
+...
+2025-09-09 03:29:54,151 [INFO] [image] saved: /app/images/a5ad9fd7-fd48-406b-83a3-f08cea8b32b2.png (808154 bytes)
+2025-09-09 03:29:54,152 [INFO] [image] saved: /app/images/1e1945ac-cce8-4422-b882-da452d6e0f52.png (1384836 bytes)
+2025-09-09 03:29:54,152 [INFO] [3] saved_image_paths=['/app/images/a5ad9fd7-fd48-406b-83a3-f08cea8b32b2.png', '/app/images/1e1945ac-cce8-4422-b882-da452d6e0f52.png']
+2025-09-09 03:29:54,158 [INFO] [POST] a5ad9fd7-fd48-406b-83a3-f08cea8b32b2.png mime type: image/png
+2025-09-09 03:29:54,163 [WARNING] [upload] a5ad9fd7-fd48-406b-83a3-f08cea8b32b2.png failed attempt 1/3: All connection attempts failed
+2025-09-09 03:29:55,340 [WARNING] [upload] a5ad9fd7-fd48-406b-83a3-f08cea8b32b2.png failed attempt 2/3: All connection attempts failed
+2025-09-09 03:29:57,828 [WARNING] [upload] a5ad9fd7-fd48-406b-83a3-f08cea8b32b2.png failed attempt 3/3: All connection attempts failed
+2025-09-09 03:30:02,334 [INFO] ROLLBACK
+2025-09-09 03:35:25,958 [INFO] SELECT DATABASE()
+2025-09-09 03:35:25,959 [INFO] [raw sql] {}
+2025-09-09 03:35:25,960 [INFO] SELECT @@sql_mode
+2025-09-09 03:35:25,960 [INFO] [raw sql] {}
+2025-09-09 03:35:25,960 [INFO] SELECT @@lower_case_table_names
+2025-09-09 03:35:25,961 [INFO] [raw sql] {}
+2025-09-09 03:35:25,961 [INFO] BEGIN (implicit)
+2025-09-09 03:35:25,962 [INFO] COMMIT
+2025-09-09 03:35:26,060 [INFO] BEGIN (implicit)
+2025-09-09 03:35:26,062 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:35:26,062 [INFO] [generated in 0.00027s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:35:26,064 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:35:26,064 [INFO] [generated in 0.00026s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:35:26,065 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:35:47,817 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:35:47,818 [INFO] AFC remote call 1 is done.
+2025-09-09 03:35:47,819 [INFO] [1] generated_content len=1418
+2025-09-09 03:35:47,819 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:35:47,820 [INFO] [cached since 18.46s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 03:35:47,821 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:36:11,855 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:36:11,859 [INFO] AFC remote call 1 is done.
+2025-09-09 03:36:11,859 [INFO] [2] fact_checked_text len=3046
+2025-09-09 03:36:11,860 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:36:11,860 [INFO] [cached since 42.5s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 03:36:11,861 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:36:33,357 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:36:34,423 [INFO] AFC remote call 1 is done.
+2025-09-09 03:36:34,423 [INFO] [genai:image] text part: ## 블로그 글 대표 이미지 생성 (2장)
+
+**1. 첫 번째 이미지:** 블로그 글의 핵심 아이디어를 시각적으로 나타내는 이미지를 생성합니다. 밤하늘 아래 빛나는 무대 조명과 어둠 속에서 붉게 빛나는 눈빛을 가진 아이돌 그룹 멤버들의 실루엣을 대비시켜 '빛과 어둠', '아이돌과 헌터'라는 이중적인 컨셉을 강조합니다. 멤버들은 어딘가를 결의에 찬 표정으로 ...
+2025-09-09 03:36:34,606 [INFO] [genai:image] text part: 
+
+...
+2025-09-09 03:36:34,776 [INFO] [image] saved: /app/images/988600da-e742-4141-820f-5e8b3e14bfbb.png (765286 bytes)
+2025-09-09 03:36:34,777 [INFO] [image] saved: /app/images/94b39a64-2eea-45e8-9c2d-3f8d50c30c56.png (832922 bytes)
+2025-09-09 03:36:34,777 [INFO] [3] saved_image_paths=['/app/images/988600da-e742-4141-820f-5e8b3e14bfbb.png', '/app/images/94b39a64-2eea-45e8-9c2d-3f8d50c30c56.png']
+2025-09-09 03:36:34,783 [INFO] [POST] /app/images/988600da-e742-4141-820f-5e8b3e14bfbb.png mime type: image/png
+2025-09-09 03:36:34,788 [WARNING] [upload] /app/images/988600da-e742-4141-820f-5e8b3e14bfbb.png failed attempt 1/3: All connection attempts failed
+2025-09-09 03:36:36,278 [WARNING] [upload] /app/images/988600da-e742-4141-820f-5e8b3e14bfbb.png failed attempt 2/3: All connection attempts failed
+2025-09-09 03:36:39,029 [WARNING] [upload] /app/images/988600da-e742-4141-820f-5e8b3e14bfbb.png failed attempt 3/3: All connection attempts failed
+2025-09-09 03:36:43,536 [INFO] ROLLBACK
+2025-09-09 03:41:42,353 [INFO] SELECT DATABASE()
+2025-09-09 03:41:42,353 [INFO] [raw sql] {}
+2025-09-09 03:41:42,354 [INFO] SELECT @@sql_mode
+2025-09-09 03:41:42,354 [INFO] [raw sql] {}
+2025-09-09 03:41:42,355 [INFO] SELECT @@lower_case_table_names
+2025-09-09 03:41:42,355 [INFO] [raw sql] {}
+2025-09-09 03:41:42,356 [INFO] BEGIN (implicit)
+2025-09-09 03:41:42,356 [INFO] COMMIT
+2025-09-09 03:41:42,448 [INFO] BEGIN (implicit)
+2025-09-09 03:41:42,450 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:41:42,450 [INFO] [generated in 0.00030s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:41:42,452 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:41:42,452 [INFO] [generated in 0.00028s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:41:42,453 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:42:01,311 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:42:01,312 [INFO] AFC remote call 1 is done.
+2025-09-09 03:42:01,312 [INFO] [1] generated_content len=1601
+2025-09-09 03:42:01,313 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:42:01,313 [INFO] [cached since 15.62s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 03:42:01,314 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:42:28,363 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:42:28,365 [INFO] AFC remote call 1 is done.
+2025-09-09 03:42:28,365 [INFO] [2] fact_checked_text len=1951
+2025-09-09 03:42:28,366 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:42:28,367 [INFO] [cached since 39.53s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 03:42:28,369 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:42:30,651 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:42:30,654 [INFO] AFC remote call 1 is done.
+2025-09-09 03:42:30,654 [INFO] [genai:image] text part: 1. **이미지 설명:** 화려한 조명 아래, 강렬한 눈빛으로 카메라를 응시하는 7명의 K-POP 아이돌 그룹 멤버들을 클로즈업하여 생성합니다. 이들은 블랙과 레드가 조화된 가죽 소재의 무대 의상을 입고 있으며, 얼굴에는 옅은 흉터나 문신과 같은 디테일을 추가하여 '악마와 싸우는 영웅'이라는 콘셉트를 시각적으로 드러냅니다. 배경은 어둡게 처리하여 아이돌들의...
+2025-09-09 03:42:30,654 [WARNING] [genai:image] no images in response (attempt 1/6) → sleep 1.7s
+2025-09-09 03:42:32,337 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:42:42,965 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:42:43,914 [INFO] AFC remote call 1 is done.
+2025-09-09 03:42:43,914 [INFO] [genai:image] text part: Image Generation: enabled.
+
+1. 블로그 글의 핵심 내용을 시각적으로 나타내는 이미지를 생성합니다. 화려한 조명 아래에서 빛나는 K-POP 아이돌 그룹 멤버들이 역동적인 안무를 선보이는 모습과, 동시에 그들 주변으로 어둠이 드리워지고 초자연적인 힘을 발휘하는 듯한 효과를 넣어 '익숙함 속의 신선함'이라는 콘셉트를 표현합니다. 멤버들은 ...
+2025-09-09 03:42:44,082 [INFO] [genai:image] text part: 
+
+2. K-POP 아이돌 그룹의 세계관이 확장되어 다양한 IP로 발전하는 모습을 보여주는 이미지를 생성합니다. 중앙에는 블로그 글에서 언급된 웹툰 '7FATES: CHAKHO'의 주인공들과 ENHYPEN의 'DARK MOON' 시리즈 캐릭터들의 실루엣을 배치하고, 그 주변으로 웹툰, 게임, 애니메이션, 드라마 등 다양한 형태의 콘텐츠 아이콘들을 배치하여 ...
+2025-09-09 03:42:44,230 [INFO] [image] saved: /app/images/db6ec390-dadd-4017-9433-8d5aa7f27947.png (628078 bytes)
+2025-09-09 03:42:44,230 [INFO] [image] saved: /app/images/baaef5e7-6749-4180-ae6b-3c30099d9323.png (698694 bytes)
+2025-09-09 03:42:44,230 [INFO] [3] saved_image_paths=['/app/images/db6ec390-dadd-4017-9433-8d5aa7f27947.png', '/app/images/baaef5e7-6749-4180-ae6b-3c30099d9323.png']
+2025-09-09 03:42:44,231 [INFO] [3] upload_url=http://wordpressapi:32552/posts/upload-image/
+2025-09-09 03:42:44,236 [INFO] [POST] /app/images/db6ec390-dadd-4017-9433-8d5aa7f27947.png mime type: image/png
+2025-09-09 03:42:44,241 [WARNING] [upload] /app/images/db6ec390-dadd-4017-9433-8d5aa7f27947.png failed attempt 1/3: All connection attempts failed
+2025-09-09 03:42:45,869 [WARNING] [upload] /app/images/db6ec390-dadd-4017-9433-8d5aa7f27947.png failed attempt 2/3: All connection attempts failed
+2025-09-09 03:42:48,524 [WARNING] [upload] /app/images/db6ec390-dadd-4017-9433-8d5aa7f27947.png failed attempt 3/3: All connection attempts failed
+2025-09-09 03:42:53,044 [INFO] ROLLBACK
+2025-09-09 03:47:19,295 [INFO] SELECT DATABASE()
+2025-09-09 03:47:19,295 [INFO] [raw sql] {}
+2025-09-09 03:47:19,296 [INFO] SELECT @@sql_mode
+2025-09-09 03:47:19,296 [INFO] [raw sql] {}
+2025-09-09 03:47:19,297 [INFO] SELECT @@lower_case_table_names
+2025-09-09 03:47:19,297 [INFO] [raw sql] {}
+2025-09-09 03:47:19,298 [INFO] BEGIN (implicit)
+2025-09-09 03:47:19,298 [INFO] COMMIT
+2025-09-09 03:47:19,394 [INFO] BEGIN (implicit)
+2025-09-09 03:47:19,395 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:47:19,396 [INFO] [generated in 0.00030s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:47:19,397 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:47:19,397 [INFO] [generated in 0.00025s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:47:19,399 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:47:34,006 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2025-09-09 03:47:34,007 [WARNING] [step_generate_text] attempt 1/3 failed: module 'google.genai.errors' has no attribute 'RateLimitError'
+2025-09-09 03:47:35,838 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:47:48,756 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:47:48,758 [INFO] AFC remote call 1 is done.
+2025-09-09 03:47:48,758 [INFO] [1] generated_content len=1352
+2025-09-09 03:47:48,759 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:47:48,759 [INFO] [cached since 26.05s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 03:47:48,760 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:48:09,324 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:48:09,325 [INFO] AFC remote call 1 is done.
+2025-09-09 03:48:09,325 [INFO] [2] fact_checked_text len=3072
+2025-09-09 03:48:09,326 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:48:09,326 [INFO] [cached since 43.36s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 03:48:09,327 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:48:26,532 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:48:26,941 [INFO] AFC remote call 1 is done.
+2025-09-09 03:48:26,942 [INFO] [genai:image] text part: 1.  **이미지 설명:** 첫 번째 이미지는 "K-POP Demon Hunters"라는 가상의 컨셉을 시각적으로 표현합니다. 어두운 밤, 붉은 달빛 아래에서 빛나는 무대 의상을 입은 7명의 K-POP 아이돌 그룹 멤버들이 악마 형상의 적들을 향해 각자의 무기를 들고 결연한 표정을 짓고 있는 모습입니다. 멤버들의 의상은 화려하면서도 전투적인 느낌을 주며, ...
+2025-09-09 03:48:27,123 [INFO] [genai:image] text part: 
+
+...
+2025-09-09 03:48:27,271 [INFO] [image] saved: /app/images/d16a1e05-fce1-4963-beac-def2b24bf56c.png (741730 bytes)
+2025-09-09 03:48:27,272 [INFO] [image] saved: /app/images/5da3745b-dfec-488d-bf87-23c7b8b2ad66.png (700016 bytes)
+2025-09-09 03:48:27,272 [INFO] [3] saved_image_paths=['/app/images/d16a1e05-fce1-4963-beac-def2b24bf56c.png', '/app/images/5da3745b-dfec-488d-bf87-23c7b8b2ad66.png']
+2025-09-09 03:48:27,272 [INFO] [3] upload_url=http://wordpressapi:32552/posts/upload-image/
+2025-09-09 03:48:27,277 [INFO] [POST] /app/images/d16a1e05-fce1-4963-beac-def2b24bf56c.png mime type: image/png
+2025-09-09 03:48:27,282 [WARNING] [upload] /app/images/d16a1e05-fce1-4963-beac-def2b24bf56c.png failed attempt 1/3: All connection attempts failed
+2025-09-09 03:48:32,182 [WARNING] [upload] /app/images/d16a1e05-fce1-4963-beac-def2b24bf56c.png failed attempt 2/3: All connection attempts failed
+2025-09-09 03:48:34,382 [WARNING] [upload] /app/images/d16a1e05-fce1-4963-beac-def2b24bf56c.png failed attempt 3/3: All connection attempts failed
+2025-09-09 03:48:39,126 [INFO] ROLLBACK
+2025-09-09 03:52:25,448 [INFO] SELECT DATABASE()
+2025-09-09 03:52:25,448 [INFO] [raw sql] {}
+2025-09-09 03:52:25,449 [INFO] SELECT @@sql_mode
+2025-09-09 03:52:25,449 [INFO] [raw sql] {}
+2025-09-09 03:52:25,450 [INFO] SELECT @@lower_case_table_names
+2025-09-09 03:52:25,450 [INFO] [raw sql] {}
+2025-09-09 03:52:25,451 [INFO] BEGIN (implicit)
+2025-09-09 03:52:25,451 [INFO] COMMIT
+2025-09-09 03:52:25,543 [INFO] BEGIN (implicit)
+2025-09-09 03:52:25,545 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:52:25,545 [INFO] [generated in 0.00031s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:52:25,547 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:52:25,547 [INFO] [generated in 0.00024s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:52:25,548 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:52:40,063 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:52:40,064 [INFO] AFC remote call 1 is done.
+2025-09-09 03:52:40,064 [INFO] [1] generated_content len=1295
+2025-09-09 03:52:40,065 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:52:40,065 [INFO] [cached since 14.52s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 03:52:40,067 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:52:59,758 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:52:59,761 [INFO] AFC remote call 1 is done.
+2025-09-09 03:52:59,761 [INFO] [2] fact_checked_text len=2341
+2025-09-09 03:52:59,762 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:52:59,762 [INFO] [cached since 30.96s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 03:52:59,763 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:53:05,814 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:53:06,868 [INFO] AFC remote call 1 is done.
+2025-09-09 03:53:06,868 [INFO] [genai:image] text part: 1.  한밤중, 붉은 달빛 아래에서 카리스마 넘치는 K-POP 아이돌 그룹 멤버들이 빛나는 무기를 들고 악마와 맞서 싸우는 역동적인 장면을 담은 이미지를 생성합니다. 멤버들은 어두운색과 화려한 포인트를 조합한 무대 의상을 입고 있으며, 주변에는 깨진 건물 조각들과 흩날리는 먼지가 긴장감을 더합니다. 각 멤버는 고유한 능력이나 무기를 사용하는 듯한 역동적인 ...
+2025-09-09 03:53:07,078 [INFO] [genai:image] text part: 
+
+2.  미래적인 느낌의 콘서트 무대에서 'K-POP Demon Hunters'라는 빛나는 로고가 크게 나타나고, 그 아래로 열정적인 팬들이 환호하는 모습과 함께 멤버들의 실루엣이 역동적으로 겹쳐 보이는 이미지를 생성합니다. 무대 주변에는 화려한 조명과 특수 효과들이 어우러져 미래지향적인 분위기를 연출하고, 팬들은 응원봉을 흔들며 열광하는 모습으로 K-P...
+2025-09-09 03:53:07,264 [INFO] [image] saved: /app/images/f0de5795-3a52-4117-a466-9d08efa451db.png (894378 bytes)
+2025-09-09 03:53:07,264 [INFO] [image] saved: /app/images/d3069666-9e4d-48b9-a27a-71ea50916f62.png (928040 bytes)
+2025-09-09 03:53:07,265 [INFO] [3] saved_image_paths=['/app/images/f0de5795-3a52-4117-a466-9d08efa451db.png', '/app/images/d3069666-9e4d-48b9-a27a-71ea50916f62.png']
+2025-09-09 03:53:07,265 [INFO] [3] upload_url=http://wordpressapi:32552/posts/upload-image/
+2025-09-09 03:53:07,270 [INFO] [POST] /app/images/f0de5795-3a52-4117-a466-9d08efa451db.png mime type: image/png
+2025-09-09 03:53:10,329 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/upload-image/ "HTTP/1.1 200 OK"
+2025-09-09 03:53:10,330 [INFO] [POST] /app/images/d3069666-9e4d-48b9-a27a-71ea50916f62.png mime type: image/png
+2025-09-09 03:53:11,153 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/upload-image/ "HTTP/1.1 200 OK"
+2025-09-09 03:53:11,194 [INFO] [3] uploaded_results=[{'message': '이미지 업로드 및 DB 저장 성공', 'db_image_id': 17, 'image_id': 63, 'image_url': 'http://notaverse.ddns.net/wp-content/uploads/2025/09/f0de5795-3a52-4117-a466-9d08efa451db.png'}, {'message': '이미지 업로드 및 DB 저장 성공', 'db_image_id': 18, 'image_id': 64, 'image_url': 'http://notaverse.ddns.net/wp-content/uploads/2025/09/d3069666-9e4d-48b9-a27a-71ea50916f62.png'}]
+2025-09-09 03:53:11,195 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:53:11,195 [INFO] [cached since 42.39s ago] {'id_1': 4, 'param_1': 1}
+2025-09-09 03:53:11,196 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:53:17,467 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:53:17,468 [INFO] AFC remote call 1 is done.
+2025-09-09 03:53:17,469 [INFO] [4] tags=['K-POP', 'K-POP Demon Hunters', 'K-POP 세계관', '엔터테인먼트 트렌드', '문화 콘텐츠'] categories=['K-POP 트렌드']
+2025-09-09 03:53:17,469 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:53:17,469 [INFO] [cached since 48.67s ago] {'id_1': 5, 'param_1': 1}
+2025-09-09 03:53:17,470 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:53:38,714 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:53:38,715 [INFO] AFC remote call 1 is done.
+2025-09-09 03:53:38,715 [INFO] [5] html_result len=2910
+2025-09-09 03:53:39,226 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/create-post/ "HTTP/1.1 200 OK"
+2025-09-09 03:53:39,226 [INFO] [5] create_post resp={'message': '글 등록 및 DB 저장 성공', 'db_post_id': 7, 'wp_post_id': 65, 'wp_link': 'http://notaverse.ddns.net/2025/09/09/untitled/'}
+2025-09-09 03:53:39,227 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:53:39,227 [INFO] [cached since 67.18s ago] {'id_1': 6, 'param_1': 1}
+2025-09-09 03:53:39,228 [INFO] ROLLBACK
+2025-09-09 03:57:12,497 [INFO] SELECT DATABASE()
+2025-09-09 03:57:12,497 [INFO] [raw sql] {}
+2025-09-09 03:57:12,498 [INFO] SELECT @@sql_mode
+2025-09-09 03:57:12,498 [INFO] [raw sql] {}
+2025-09-09 03:57:12,498 [INFO] SELECT @@lower_case_table_names
+2025-09-09 03:57:12,499 [INFO] [raw sql] {}
+2025-09-09 03:57:12,499 [INFO] BEGIN (implicit)
+2025-09-09 03:57:12,500 [INFO] COMMIT
+2025-09-09 03:57:12,626 [INFO] BEGIN (implicit)
+2025-09-09 03:57:12,628 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:57:12,629 [INFO] [generated in 0.00035s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:57:12,630 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:57:12,630 [INFO] [generated in 0.00029s] {'id_1': 1, 'param_1': 1}
+2025-09-09 03:57:12,632 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:57:29,407 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:57:29,408 [INFO] AFC remote call 1 is done.
+2025-09-09 03:57:29,409 [INFO] [1] generated_content len=1491
+2025-09-09 03:57:29,410 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:57:29,410 [INFO] [cached since 13.49s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 03:57:29,411 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:57:45,082 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:57:45,085 [INFO] AFC remote call 1 is done.
+2025-09-09 03:57:45,085 [INFO] [2] fact_checked_text len=2046
+2025-09-09 03:57:45,086 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:57:45,086 [INFO] [cached since 29.16s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 03:57:45,087 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:57:46,946 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:57:46,948 [INFO] AFC remote call 1 is done.
+2025-09-09 03:57:46,949 [INFO] [genai:image] text part: ## 이미지 1
+
+활활 타오르는 듯한 붉은색과 검은색의 강렬한 배경 위에 주인공 탄지로가 그의 트레이드마크인 푸른색 하오리를 입고 붉은색 칼날을 휘두르는 역동적인 모습을 클로즈업하여 생성합니다. 탄지로의 굳건한 표정과 칼날에서 뿜어져 나오는 듯한 불꽃 효과를 통해 강렬한 액션과 긴장감을 시각적으로 전달하고자 합니다.
+
+## 이미지 2
+
+일본 전통 건축 양식...
+2025-09-09 03:57:46,949 [WARNING] [genai:image] no images in response (attempt 1/6) → sleep 1.7s
+2025-09-09 03:57:48,660 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:57:58,813 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:57:59,869 [INFO] AFC remote call 1 is done.
+2025-09-09 03:57:59,869 [INFO] [genai:image] text part: ## 이미지 1: '귀멸의 칼날'의 인기와 흥행을 상징하는 이미지
+
+'귀멸의 칼날' 주인공 탄지로가 강렬한 검술을 펼치는 역동적인 장면을 클로즈업하여 담아내겠습니다. 배경은 어둡고 붉은색 불꽃이 타오르는 듯한 효과를 넣어 긴장감과 박진감을 강조하고, 탄지로의 рішучий 표정과 рішучий 눈빛을 통해 그의 강인함과 рішучий 의지를 드러낼 것입니다...
+2025-09-09 03:58:00,131 [INFO] [genai:image] text part: 
+
+## 이미지 2: '귀멸의 칼날'이 애니메이션 시장에 미치는 영향과 미래를 보여주는 이미지
+
+다양한 애니메이션 캐릭터들이 '귀멸의 칼날' 주인공 탄지로를 중심으로 모여 환호하는 모습을 역동적으로 표현하겠습니다. 탄지로는 중앙에서 밝게 빛나고 있으며, 주변 캐릭터들은 각자의 개성을 드러내는 포즈와 표정을 짓고 있습니다. 배경은 현대적인 도시의 야경을 흐릿...
+2025-09-09 03:58:00,302 [INFO] [image] saved: /app/images/ebdd2f64-bc02-4f84-9ebc-4bb72aecfa4a.png (1322929 bytes)
+2025-09-09 03:58:00,303 [INFO] [image] saved: /app/images/f10ec3c3-385b-4f38-9d3d-2a11c100268c.png (893421 bytes)
+2025-09-09 03:58:00,303 [INFO] [3] saved_image_paths=['/app/images/ebdd2f64-bc02-4f84-9ebc-4bb72aecfa4a.png', '/app/images/f10ec3c3-385b-4f38-9d3d-2a11c100268c.png']
+2025-09-09 03:58:00,304 [INFO] [3] upload_url=http://wordpressapi:32552/posts/upload-image/
+2025-09-09 03:58:00,309 [INFO] [POST] /app/images/ebdd2f64-bc02-4f84-9ebc-4bb72aecfa4a.png mime type: image/png
+2025-09-09 03:58:01,375 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/upload-image/ "HTTP/1.1 200 OK"
+2025-09-09 03:58:01,375 [INFO] [POST] /app/images/f10ec3c3-385b-4f38-9d3d-2a11c100268c.png mime type: image/png
+2025-09-09 03:58:01,933 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/upload-image/ "HTTP/1.1 200 OK"
+2025-09-09 03:58:01,977 [INFO] [3] uploaded_results=[{'message': '이미지 업로드 및 DB 저장 성공', 'db_image_id': 19, 'image_id': 66, 'image_url': 'http://notaverse.ddns.net/wp-content/uploads/2025/09/ebdd2f64-bc02-4f84-9ebc-4bb72aecfa4a.png'}, {'message': '이미지 업로드 및 DB 저장 성공', 'db_image_id': 20, 'image_id': 67, 'image_url': 'http://notaverse.ddns.net/wp-content/uploads/2025/09/f10ec3c3-385b-4f38-9d3d-2a11c100268c.png'}]
+2025-09-09 03:58:01,978 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:58:01,978 [INFO] [cached since 42.82s ago] {'id_1': 4, 'param_1': 1}
+2025-09-09 03:58:01,979 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:58:08,559 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:58:08,562 [INFO] AFC remote call 1 is done.
+2025-09-09 03:58:08,562 [INFO] [4] tags=['귀멸의 칼날', '애니메이션', '성공 요인', '문화 현상', 'Ufotable', '애니메이션 시장'] categories=['애니메이션 분석', '문화 트렌드', '미디어 산업']
+2025-09-09 03:58:08,563 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:58:08,563 [INFO] [cached since 49.41s ago] {'id_1': 5, 'param_1': 1}
+2025-09-09 03:58:08,564 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 03:58:24,167 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 03:58:24,170 [INFO] AFC remote call 1 is done.
+2025-09-09 03:58:24,170 [INFO] [5] html_result len=2577
+2025-09-09 03:58:24,805 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/create-post/ "HTTP/1.1 200 OK"
+2025-09-09 03:58:24,806 [INFO] [5] create_post resp={'message': '글 등록 및 DB 저장 성공', 'db_post_id': 8, 'wp_post_id': 68, 'wp_link': 'http://notaverse.ddns.net/2025/09/09/untitled-2/'}
+2025-09-09 03:58:24,806 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 03:58:24,807 [INFO] [cached since 65.65s ago] {'id_1': 6, 'param_1': 1}
+2025-09-09 03:58:24,807 [INFO] ROLLBACK
+2025-09-09 04:11:03,906 [INFO] SELECT DATABASE()
+2025-09-09 04:11:03,906 [INFO] [raw sql] {}
+2025-09-09 04:11:03,907 [INFO] SELECT @@sql_mode
+2025-09-09 04:11:03,907 [INFO] [raw sql] {}
+2025-09-09 04:11:03,908 [INFO] SELECT @@lower_case_table_names
+2025-09-09 04:11:03,908 [INFO] [raw sql] {}
+2025-09-09 04:11:03,909 [INFO] BEGIN (implicit)
+2025-09-09 04:11:03,909 [INFO] COMMIT
+2025-09-09 04:11:04,035 [INFO] BEGIN (implicit)
+2025-09-09 04:11:04,037 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:11:04,037 [INFO] [generated in 0.00032s] {'id_1': 1, 'param_1': 1}
+2025-09-09 04:11:04,039 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:11:04,040 [INFO] [generated in 0.00034s] {'id_1': 1, 'param_1': 1}
+2025-09-09 04:11:04,041 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 04:11:18,455 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 04:11:18,456 [INFO] AFC remote call 1 is done.
+2025-09-09 04:11:18,456 [INFO] [1] generated_content len=1420
+2025-09-09 04:11:18,457 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:11:18,457 [INFO] [cached since 11.08s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 04:11:18,458 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 04:11:32,993 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 04:11:32,995 [INFO] AFC remote call 1 is done.
+2025-09-09 04:11:32,995 [INFO] [2] fact_checked_text =안녕하세요, 애니메이션과 팝 컬처를 사랑하는 여러분! 오늘은 전 세계를 휩쓴 센세이션, 바로 '귀멸의 칼날' 이야기로 문을 열어볼까 합니다. 최근 '귀멸의 칼날'은 단순한 애니메이션을 넘어 하나의 거대한 문화 현상으로 자리 잡았습니다. 특히, 다가올 궁극적인 클라이맥스, '무한성편'에 대한 기대를 한껏 끌어올린 최근 극장판의 흥행은 놀라움 그 자체였습니다.
+
+'귀멸의 칼날'은 이미 큰 성공을 거둔 시리즈임에도 불구하고, 새로운 TV 시즌을 예고하는 에피소드들을 극장에서 미리 상영하는 방식, 이른바 '월드 투어 상영'을 통해 또 한 번 엄청난 관객을 끌어모으고 있습니다. 예를 들어, 최근 상영된 '귀멸의 칼날: 인연의 기적, 그리고 합동 강화 훈련으로' 극장판은 '도공 마을편'의 마지막 에피소드와 '합동 강화 훈련편'의 첫 번째 에피소드를 묶어 전 세계 극장에서 선보였습니다. 이는 단순한 팬심을 넘어, 애니메이션 시장의 미래를 엿볼 수 있는 중요한 신호탄이 되고 있습니다. 과연 '귀멸의 칼날'이 보여주는 이 혁신적인 흥행 방식은 어떤 의미를 가지며, 앞으로 애니메이션 시장은 어떤 방향으로 나아가게 될까요?
+
+---
+
+### '귀멸의 칼날' 성공의 핵심 비결 분석
+
+'귀멸의 칼날'의 성공 비결은 여러 가지 복합적인 요인에서 찾을 수 있습니다.
+
+1.  **ufotable 스튜디오의 압도적인 작화와 액션 연출:** 매 프레임이 예술에 가까운 고품질 애니메이션은 시청자들에게 극강의 몰입감을 선사하며, 단순히 스토리를 따라가는 것을 넘어 시각적인 즐거움까지 극대화합니다. 특히 화려하면서도 역동적인 액션 시퀀스는 팬들의 극찬을 받습니다.
+
+2.  **탄탄한 원작 스토리와 매력적인 캐릭터들:** 고토게 코요하루 작가의 원작 스토리는 선과 악의 경계가 모호한 입체적인 캐릭터들과 깊이 있는 서사를 통해 시청자들의 공감을 자아내고, 희로애락을 함께 나누게 만듭니다. 각자의 사연과 고뇌를 가진 인물들은 단순한 소년 만화를 넘어선 감동을 선사합니다.
+
+3.  **영리한 마케팅 전략과 다각화된 미디어 믹스:** 만화, 애니메이션, 극장판, 게임, 굿즈 등 다양한 플랫폼을 통해 팬들과 소통하고 브랜드 가치를 확장하는 전략은 '귀멸의 칼날'을 단순한 애니메이션을 넘어 거대한 프랜차이즈로 성장시켰습니다. 특히, **'이벤트 시네마' 형태의 월드 투어 상영**은 팬들에게 TV 방영에 앞서 특별한 경험을 제공하며 극장 흥행과 동시에 다음 시즌에 대한 기대감을 최고조로 끌어올리는 혁신적인 시도로 평가받고 있습니다. 이는 단순한 미리 보기를 넘어, 팬덤을 결집하고 글로벌 스케일로 화제성을 증폭시키는 효과를 가져왔습니다.
+
+---
+
+### '귀멸의 칼날'이 제시하는 애니메이션 시장의 새로운 방향
+
+이러한 '귀멸의 칼날'의 성공 방식은 앞으로 애니메이션 시장이 나아갈 방향을 명확하게 제시합니다.
+
+*   **고품질 애니메이션의 필수화:** 더 이상 기술적 완성도는 선택 사항이 아닌 필수가 되었습니다. 시청자들은 단순히 스토리를 소비하는 것을 넘어, 압도적인 비주얼과 연출이 선사하는 '경험'을 갈구합니다.
+*   **'경험'을 제공하는 배급 방식의 진화:** '이벤트 시네마'와 같은 새로운 형태의 배급 방식은 극장과 TV, 스트리밍 플랫폼의 경계를 허물며 수익 다각화의 가능성을 보여줍니다. 이는 팬들에게 특별한 추억을 선사하며, 다음 시즌에 대한 기대감을 극대화하는 효과적인 전략입니다.
+*   **글로벌 팬덤 구축과 적극적인 소통:** '귀멸의 칼날'은 전 세계적인 '월드 투어' 상영과 적극적인 홍보를 통해 글로벌 팬덤을 구축하고 그들과 소통하는 것이 성공의 핵심 동력임을 증명했습니다. 이제 애니메이션은 특정 지역이나 연령층의 전유물이 아닌, 전 세계인이 함께 즐기는 강력한 문화 콘텐츠로 진화하고 있습니다.
+
+---
+
+'귀멸의 칼날'이 개척한 길을 따라, 앞으로 더욱 다양하고 혁신적인 애니메이션들이 탄생하여 전 세계 시청자들에게 끊임없이 새로운 감동과 즐거움을 선사할 수 있기를 기대해 봅니다. 궁극적인 스토리의 정점이 될 '무한성편'의 애니메이션화 역시 많은 팬들의 염원인 만큼, '귀멸의 칼날'이 써 내려갈 또 다른 역사가 기대됩니다!
+2025-09-09 04:11:32,996 [INFO] [2] fact_checked_text len=2046
+2025-09-09 04:11:32,996 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:11:32,997 [INFO] [cached since 25.62s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 04:11:32,998 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 04:11:39,365 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 04:11:40,369 [INFO] AFC remote call 1 is done.
+2025-09-09 04:11:40,370 [INFO] [genai:image] text part: 1. 첫 번째 이미지는 '귀멸의 칼날' 주인공 탄지로와 주요 등장인물들이 결의에 찬 표정으로 정면을 응시하는 역동적인 구도로 생성해 주세요. 배경은 웅장한 산봉우리와 떠오르는 태양을 넣어 희망찬 분위기를 연출하고, ufotable 특유의 섬세하고 화려한 그림체와 생동감 넘치는 액션 연출을 강조하여 시각적인 즐거움을 극대화해 주세요.
+
+...
+2025-09-09 04:11:40,557 [INFO] [genai:image] text part: 
+
+2. 두 번째 이미지는 '귀멸의 칼날: 인연의 기적, 그리고 합동 강화 훈련으로' 극장판의 한 장면을 연상시키는 이미지로, 탄지로와 하시라들이 함께 훈련하는 모습이나, 새로운 적과 맞서는 긴장감 넘치는 순간을 담아주세요. 영화 포스터처럼 강렬한 색감과 역동적인 구도를 활용하여 '이벤트 시네마'의 특별함과 다음 시즌에 대한 기대감을 높여주세요.
+
+...
+2025-09-09 04:11:40,730 [INFO] [image] saved: /app/images/eed20f76-413a-492c-8d25-c42a0f298184.png (829081 bytes)
+2025-09-09 04:11:40,731 [INFO] [image] saved: /app/images/3f20f238-af86-48f7-8ae9-54b3a487195f.png (858106 bytes)
+2025-09-09 04:11:40,731 [INFO] [3] saved_image_paths=['/app/images/eed20f76-413a-492c-8d25-c42a0f298184.png', '/app/images/3f20f238-af86-48f7-8ae9-54b3a487195f.png']
+2025-09-09 04:11:40,731 [INFO] [3] upload_url=http://wordpressapi:32552/posts/upload-image/
+2025-09-09 04:11:40,737 [INFO] [POST] /app/images/eed20f76-413a-492c-8d25-c42a0f298184.png mime type: image/png
+2025-09-09 04:11:41,401 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/upload-image/ "HTTP/1.1 200 OK"
+2025-09-09 04:11:41,402 [INFO] [POST] /app/images/3f20f238-af86-48f7-8ae9-54b3a487195f.png mime type: image/png
+2025-09-09 04:11:41,913 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/upload-image/ "HTTP/1.1 200 OK"
+2025-09-09 04:11:41,955 [INFO] [3] uploaded_results=[{'message': '이미지 업로드 및 DB 저장 성공', 'db_image_id': 21, 'image_id': 69, 'image_url': 'http://notaverse.ddns.net/wp-content/uploads/2025/09/eed20f76-413a-492c-8d25-c42a0f298184.png'}, {'message': '이미지 업로드 및 DB 저장 성공', 'db_image_id': 22, 'image_id': 70, 'image_url': 'http://notaverse.ddns.net/wp-content/uploads/2025/09/3f20f238-af86-48f7-8ae9-54b3a487195f.png'}]
+2025-09-09 04:11:41,956 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:11:41,956 [INFO] [cached since 34.58s ago] {'id_1': 4, 'param_1': 1}
+2025-09-09 04:11:41,957 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 04:11:51,826 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 04:11:51,827 [INFO] AFC remote call 1 is done.
+2025-09-09 04:11:51,827 [INFO] [4] tags=['귀멸의 칼날', '애니메이션', '월드 투어 상영', '유포터블', '마케팅 전략', '팝 컬처', '흥행 분석'] categories=['애니메이션 산업 분석']
+2025-09-09 04:11:51,828 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:11:51,828 [INFO] [cached since 41.12s ago] {'id_1': 5, 'param_1': 1}
+2025-09-09 04:11:51,829 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 04:12:06,838 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 04:12:06,840 [INFO] AFC remote call 1 is done.
+2025-09-09 04:12:06,841 [INFO] [5] html_result_text=```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>귀멸의 칼날: 문화 현상과 애니메이션 시장의 미래</title>
+</head>
+<body>
+    <p>안녕하세요, 애니메이션과 팝 컬처를 사랑하는 여러분! 오늘은 전 세계를 휩쓴 센세이션, 바로 '귀멸의 칼날' 이야기로 문을 열어볼까 합니다. 최근 '귀멸의 칼날'은 단순한 애니메이션을 넘어 하나의 거대한 문화 현상으로 자리 잡았습니다. 특히, 다가올 궁극적인 클라이맥스, '무한성편'에 대한 기대를 한껏 끌어올린 최근 극장판의 흥행은 놀라움 그 자체였습니다.</p>
+
+    <p>'귀멸의 칼날'은 이미 큰 성공을 거둔 시리즈임에도 불구하고, 새로운 TV 시즌을 예고하는 에피소드들을 극장에서 미리 상영하는 방식, 이른바 '월드 투어 상영'을 통해 또 한 번 엄청난 관객을 끌어모으고 있습니다. 예를 들어, 최근 상영된 '귀멸의 칼날: 인연의 기적, 그리고 합동 강화 훈련으로' 극장판은 '도공 마을편'의 마지막 에피소드와 '합동 강화 훈련편'의 첫 번째 에피소드를 묶어 전 세계 극장에서 선보였습니다. 이는 단순한 팬심을 넘어, 애니메이션 시장의 미래를 엿볼 수 있는 중요한 신호탄이 되고 있습니다. 과연 '귀멸의 칼날'이 보여주는 이 혁신적인 흥행 방식은 어떤 의미를 가지며, 앞으로 애니메이션 시장은 어떤 방향으로 나아가게 될까요?</p>
+
+    <p><img src="http://notaverse.ddns.net/wp-content/uploads/2025/09/eed20f76-413a-492c-8d25-c42a0f298184.png" alt="귀멸의 칼날 관련 이미지 1"></p>
+
+    <h2>'귀멸의 칼날' 성공의 핵심 비결 분석</h2>
+    <p>'귀멸의 칼날'의 성공 비결은 여러 가지 복합적인 요인에서 찾을 수 있습니다.</p>
+    <ol>
+        <li>
+            <p><strong>ufotable 스튜디오의 압도적인 작화와 액션 연출:</strong> 매 프레임이 예술에 가까운 고품질 애니메이션은 시청자들에게 극강의 몰입감을 선사하며, 단순히 스토리를 따라가는 것을 넘어 시각적인 즐거움까지 극대화합니다. 특히 화려하면서도 역동적인 액션 시퀀스는 팬들의 극찬을 받습니다.</p>
+        </li>
+        <li>
+            <p><strong>탄탄한 원작 스토리와 매력적인 캐릭터들:</strong> 고토게 코요하루 작가의 원작 스토리는 선과 악의 경계가 모호한 입체적인 캐릭터들과 깊이 있는 서사를 통해 시청자들의 공감을 자아내고, 희로애락을 함께 나누게 만듭니다. 각자의 사연과 고뇌를 가진 인물들은 단순한 소년 만화를 넘어선 감동을 선사합니다.</p>
+        </li>
+        <li>
+            <p><strong>영리한 마케팅 전략과 다각화된 미디어 믹스:</strong> 만화, 애니메이션, 극장판, 게임, 굿즈 등 다양한 플랫폼을 통해 팬들과 소통하고 브랜드 가치를 확장하는 전략은 '귀멸의 칼날'을 단순한 애니메이션을 넘어 거대한 프랜차이즈로 성장시켰습니다. 특히, <strong>'이벤트 시네마' 형태의 월드 투어 상영</strong>은 팬들에게 TV 방영에 앞서 특별한 경험을 제공하며 극장 흥행과 동시에 다음 시즌에 대한 기대감을 최고조로 끌어올리는 혁신적인 시도로 평가받고 있습니다. 이는 단순한 미리 보기를 넘어, 팬덤을 결집하고 글로벌 스케일로 화제성을 증폭시키는 효과를 가져왔습니다.</p>
+        </li>
+    </ol>
+
+    <p><img src="http://notaverse.ddns.net/wp-content/uploads/2025/09/3f20f238-af86-48f7-8ae9-54b3a487195f.png" alt="귀멸의 칼날 관련 이미지 2"></p>
+
+    <h2>'귀멸의 칼날'이 제시하는 애니메이션 시장의 새로운 방향</h2>
+    <p>이러한 '귀멸의 칼날'의 성공 방식은 앞으로 애니메이션 시장이 나아갈 방향을 명확하게 제시합니다.</p>
+    <ul>
+        <li>
+            <p><strong>고품질 애니메이션의 필수화:</strong> 더 이상 기술적 완성도는 선택 사항이 아닌 필수가 되었습니다. 시청자들은 단순히 스토리를 소비하는 것을 넘어, 압도적인 비주얼과 연출이 선사하는 '경험'을 갈구합니다.</p>
+        </li>
+        <li>
+            <p><strong>'경험'을 제공하는 배급 방식의 진화:</strong> '이벤트 시네마'와 같은 새로운 형태의 배급 방식은 극장과 TV, 스트리밍 플랫폼의 경계를 허물며 수익 다각화의 가능성을 보여줍니다. 이는 팬들에게 특별한 추억을 선사하며, 다음 시즌에 대한 기대감을 극대화하는 효과적인 전략입니다.</p>
+        </li>
+        <li>
+            <p><strong>글로벌 팬덤 구축과 적극적인 소통:</strong> '귀멸의 칼날'은 전 세계적인 '월드 투어' 상영과 적극적인 홍보를 통해 글로벌 팬덤을 구축하고 그들과 소통하는 것이 성공의 핵심 동력임을 증명했습니다. 이제 애니메이션은 특정 지역이나 연령층의 전유물이 아닌, 전 세계인이 함께 즐기는 강력한 문화 콘텐츠로 진화하고 있습니다.</p>
+        </li>
+    </ul>
+
+    <p>'귀멸의 칼날'이 개척한 길을 따라, 앞으로 더욱 다양하고 혁신적인 애니메이션들이 탄생하여 전 세계 시청자들에게 끊임없이 새로운 감동과 즐거움을 선사할 수 있기를 기대해 봅니다. 궁극적인 스토리의 정점이 될 '무한성편'의 애니메이션화 역시 많은 팬들의 염원인 만큼, '귀멸의 칼날'이 써 내려갈 또 다른 역사가 기대됩니다!</p>
+</body>
+</html>
+```
+2025-09-09 04:12:06,841 [INFO] [5] html_result len=2991
+2025-09-09 04:12:07,442 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/create-post/ "HTTP/1.1 200 OK"
+2025-09-09 04:12:07,443 [INFO] [5] create_post resp={'message': '글 등록 및 DB 저장 성공', 'db_post_id': 9, 'wp_post_id': 71, 'wp_link': 'http://notaverse.ddns.net/2025/09/09/%ea%b7%80%eb%a9%b8%ec%9d%98-%ec%b9%bc%eb%82%a0-%eb%ac%b8%ed%99%94-%ed%98%84%ec%83%81%ea%b3%bc-%ec%95%a0%eb%8b%88%eb%a9%94%ec%9d%b4%ec%85%98-%ec%8b%9c%ec%9e%a5%ec%9d%98-%eb%af%b8%eb%9e%98/'}
+2025-09-09 04:12:07,443 [INFO] ROLLBACK
+2025-09-09 04:16:53,140 [INFO] SELECT DATABASE()
+2025-09-09 04:16:53,140 [INFO] [raw sql] {}
+2025-09-09 04:16:53,141 [INFO] SELECT @@sql_mode
+2025-09-09 04:16:53,141 [INFO] [raw sql] {}
+2025-09-09 04:16:53,142 [INFO] SELECT @@lower_case_table_names
+2025-09-09 04:16:53,142 [INFO] [raw sql] {}
+2025-09-09 04:16:53,143 [INFO] BEGIN (implicit)
+2025-09-09 04:16:53,143 [INFO] COMMIT
+2025-09-09 04:16:53,237 [INFO] BEGIN (implicit)
+2025-09-09 04:16:53,239 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:16:53,239 [INFO] [generated in 0.00043s] {'id_1': 1, 'param_1': 1}
+2025-09-09 04:16:53,241 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:16:53,241 [INFO] [generated in 0.00028s] {'id_1': 1, 'param_1': 1}
+2025-09-09 04:16:53,242 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 04:17:06,261 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 04:17:06,262 [INFO] AFC remote call 1 is done.
+2025-09-09 04:17:06,263 [INFO] [1] generated_content len=1400
+2025-09-09 04:17:06,263 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:17:06,264 [INFO] [cached since 13.02s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 04:17:06,265 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 04:17:27,171 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 04:17:27,174 [INFO] AFC remote call 1 is done.
+2025-09-09 04:17:27,175 [INFO] [2] fact_checked_text =제공해주신 텍스트는 전반적으로 매우 정확하고 중요한 메시지를 담고 있습니다. '기후난민'과 '기후 인플레이션'이라는 핵심 개념을 잘 설명하고 있으며, 기후 변화의 심각성과 우리 모두의 행동이 필요하다는 점을 강조하는 좋은 글입니다.
+
+**사실 검증 및 보완 의견:**
+
+1.  **과학적 합의:** "과학자들은 이러한 이상 기후가 인간 활동으로 인한 온실가스 배출량 증가, 즉 기후 변화 때문이라고 한목소리로 경고합니다." 이 부분은 97% 이상의 과학자들이 인위적 기후 변화에 동의한다는 사실을 바탕으로 매우 정확합니다.
+2.  **기후난민(Climate Refugee) 용어:** "이러한 환경 변화는 '기후난민'이라는 안타까운 현실을 만들어내고 있습니다."
+    *   **보완점:** '기후난민(climate refugee)'이라는 용어는 실제 현실을 잘 나타내지만, 국제법상 공식적인 난민 지위(1951년 난민 협약)는 아니라는 점을 언급하면 더욱 정확성을 높일 수 있습니다. 국제법에서는 전쟁이나 박해를 피한 사람들을 난민으로 규정하며, 기후 변화로 인해 이동하는 사람들은 '환경 이주민(environmental migrant)' 또는 '기후로 인한 이주민(climate-induced displaced persons)' 등으로 불리는 경우가 많습니다. 물론 일반적인 글에서는 '기후난민'이라는 용어가 널리 사용되고 이해되므로, 사용 자체에는 문제가 없습니다. 필요하다면 이 지점에 대한 짧은 설명을 덧붙이는 것을 고려해볼 수 있습니다. (예: "정식 난민 지위는 아니지만, 기후 변화로 삶의 터전을 잃은 사람들을 총칭하는 표현입니다.")
+3.  **기후 인플레이션:** "환경 위기는 우리의 지갑에도 직접적인 영향을 미칩니다. 바로 '기후 인플레이션'입니다."
+    *   **정확성:** 매우 정확합니다. 기후 인플레이션은 농작물 생산 감소, 공급망 교란, 에너지 전환 비용 증가, 재난 복구 비용 등으로 인해 발생하는 물가 상승을 의미하며, 이미 전 세계적으로 관찰되고 있는 현상입니다.
+4.  **해결책 및 행동 촉구:** 제시된 해결책들(탄소 배출 감소, 재생 에너지 지지, 지속 가능한 소비 등)은 개인과 사회가 할 수 있는 효과적인 행동들로 적절합니다.
+
+전체적으로 볼 때, 텍스트는 사실에 기반을 두고 있으며 설득력 있게 내용을 전달합니다. 위에 언급된 '기후난민' 용어에 대한 작은 보완을 제외하고는 크게 교정할 부분은 없습니다.
+
+---
+
+아래는 위 검토 의견을 반영하여 블로그 글 형식으로 재작성한 것입니다.
+
+---
+
+## 위기의 지구, 우리의 오늘과 내일을 묻다: 기후난민과 기후 인플레이션
+
+안녕하세요, 여러분! 우리가 발 딛고 살아가는 이 지구는 지금 '환경 위기'라는 거대한 도전에 직면해 있습니다. 상상할 수 없을 정도로 뜨거운 폭염, 예측 불가능한 홍수, 극심한 가뭄, 걷잡을 수 없는 산불까지, 이 모든 현상은 단순한 자연 현상을 넘어 우리의 생존을 위협하는 수준에 이르렀습니다. 전 세계 과학자들은 이러한 극단적인 이상 기후가 인간 활동으로 인한 온실가스 배출량 증가, 즉 급격한 기후 변화 때문이라고 한목소리로 경고합니다. 얼어붙은 극지방의 빙하가 녹아내리고, 해수면이 상승하며, 아름다운 산호초가 죽어가는 모습은 더 이상 먼 나라의 이야기가 아닙니다. 이처럼 파괴되는 환경은 우리의 삶에 직접적인 영향을 미치며, 그 결과는 예상보다 훨씬 복잡하고 고통스럽습니다. 우리는 지금, 인류의 지속 가능성을 심각하게 고민해야 할 중대한 전환점에 서 있습니다.
+
+### 삶의 터전을 잃은 사람들: '기후난민'의 현실
+
+이러한 환경 변화는 수많은 사람들을 삶의 터전에서 밀어내는 '기후난민'이라는 안타까운 현실을 낳고 있습니다. 해수면 상승으로 살던 곳이 물에 잠기거나, 사막화로 농경지가 황폐해지면서 식량과 물이 부족해진 수많은 사람이 익숙한 곳을 떠나 새로운 터전을 찾아야 하는 상황에 내몰립니다. 이들은 단순히 거주지를 옮기는 것을 넘어, 정체성의 상실과 더불어 사회적, 경제적 어려움에 직면하게 됩니다. 이들을 받아들이는 지역 또한 예상치 못한 난민 문제로 인해 사회적 혼란을 겪기도 합니다. 비록 '기후난민'이라는 용어가 국제법상 공식적인 난민 지위를 부여하는 것은 아니지만, 기후 변화로 인해 강제로 이주해야 하는 사람들의 현실을 가장 잘 나타내는 표현으로 사용되고 있습니다.
+
+### 우리 지갑을 위협하는 그림자: '기후 인플레이션'
+
+여기서 그치지 않고, 환경 위기는 우리의 지갑에도 직접적인 영향을 미칩니다. 바로 '기후 인플레이션'입니다. 기후 변화로 인해 농작물 생산량이 급감하면 식료품 가격이 폭등하고, 극심한 기상 이변으로 물류 시스템이 마비되면 공산품 가격까지 오르는 식입니다. 특히 에너지를 얻는 과정에서 탄소 배출 규제가 강화되거나, 이상 기후로 인한 재난 복구 비용이 증가하는 경우, 이 또한 전반적인 물가 상승으로 이어져 가계 경제에 큰 부담을 안겨줍니다. 이처럼 환경 위기는 단순히 자연의 문제가 아닌, 난민 문제와 경제 문제를 야기하며 지구촌 모두에게 영향을 미치는 복잡한 연결고리를 형성합니다.
+
+### 절망 대신 행동을 선택할 때: 우리의 역할
+
+지금까지의 이야기가 무겁게 느껴질 수 있지만, 이 문제들을 마주하는 것은 절망하기 위함이 아닙니다. 우리에게는 아직 행동할 기회가 있으며, 이 심각한 도전을 해결할 지혜와 능력이 있습니다. 탄소 배출을 줄이는 생활 습관, 재생 에너지 확대 지지, 지속 가능한 제품 소비, 그리고 환경 보호 정책에 대한 적극적인 관심과 참여 등 우리가 할 수 있는 일은 생각보다 많습니다.
+
+우리 한 사람 한 사람의 작은 실천 하나하나가 모여 더 큰 변화를 만들고, 지구 반대편의 기후난민에게는 희망이, 우리 경제에는 안정의 기반이 될 수 있습니다. 우리 모두의 지혜와 노력이 모인다면, 환경 위기를 극복하고 기후로 인한 이주민 문제를 해결하며, 기후 인플레이션의 위험에서 벗어나 지속 가능한 미래를 함께 만들어갈 수 있을 것입니다. 지금이 바로 행동할 때입니다. 우리의 작은 변화가 지구와 인류의 내일을 결정할 것입니다.
+2025-09-09 04:17:27,175 [INFO] [2] fact_checked_text len=2985
+2025-09-09 04:17:27,176 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:17:27,176 [INFO] [cached since 30.6s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 04:17:27,177 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 04:17:33,852 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 04:17:34,905 [INFO] AFC remote call 1 is done.
+2025-09-09 04:17:34,905 [INFO] [genai:image] text part: 1.  기후 변화로 인해 황폐해진 땅에서 절망에 빠진 사람들의 모습을 보여주는 이미지를 생성해 주세요. 메마른 땅과 갈라진 논밭을 배경으로 하고, 낡은 옷을 입은 가족들이 짐을 들고 힘없이 걸어가는 모습을 담아주세요. 어둡고 불안한 분위기를 연출하여 기후난민의 어려움을 시각적으로 표현해 주세요.
+
+...
+2025-09-09 04:17:35,039 [INFO] [genai:image] text part: 
+
+2.  기후 변화로 인해 식료품 가격이 상승하는 것을 보여주는 이미지를 생성해 주세요. 시장이나 슈퍼마켓에서 사람들이 오른 가격표를 보고 놀라거나 걱정하는 표정을 짓고 있는 모습을 클로즈업하여 보여주세요. 흐릿하게 보이는 신문이나 광고판에 '물가 상승', '식료품 가격 인상' 등의 문구를 넣어 기후 인플레이션의 심각성을 강조해 주세요.
+
+...
+2025-09-09 04:17:35,258 [INFO] [image] saved: /app/images/cc6d467f-cd1f-4b35-ac0a-8aa0547800a1.png (1010943 bytes)
+2025-09-09 04:17:35,259 [INFO] [image] saved: /app/images/92359ca3-d157-42aa-a73b-4d7026905c39.png (980115 bytes)
+2025-09-09 04:17:35,259 [INFO] [3] saved_image_paths=['/app/images/cc6d467f-cd1f-4b35-ac0a-8aa0547800a1.png', '/app/images/92359ca3-d157-42aa-a73b-4d7026905c39.png']
+2025-09-09 04:17:35,259 [INFO] [3] upload_url=http://wordpressapi:32552/posts/upload-image/
+2025-09-09 04:17:35,264 [INFO] [POST] /app/images/cc6d467f-cd1f-4b35-ac0a-8aa0547800a1.png mime type: image/png
+2025-09-09 04:17:35,892 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/upload-image/ "HTTP/1.1 200 OK"
+2025-09-09 04:17:35,893 [INFO] [POST] /app/images/92359ca3-d157-42aa-a73b-4d7026905c39.png mime type: image/png
+2025-09-09 04:17:36,420 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/upload-image/ "HTTP/1.1 200 OK"
+2025-09-09 04:17:36,464 [INFO] [3] uploaded_results=[{'message': '이미지 업로드 및 DB 저장 성공', 'db_image_id': 23, 'image_id': 78, 'image_url': 'http://notaverse.ddns.net/wp-content/uploads/2025/09/cc6d467f-cd1f-4b35-ac0a-8aa0547800a1.png'}, {'message': '이미지 업로드 및 DB 저장 성공', 'db_image_id': 24, 'image_id': 79, 'image_url': 'http://notaverse.ddns.net/wp-content/uploads/2025/09/92359ca3-d157-42aa-a73b-4d7026905c39.png'}]
+2025-09-09 04:17:36,465 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:17:36,465 [INFO] [cached since 39.89s ago] {'id_1': 4, 'param_1': 1}
+2025-09-09 04:17:36,466 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 04:17:40,586 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 04:17:40,587 [INFO] AFC remote call 1 is done.
+2025-09-09 04:17:40,587 [INFO] [4] tags=['기후변화', '기후난민', '기후 인플레이션', '환경 위기', '지속가능성', '환경 보호'] categories=['환경', '사회', '경제']
+2025-09-09 04:17:40,588 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 04:17:40,588 [INFO] [cached since 44.01s ago] {'id_1': 5, 'param_1': 1}
+2025-09-09 04:17:40,589 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 04:17:59,020 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 04:17:59,021 [INFO] AFC remote call 1 is done.
+2025-09-09 04:17:59,021 [INFO] [5] html_result_text=요청하신 요구사항에 맞춰 텍스트를 블로그 게시용 HTML 형식으로 변환했습니다.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>위기의 지구, 우리의 오늘과 내일을 묻다: 기후난민과 기후 인플레이션</title>
+</head>
+<body>
+
+    <h2>위기의 지구, 우리의 오늘과 내일을 묻다: 기후난민과 기후 인플레이션</h2>
+
+    <p>안녕하세요, 여러분! 우리가 발 딛고 살아가는 이 지구는 지금 '환경 위기'라는 거대한 도전에 직면해 있습니다. 상상할 수 없을 정도로 뜨거운 폭염, 예측 불가능한 홍수, 극심한 가뭄, 걷잡을 수 없는 산불까지, 이 모든 현상은 단순한 자연 현상을 넘어 우리의 생존을 위협하는 수준에 이르렀습니다. 전 세계 과학자들은 이러한 극단적인 이상 기후가 인간 활동으로 인한 온실가스 배출량 증가, 즉 급격한 기후 변화 때문이라고 한목소리로 경고합니다. 얼어붙은 극지방의 빙하가 녹아내리고, 해수면이 상승하며, 아름다운 산호초가 죽어가는 모습은 더 이상 먼 나라의 이야기가 아닙니다. 이처럼 파괴되는 환경은 우리의 삶에 직접적인 영향을 미치며, 그 결과는 예상보다 훨씬 복잡하고 고통스럽습니다. 우리는 지금, 인류의 지속 가능성을 심각하게 고민해야 할 중대한 전환점에 서 있습니다.</p>
+
+    <img src="http://notaverse.ddns.net/wp-content/uploads/2025/09/cc6d467f-cd1f-4b35-ac0a-8aa0547800a1.png" alt="기후 위기로 인해 파괴된 환경 이미지">
+
+    <h3>삶의 터전을 잃은 사람들: '기후난민'의 현실</h3>
+
+    <p>이러한 환경 변화는 수많은 사람들을 삶의 터전에서 밀어내는 '기후난민'이라는 안타까운 현실을 낳고 있습니다. 해수면 상승으로 살던 곳이 물에 잠기거나, 사막화로 농경지가 황폐해지면서 식량과 물이 부족해진 수많은 사람이 익숙한 곳을 떠나 새로운 터전을 찾아야 하는 상황에 내몰립니다. 이들은 단순히 거주지를 옮기는 것을 넘어, 정체성의 상실과 더불어 사회적, 경제적 어려움에 직면하게 됩니다. 이들을 받아들이는 지역 또한 예상치 못한 난민 문제로 인해 사회적 혼란을 겪기도 합니다. 비록 '기후난민'이라는 용어가 국제법상 공식적인 난민 지위를 부여하는 것은 아니지만, 기후 변화로 인해 강제로 이주해야 하는 사람들의 현실을 가장 잘 나타내는 표현으로 사용되고 있습니다.</p>
+
+    <img src="http://notaverse.ddns.net/wp-content/uploads/2025/09/92359ca3-d157-42aa-a73b-4d7026905c39.png" alt="기후난민 및 경제적 영향을 나타내는 이미지">
+
+    <h3>우리 지갑을 위협하는 그림자: '기후 인플레이션'</h3>
+
+    <p>여기서 그치지 않고, 환경 위기는 우리의 지갑에도 직접적인 영향을 미칩니다. 바로 '기후 인플레이션'입니다. 기후 변화로 인해 농작물 생산량이 급감하면 식료품 가격이 폭등하고, 극심한 기상 이변으로 물류 시스템이 마비되면 공산품 가격까지 오르는 식입니다. 특히 에너지를 얻는 과정에서 탄소 배출 규제가 강화되거나, 이상 기후로 인한 재난 복구 비용이 증가하는 경우, 이 또한 전반적인 물가 상승으로 이어져 가계 경제에 큰 부담을 안겨줍니다. 이처럼 환경 위기는 단순히 자연의 문제가 아닌, 난민 문제와 경제 문제를 야기하며 지구촌 모두에게 영향을 미치는 복잡한 연결고리를 형성합니다.</p>
+
+    <h3>절망 대신 행동을 선택할 때: 우리의 역할</h3>
+
+    <p>지금까지의 이야기가 무겁게 느껴질 수 있지만, 이 문제들을 마주하는 것은 절망하기 위함이 아닙니다. 우리에게는 아직 행동할 기회가 있으며, 이 심각한 도전을 해결할 지혜와 능력이 있습니다. 탄소 배출을 줄이는 생활 습관, 재생 에너지 확대 지지, 지속 가능한 제품 소비, 그리고 환경 보호 정책에 대한 적극적인 관심과 참여 등 우리가 할 수 있는 일은 생각보다 많습니다.</p>
+
+    <p>우리 한 사람 한 사람의 작은 실천 하나하나가 모여 더 큰 변화를 만들고, 지구 반대편의 기후난민에게는 희망이, 우리 경제에는 안정의 기반이 될 수 있습니다. 우리 모두의 지혜와 노력이 모인다면, 환경 위기를 극복하고 기후로 인한 이주민 문제를 해결하며, 기후 인플레이션의 위험에서 벗어나 지속 가능한 미래를 함께 만들어갈 수 있을 것입니다. 지금이 바로 행동할 때입니다. 우리의 작은 변화가 지구와 인류의 내일을 결정할 것입니다.</p>
+
+</body>
+</html>
+```
+2025-09-09 04:17:59,022 [INFO] [5] html_result len=2385
+2025-09-09 04:17:59,626 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/create-post/ "HTTP/1.1 200 OK"
+2025-09-09 04:17:59,627 [INFO] [5] create_post resp={'message': '글 등록 및 DB 저장 성공', 'db_post_id': 10, 'wp_post_id': 80, 'wp_link': 'http://notaverse.ddns.net/2025/09/09/%ec%9c%84%ea%b8%b0%ec%9d%98-%ec%a7%80%ea%b5%ac-%ec%9a%b0%eb%a6%ac%ec%9d%98-%ec%98%a4%eb%8a%98%ea%b3%bc-%eb%82%b4%ec%9d%bc%ec%9d%84-%eb%ac%bb%eb%8b%a4-%ea%b8%b0%ed%9b%84%eb%82%9c%eb%af%bc%ea%b3%bc/'}
+2025-09-09 04:17:59,627 [INFO] ROLLBACK
+2025-09-09 10:05:08,238 [INFO] SELECT DATABASE()
+2025-09-09 10:05:08,239 [INFO] [raw sql] {}
+2025-09-09 10:05:08,239 [INFO] SELECT @@sql_mode
+2025-09-09 10:05:08,240 [INFO] [raw sql] {}
+2025-09-09 10:05:08,240 [INFO] SELECT @@lower_case_table_names
+2025-09-09 10:05:08,240 [INFO] [raw sql] {}
+2025-09-09 10:05:08,241 [INFO] BEGIN (implicit)
+2025-09-09 10:05:08,241 [INFO] COMMIT
+2025-09-09 10:05:08,338 [INFO] BEGIN (implicit)
+2025-09-09 10:05:08,340 [INFO] SELECT pipelines.id AS pipelines_id, pipelines.prompt_array AS pipelines_prompt_array, pipelines.created_at AS pipelines_created_at 
+FROM pipelines 
+WHERE pipelines.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 10:05:08,340 [INFO] [generated in 0.00029s] {'id_1': 1, 'param_1': 1}
+2025-09-09 10:05:08,342 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 10:05:08,342 [INFO] [generated in 0.00024s] {'id_1': 1, 'param_1': 1}
+2025-09-09 10:05:08,343 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 10:05:22,953 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 10:05:22,956 [INFO] AFC remote call 1 is done.
+2025-09-09 10:05:22,956 [INFO] [1] generated_content len=1269
+2025-09-09 10:05:22,957 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 10:05:22,957 [INFO] [cached since 14.62s ago] {'id_1': 2, 'param_1': 1}
+2025-09-09 10:05:22,958 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 10:05:43,143 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 10:05:43,144 [INFO] AFC remote call 1 is done.
+2025-09-09 10:05:43,145 [INFO] [2] fact_checked_text =네, 요청하신 대로 텍스트를 사실 검증하고 교정 및 보완하여 매끄러운 블로그 글 형식으로 다시 작성했습니다.
+
+**주요 검증 및 교정 내용:**
+
+1.  **"이재명 정부" 표현 수정:** 이재명 대표는 현재 정부를 구성하고 있지 않으므로, "이재명 정부"라는 표현은 사실과 다릅니다. 이를 "이재명 더불어민주당 대표의 정책 구상" 또는 "이재명 대표가 제안하는 정책" 등으로 변경했습니다.
+2.  **"청년 미래 적금"의 구체성 보완:** "청년 미래 적금"이라는 특정 정책명보다는 이재명 대표가 꾸준히 제안해온 "청년 자산 형성 지원 방안" 전반으로 확대하여 설명하는 것이 더 정확합니다. 그의 주요 구상 중 하나인 '청년 기본자산'의 개념을 명확히 제시하고, 매칭 적금 방식은 그 안의 한 가지 형태로 설명하는 것이 적절합니다. 실제로 그는 '청년 기본소득(청년배당)', '기본자산' 등 폭넓은 개념을 제시해왔습니다.
+3.  **정책의 구체적인 특징 강조:** 이재명 대표의 청년 자산 형성 지원 방안은 단순히 매칭 적금에만 국한되지 않고, '기본소득'이나 특정 시기에 '기본자산'을 지급하여 자산 출발선을 보장하려는 철학이 더 강하게 반영되어 있습니다. 이 부분을 명확히 설명하고, 그의 '기본시리즈' 정책과의 연관성을 강화했습니다.
+4.  **객관적인 톤 유지:** 정치인의 정책 구상을 설명할 때는 객관적인 정보를 제공하는 데 초점을 맞추어 톤을 조절했습니다.
+
+---
+
+## 청년의 내일을 위한 비전: 이재명 대표의 자산 형성 지원 정책 구상
+
+요즘 청년들이 마주한 미래는 녹록지 않습니다. 치솟는 물가와 불안정한 고용 시장, 그리고 좀처럼 좁혀지지 않는 자산 격차는 많은 청년에게 좌절감을 안겨주곤 합니다. 이러한 현실에 깊이 공감하며, 더불어민주당 이재명 대표는 청년들의 자산 형성 기회 부족에 주목하고, 그 해결책 중 하나로 **청년 자산 형성 지원 방안**을 꾸준히 제안해왔습니다. 이는 단순한 지원을 넘어, 사회의 출발선에서부터 자산 격차를 해소하고 청년들 스스로 미래를 설계할 수 있는 든든한 토대를 마련해주자는 취지가 담겨 있습니다. 아직 그의 구상이 '정부 정책'으로 확정된 것은 아니지만, 그의 정책적 비전을 통해 청년들의 삶을 어떻게 변화시키고자 하는지 엿볼 수 있습니다.
+
+### '기본시리즈' 철학을 담은 청년 자산 형성 지원
+
+이재명 대표가 구상하는 청년 자산 형성 지원은 그의 대표적인 '기본소득', '기본자산' 등 기본 시리즈 정책과 궤를 같이 합니다. 돈을 단순히 나누어주는 것을 넘어, 개인이 자립하고 더 큰 기회를 만들 수 있는 마중물을 제공하자는 철학이 담겨있죠.
+
+그의 구체적인 제안 중 핵심은 **'청년 기본자산'** 개념입니다. 이는 특정 연령대의 청년들에게 일종의 목돈을 지원하여, 자산 형성의 초기 디딤돌을 제공하겠다는 것입니다. 예를 들어, 청년들이 사회에 첫발을 내딛거나 중요한 전환점을 맞이하는 시기에 일정 금액을 지급하여 주택 마련, 창업 자금, 학업 투자 등 다양한 미래 계획을 실현할 기반을 제공하려는 취지입니다. 이는 과거 성남시에서 시행했던 '청년배당'과 같이 직접적인 지원을 통해 청년의 경제적 독립을 돕고자 했던 경험의 연장선으로 볼 수 있습니다.
+
+물론, 이러한 직접 지원 방식 외에 청년 개개인이 저축을 시작하면 정부가 일정 부분 매칭하여 지원하는 형태, 즉 **'매칭형 청년 적금'** 방안도 함께 논의될 수 있습니다. 청년이 매달 일정 금액을 저축하면 정부가 그에 상응하는 금액을 더해줌으로써, 자산 형성 속도를 가속화하고 젊은 나이에 실질적인 자산을 축적할 수 있도록 돕는 방식입니다. 이처럼 이재명 대표의 청년 자산 형성 지원 방안은 다양한 형태로 청년의 자산 형성을 유도하고 지원하는 복합적인 그림을 그리고 있습니다.
+
+### 청년의 미래에 대한 희망을 불어넣다
+
+이러한 정책 구상은 청년들이 느끼는 경제적 불안감을 덜어주고, 장기적인 자산 형성 계획을 세울 수 있도록 독려하는 효과를 기대할 수 있습니다. 특히 부모의 경제력에 따라 자산 출발선이 달라지는 사회 구조 속에서, 청년들에게 공정한 기회를 제공하려는 노력으로 볼 수 있습니다. 젊은 시절부터 꾸준히 자산을 모을 수 있는 구조를 마련해줌으로써, 미래에 대한 막연한 불안감 대신 구체적인 희망을 품고 자신의 잠재력을 펼칠 수 있도록 돕는 것이죠.
+
+물론 재원 마련이나 정책의 실효성 등 다양한 측면에서 심도 깊은 논의가 필요한 부분입니다. 그러나 청년들의 삶의 질을 향상시키고 미래를 위한 든든한 디딤돌을 놓아주려는 이재명 대표의 정책적 비전을 엿볼 수 있는 대목입니다. 청년들의 미래를 위한 의미 있는 논의가 더욱 활발해지기를 기대해 봅니다.
+2025-09-09 10:05:43,145 [INFO] [2] fact_checked_text len=2289
+2025-09-09 10:05:43,145 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 10:05:43,146 [INFO] [cached since 31.47s ago] {'id_1': 3, 'param_1': 1}
+2025-09-09 10:05:43,147 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 10:05:50,235 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent "HTTP/1.1 200 OK"
+2025-09-09 10:05:51,133 [INFO] AFC remote call 1 is done.
+2025-09-09 10:05:51,133 [INFO] [genai:image] text part: ## 이미지 1: 청년의 밝은 미래를 상징하는 이미지
+
+푸른 하늘을 배경으로 밝게 웃고 있는 다양한 인종의 청년들이 함께 손을 잡고 미래를 향해 나아가는 활기찬 모습을 담은 이미지를 생성해 주세요. 이미지에는 희망찬 분위기를 더하는 은은한 햇살과 푸른 새싹들이 함께 표현되면 좋겠습니다.
+
+...
+2025-09-09 10:05:51,334 [INFO] [genai:image] text part: 
+
+## 이미지 2: 청년 자산 형성 지원 정책을 시각적으로 나타내는 이미지
+
+저금통 위에 돋보기, 그래프, 그리고 밝게 빛나는 미래를 상징하는 아이콘들(예: 집, 노트북, 책 등)이 함께 놓여 있는 이미지를 생성해 주세요. 배경은 은은하고 따뜻한 느낌의 색상으로 처리하여 정책에 대한 긍정적인 인상을 줄 수 있도록 합니다.
+
+...
+2025-09-09 10:05:51,452 [INFO] [image] saved: /app/images/ec820a46-9146-4bf3-96a1-7e7b208ad2ed.png (721823 bytes)
+2025-09-09 10:05:51,453 [INFO] [image] saved: /app/images/f2905c49-9d27-4c7c-b52a-3fbd5202eed7.png (455640 bytes)
+2025-09-09 10:05:51,453 [INFO] [3] saved_image_paths=['/app/images/ec820a46-9146-4bf3-96a1-7e7b208ad2ed.png', '/app/images/f2905c49-9d27-4c7c-b52a-3fbd5202eed7.png']
+2025-09-09 10:05:51,453 [INFO] [3] upload_url=http://wordpressapi:32552/posts/upload-image/
+2025-09-09 10:05:51,459 [INFO] [POST] /app/images/ec820a46-9146-4bf3-96a1-7e7b208ad2ed.png mime type: image/png
+2025-09-09 10:05:55,041 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/upload-image/ "HTTP/1.1 200 OK"
+2025-09-09 10:05:55,041 [INFO] [POST] /app/images/f2905c49-9d27-4c7c-b52a-3fbd5202eed7.png mime type: image/png
+2025-09-09 10:06:25,937 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/upload-image/ "HTTP/1.1 200 OK"
+2025-09-09 10:06:25,979 [INFO] [3] uploaded_results=[{'message': '이미지 업로드 및 DB 저장 성공', 'db_image_id': 25, 'image_id': 81, 'image_url': 'http://notaverse.ddns.net/wp-content/uploads/2025/09/ec820a46-9146-4bf3-96a1-7e7b208ad2ed.png'}, {'message': '이미지 업로드 및 DB 저장 성공', 'db_image_id': 26, 'image_id': 82, 'image_url': 'http://notaverse.ddns.net/wp-content/uploads/2025/09/f2905c49-9d27-4c7c-b52a-3fbd5202eed7.png'}]
+2025-09-09 10:06:25,980 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 10:06:25,980 [INFO] [cached since 70.97s ago] {'id_1': 4, 'param_1': 1}
+2025-09-09 10:06:25,981 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 10:06:33,604 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 10:06:33,605 [INFO] AFC remote call 1 is done.
+2025-09-09 10:06:33,606 [INFO] [4] tags=['이재명', '청년정책', '자산형성', '기본소득', '기본자산', '매칭형적금'] categories=['정책분석']
+2025-09-09 10:06:33,606 [INFO] SELECT prompts.id AS prompts_id, prompts.prompt AS prompts_prompt, prompts.created_at AS prompts_created_at 
+FROM prompts 
+WHERE prompts.id = %(id_1)s 
+ LIMIT %(param_1)s
+2025-09-09 10:06:33,606 [INFO] [cached since 78.59s ago] {'id_1': 5, 'param_1': 1}
+2025-09-09 10:06:33,607 [INFO] AFC is enabled with max remote calls: 10.
+2025-09-09 10:06:50,601 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 10:06:50,603 [INFO] AFC remote call 1 is done.
+2025-09-09 10:06:50,603 [INFO] [5] html_result_text=요청하신 요구사항에 맞춰 블로그에 게시 가능한 HTML 형식으로 변환했습니다.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청년의 내일을 위한 비전: 이재명 대표의 자산 형성 지원 정책 구상</title>
+</head>
+<body>
+
+    <h2>청년의 내일을 위한 비전: 이재명 대표의 자산 형성 지원 정책 구상</h2>
+
+    <p>요즘 청년들이 마주한 미래는 녹록지 않습니다. 치솟는 물가와 불안정한 고용 시장, 그리고 좀처럼 좁혀지지 않는 자산 격차는 많은 청년에게 좌절감을 안겨주곤 합니다. 이러한 현실에 깊이 공감하며, 더불어민주당 이재명 대표는 청년들의 자산 형성 기회 부족에 주목하고, 그 해결책 중 하나로 <strong>청년 자산 형성 지원 방안</strong>을 꾸준히 제안해왔습니다. 이는 단순한 지원을 넘어, 사회의 출발선에서부터 자산 격차를 해소하고 청년들 스스로 미래를 설계할 수 있는 든든한 토대를 마련해주자는 취지가 담겨 있습니다. 아직 그의 구상이 '정부 정책'으로 확정된 것은 아니지만, 그의 정책적 비전을 통해 청년들의 삶을 어떻게 변화시키고자 하는지 엿볼 수 있습니다.</p>
+
+    <img src="http://notaverse.ddns.net/wp-content/uploads/2025/09/ec820a46-9146-4bf3-96a1-7e7b208ad2ed.png" alt="청년 자산 형성 지원을 상징하는 이미지1">
+
+    <h3>'기본시리즈' 철학을 담은 청년 자산 형성 지원</h3>
+
+    <p>이재명 대표가 구상하는 청년 자산 형성 지원은 그의 대표적인 '기본소득', '기본자산' 등 기본 시리즈 정책과 궤를 같이 합니다. 돈을 단순히 나누어주는 것을 넘어, 개인이 자립하고 더 큰 기회를 만들 수 있는 마중물을 제공하자는 철학이 담겨있죠.</p>
+
+    <p>그의 구체적인 제안 중 핵심은 <strong>'청년 기본자산'</strong> 개념입니다. 이는 특정 연령대의 청년들에게 일종의 목돈을 지원하여, 자산 형성의 초기 디딤돌을 제공하겠다는 것입니다. 예를 들어, 청년들이 사회에 첫발을 내딛거나 중요한 전환점을 맞이하는 시기에 일정 금액을 지급하여 주택 마련, 창업 자금, 학업 투자 등 다양한 미래 계획을 실현할 기반을 제공하려는 취지입니다. 이는 과거 성남시에서 시행했던 '청년배당'과 같이 직접적인 지원을 통해 청년의 경제적 독립을 돕고자 했던 경험의 연장선으로 볼 수 있습니다.</p>
+
+    <p>물론, 이러한 직접 지원 방식 외에 청년 개개인이 저축을 시작하면 정부가 일정 부분 매칭하여 지원하는 형태, 즉 <strong>'매칭형 청년 적금'</strong> 방안도 함께 논의될 수 있습니다. 청년이 매달 일정 금액을 저축하면 정부가 그에 상응하는 금액을 더해줌으로써, 자산 형성 속도를 가속화하고 젊은 나이에 실질적인 자산을 축적할 수 있도록 돕는 방식입니다. 이처럼 이재명 대표의 청년 자산 형성 지원 방안은 다양한 형태로 청년의 자산 형성을 유도하고 지원하는 복합적인 그림을 그리고 있습니다.</p>
+
+    <img src="http://notaverse.ddns.net/wp-content/uploads/2025/09/f2905c49-9d27-4c7c-b52a-3fbd5202eed7.png" alt="청년 자산 형성 지원을 상징하는 이미지2">
+
+    <h3>청년의 미래에 대한 희망을 불어넣다</h3>
+
+    <p>이러한 정책 구상은 청년들이 느끼는 경제적 불안감을 덜어주고, 장기적인 자산 형성 계획을 세울 수 있도록 독려하는 효과를 기대할 수 있습니다. 특히 부모의 경제력에 따라 자산 출발선이 달라지는 사회 구조 속에서, 청년들에게 공정한 기회를 제공하려는 노력으로 볼 수 있습니다. 젊은 시절부터 꾸준히 자산을 모을 수 있는 구조를 마련해줌으로써, 미래에 대한 막연한 불안감 대신 구체적인 희망을 품고 자신의 잠재력을 펼칠 수 있도록 돕는 것이죠.</p>
+
+    <p>물론 재원 마련이나 정책의 실효성 등 다양한 측면에서 심도 깊은 논의가 필요한 부분입니다. 그러나 청년들의 삶의 질을 향상시키고 미래를 위한 든든한 디딤돌을 놓아주려는 이재명 대표의 정책적 비전을 엿볼 수 있는 대목입니다. 청년들의 미래를 위한 의미 있는 논의가 더욱 활발해지기를 기대해 봅니다.</p>
+
+</body>
+</html>
+```
+2025-09-09 10:06:50,604 [INFO] [5] html_result len=2273
+2025-09-09 10:06:51,142 [INFO] HTTP Request: POST http://wordpressapi:32552/posts/create-post/ "HTTP/1.1 200 OK"
+2025-09-09 10:06:51,142 [INFO] [5] create_post resp={'message': '글 등록 및 DB 저장 성공', 'db_post_id': 11, 'wp_post_id': 83, 'wp_link': 'http://notaverse.ddns.net/2025/09/09/%ec%b2%ad%eb%85%84%ec%9d%98-%eb%82%b4%ec%9d%bc%ec%9d%84-%ec%9c%84%ed%95%9c-%eb%b9%84%ec%a0%84-%ec%9d%b4%ec%9e%ac%eb%aa%85-%eb%8c%80%ed%91%9c%ec%9d%98-%ec%9e%90%ec%82%b0-%ed%98%95%ec%84%b1-%ec%a7%80/'}
+2025-09-09 10:06:51,143 [INFO] ROLLBACK

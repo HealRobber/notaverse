@@ -5,6 +5,6 @@
 
 .env
 
-/database/storage/
+/database/dev/storage/*
 /shared/images
-/wordpress/storage
+/wordpress/dev/storage/*
