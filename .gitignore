@@ -9,3 +9,6 @@
 /database/dev/pgdata/*
 /shared/images
 /wordpress/dev/storage/*
+
+
+/backend/gemini-api/app.log
