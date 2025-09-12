@@ -1,5 +1,8 @@
-# content_generate_service.py
 from __future__ import annotations
+
+import httpx
+import socket
+
 import os
 import uuid
 import base64
@@ -8,14 +11,22 @@ import random
 import logging
 from io import BytesIO
 from pathlib import Path
-from typing import Any, Optional
 
 import log_config  # logger 설정 모듈 (사용 중)
 from google import genai
 from google.genai import types, errors as genai_errors
 from PIL import Image
 
-# ✅ 여기! name이 아니라 __name__ 을 사용해야 합니다.
+# 맨 위 import 근처에 추가
+from typing import Optional, Any
+
+try:
+    # 경로는 사용하시는 위치에 맞게 조정 (예: models.content_request 또는 app.models.content_request)
+    from models.content_request import ContentRequest
+except Exception:
+    ContentRequest = None  # 타입 체크 회피용
+
+
 logger = logging.getLogger(__name__)
 
 # 동시성 제한(환경변수 조절 가능)
@@ -70,14 +81,31 @@ class ContentGenerateService:
     client = genai.Client()
 
     # ============== TEXT ==============
-    async def generate_content(self, model, contents):
+    async def generate_content(self, model_or_req: Any, contents: Optional[str] = None):
         """
-        - 동기 SDK 호출을 to_thread로 위임(이벤트 루프 블로킹 방지)
-        - 503/RateLimit에 대해 지수 백오프+지터로 재시도
-        - 기존과 동일하게 '원본 응답 객체'를 반환(호출부 호환성 유지)
+        지원 형태:
+          - generate_content(model, contents="...")  ← 기존 방식
+          - generate_content(ContentRequest(...))    ← 새 방식
         """
-        last_exc: Optional[Exception] = None
+        # --- 인자 정규화 ---
+        if ContentRequest is not None and isinstance(model_or_req, ContentRequest):
+            model = model_or_req.model
+            contents = model_or_req.content
+        elif hasattr(model_or_req, "content") and hasattr(model_or_req, "model") and contents is None:
+            # ContentRequest duck-typing (임포트 실패 대비)
+            model = getattr(model_or_req, "model", None)
+            contents = getattr(model_or_req, "content", None)
+        else:
+            model = model_or_req  # 기존 방식
+            # contents 는 두 번째 인자에서 받음
 
+        if not contents:
+            raise TypeError("generate_content() requires 'contents' text")
+        if not model:
+            # ContentRequest validator가 기본값을 넣지만, 안전망
+            model = os.getenv("GEMINI_TEXT_MODEL", "gemini-2.5-flash")
+
+        last_exc: Optional[Exception] = None
         for attempt in range(GENAI_MAX_ATTEMPTS):
             try:
                 async with _genai_sem:
@@ -88,30 +116,46 @@ class ContentGenerateService:
                         )
                     response = await asyncio.to_thread(_call)
                 return response
-            except (genai_errors.ServerError, genai_errors.RateLimitError) as e:
+            except (ServerErr, APIErr, ClientErr, httpx.HTTPError, TimeoutError, socket.timeout) as e:
+                if _is_retryable_error(e):
+                    last_exc = e
+                    delay = _jittered_backoff(attempt)
+                    logger.warning(
+                        f"[genai:text] transient error (attempt {attempt + 1}/{GENAI_MAX_ATTEMPTS}): {e} → sleep {delay:.1f}s"
+                    )
+                    await asyncio.sleep(delay)
+                    continue
                 last_exc = e
-                delay = _jittered_backoff(attempt)
-                logger.warning(
-                    f"[genai:text] transient error (attempt {attempt+1}/{GENAI_MAX_ATTEMPTS}): {e} → sleep {delay:.1f}s"
-                )
-                await asyncio.sleep(delay)
-                continue
+                logger.exception(f"[genai:text] non-retryable error: {e}")
+                raise
             except Exception as e:
                 last_exc = e
                 logger.exception(f"[genai:text] unexpected error: {e}")
                 raise
-
         raise last_exc or RuntimeError("generate_content failed after retries")
 
     # ============== IMAGE ==============
-    async def generate_image(self, image_model, contents):
+    async def generate_image(self, image_model_or_req: Any, contents: Optional[str] = None):
         """
-        - 동기 SDK 호출을 to_thread로 위임
-        - 503/RateLimit 재시도(지수 백오프+지터)
-        - inline_data.data(bytes/base64) 모두 처리
-        - 저장 디렉터리 자동 생성 및 안전 경로(/tmp 등) 사용
-        - 반환: 저장된 로컬 이미지 경로 리스트
+        지원 형태:
+          - generate_image(image_model, contents="...")  ← 기존 방식
+          - generate_image(ContentRequest(...))          ← 새 방식
         """
+        # --- 인자 정규화 ---
+        if ContentRequest is not None and isinstance(image_model_or_req, ContentRequest):
+            image_model = image_model_or_req.image_model
+            contents = image_model_or_req.content
+        elif hasattr(image_model_or_req, "content") and hasattr(image_model_or_req, "image_model") and contents is None:
+            image_model = getattr(image_model_or_req, "image_model", None)
+            contents = getattr(image_model_or_req, "content", None)
+        else:
+            image_model = image_model_or_req
+
+        if not contents:
+            raise TypeError("generate_image() requires 'contents' text")
+        if not image_model:
+            image_model = os.getenv("GEMINI_IMAGE_MODEL", "gemini-2.0-flash-preview-image-generation")
+
         last_exc: Optional[Exception] = None
         out_dir = _ensure_dir(IMG_OUT_DIR)
 
@@ -129,26 +173,21 @@ class ContentGenerateService:
                     response = await asyncio.to_thread(_call)
 
                 saved_image_paths: list[str] = []
-
                 try:
                     parts = response.candidates[0].content.parts
                 except Exception:
                     parts = []
 
                 for part in parts:
-                    # 텍스트 파트는 로깅만
                     if getattr(part, "text", None):
                         logger.info(f"[genai:image] text part: {part.text[:200]}...")
                         continue
-
                     inline = getattr(part, "inline_data", None)
                     if inline is None:
                         continue
-
                     bin_ = _decode_inline_data(getattr(inline, "data", None))
                     if not bin_:
                         continue
-
                     mime = getattr(inline, "mime_type", None)
                     ext = "png"
                     if isinstance(mime, str):
@@ -158,7 +197,6 @@ class ContentGenerateService:
                             ext = "webp"
                         elif "gif" in mime:
                             ext = "gif"
-
                     try:
                         path = _save_image_bytes(bin_, out_dir, ext)
                         saved_image_paths.append(path)
@@ -175,17 +213,49 @@ class ContentGenerateService:
 
                 return saved_image_paths
 
-            except (genai_errors.ServerError, genai_errors.RateLimitError) as e:
+            except (ServerErr, APIErr, ClientErr, httpx.HTTPError, TimeoutError, socket.timeout) as e:
+                if _is_retryable_error(e):
+                    last_exc = e
+                    delay = _jittered_backoff(attempt)
+                    logger.warning(
+                        f"[genai:image] transient error (attempt {attempt + 1}/{GENAI_MAX_ATTEMPTS}): {e} → sleep {delay:.1f}s"
+                    )
+                    await asyncio.sleep(delay)
+                    continue
                 last_exc = e
-                delay = _jittered_backoff(attempt)
-                logger.warning(
-                    f"[genai:image] transient error (attempt {attempt+1}/{GENAI_MAX_ATTEMPTS}): {e} → sleep {delay:.1f}s"
-                )
-                await asyncio.sleep(delay)
-                continue
+                logger.exception(f"[genai:image] non-retryable error: {e}")
+                raise
             except Exception as e:
                 last_exc = e
                 logger.exception(f"[genai:image] unexpected error: {e}")
                 raise
 
         raise last_exc or RuntimeError("generate_image failed after retries")
+
+ClientErr = getattr(genai_errors, "ClientError", Exception)
+ServerErr = getattr(genai_errors, "ServerError", Exception)
+APIErr    = getattr(genai_errors, "APIError", Exception)
+
+def _is_retryable_error(e: Exception) -> bool:
+    """429, 5xx, 타임아웃/일시적 네트워크 오류면 True"""
+    status = getattr(e, "status", None) or getattr(e, "http_status", None)
+    code   = getattr(e, "code", None)
+
+    if isinstance(status, int) and (status == 429 or 500 <= status < 600):
+        return True
+    if isinstance(code, int) and (code == 429 or 500 <= code < 600):
+        return True
+
+    txt = repr(e).lower()
+    if any(k in txt for k in [
+        "429", "rate limit", "resource exhausted", "too many requests",
+        "unavailable", "temporarily", "retry", "server error",
+        "deadline", "timeout"
+    ]):
+        return True
+
+    # 네트워크 계열
+    if isinstance(e, (TimeoutError, socket.timeout, httpx.ReadTimeout, httpx.ConnectTimeout)):
+        return True
+
+    return False

@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 6.8.x - Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-08-29 02:23:15+0000\n"
+"PO-Revision-Date: 2025-09-10 23:53:18+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -7141,7 +7141,7 @@ msgstr "사람이 읽을 수 있는 형식의 블록 제목."
 
 #: wp-includes/rest-api/endpoints/class-wp-rest-block-directory-controller.php:226
 msgid "The block name, in namespace/block-name format."
-msgstr "namespace/block-name 형식의 블록 이름."
+msgstr "namespace/block-name 형식의 블록 이름입니다."
 
 #: wp-includes/rest-api/endpoints/class-wp-rest-block-directory-controller.php:58
 msgid "Sorry, you are not allowed to browse the block directory."
@@ -10980,7 +10980,7 @@ msgstr "사용할 oEmbed 형식."
 #: wp-includes/class-wp-oembed-controller.php:45
 #: wp-includes/class-wp-oembed-controller.php:73
 msgid "The URL of the resource for which to fetch oEmbed data."
-msgstr "oEmbed 데이터를 가져올 리소스 URL."
+msgstr "oEmbed 데이터를 가져올 리소스 URL입니다."
 
 #: wp-includes/class-wp-editor.php:1283
 msgctxt "Short for blue in RGB"

@@ -172,7 +172,7 @@ async def step_generate_images(service: ContentGenerateService, image_model: Opt
 # --------------- 메인 파이프라인 ---------------
 async def main():
     pipeline_id = 1  # 조회할 pipeline ID
-    topic = "이재명 정부와 청년 미래 적금 관련 소식 정리"
+    topic = "대한민국 부동산 정책과 이재명 정부, 집 값 어떻게 잡아야 하는가?"
 
     wordpress_api_base = WORDPRESS_API_BASE.rstrip("/")
     create_article_service = CreateArticleService()
