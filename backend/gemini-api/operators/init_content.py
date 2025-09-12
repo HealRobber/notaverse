@@ -256,6 +256,7 @@ async def main():
 
                 parser = HtmlParser()
                 title, content = parser.parse_for_wp_content(html_result_text)
+                logger.info(f"[5] title={title}, content={content}")
 
                 post_data = {
                     "title": title,
