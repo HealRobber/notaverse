@@ -1,3 +1,5 @@
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
 # BEGIN WordPress
 # "BEGIN WordPress"와 "END WordPress" 사이의 지시문(줄)은
 # 동적으로 생성되며 워드프레스 필터를 통해서만 수정해야합니다.

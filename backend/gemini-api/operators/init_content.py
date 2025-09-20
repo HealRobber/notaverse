@@ -7,16 +7,15 @@ import os
 import mimetypes
 from pathlib import Path
 from typing import Any, Optional, List
-
 import httpx
 import log_config  # noqa: F401
 from sqlalchemy.orm import Session
-
 from services.create_article_service import CreateArticleService
 from services.db_service import get_db
 from services.content_generate_service import ContentGenerateService
 from models.content_request import ContentRequest
 from utils.html_parser import HtmlParser
+from utils.validators import safe_parse_and_validate
 
 logger = logging.getLogger(__name__)
 
@@ -172,7 +171,7 @@ async def step_generate_images(service: ContentGenerateService, image_model: Opt
 # --------------- 메인 파이프라인 ---------------
 async def main():
     pipeline_id = 1  # 조회할 pipeline ID
-    topic = "대한민국 부동산 정책과 이재명 정부, 집 값 어떻게 잡아야 하는가?"
+    topic = "포항시 천원주택에 관한 소개와 기대효과에 대한 전망 분석"
 
     wordpress_api_base = WORDPRESS_API_BASE.rstrip("/")
     create_article_service = CreateArticleService()
@@ -215,7 +214,7 @@ async def main():
                 if not fact_checked_text:
                     raise RuntimeError("[3] fact_checked_text is empty")
                 # n 값은 프롬프트 내부 지시로 반영
-                req = ContentRequest(content=tmpl.format(n=2, fact_checked_text=fact_checked_text))
+                req = ContentRequest(content=tmpl.format(n=1, fact_checked_text=fact_checked_text))
                 saved_image_paths = await step_generate_images(content_generate_service, req.image_model, req.content)
                 logger.info("[3] saved_image_paths=%s", saved_image_paths)
 
@@ -255,7 +254,12 @@ async def main():
                 logger.info("[5] html_result len=%s", len(html_result_text))
 
                 parser = HtmlParser()
-                title, content = parser.parse_for_wp_content(html_result_text)
+                parsed = safe_parse_and_validate(html_result_text, parser)
+                if not parsed:
+                    # 포스팅 건너뛰고 상위 로직에 '스킵' 처리만 남깁니다.
+                    # 예: return {"status":"skipped","reason":"invalid parse"}
+                    raise RuntimeError("Parsed result invalid. Skip posting.")
+                title, content = parsed
                 logger.info(f"[5] title={title}, content={content}")
 
                 post_data = {

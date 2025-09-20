@@ -14,6 +14,9 @@ services:
       - ${WORDPRESS_STORAGE}/config/custom-entrypoint.sh:/usr/local/bin/custom-entrypoint.sh
       - ${WORDPRESS_STORAGE}/config/wp-config-template.php:/var/www/html/wp-config-template.php
       - ${WORDPRESS_STORAGE}/config/.htaccess-template:/var/www/html/.htaccess-template
+      - ${WORDPRESS_STORAGE}/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ${WORDPRESS_STORAGE}/config/navercd478651dd173a79f5d8b73d26aa877d.html:/var/www/html/navercd478651dd173a79f5d8b73d26aa877d.html
+      - ${WORDPRESS_STORAGE}/config/ads.txt:/var/www/html/ads.txt
       - ${WORDPRESS_STORAGE}/storage/wp-content:/var/www/html/wp-content
     entrypoint: ["bash", "/usr/local/bin/custom-entrypoint.sh"]
     depends_on: 
@@ -50,7 +53,7 @@ services:
   geminiapi:
     build:
       context: ./backend/gemini-api
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     env_file:
       - .env
     container_name: gemini_api
@@ -74,3 +77,11 @@ services:
     depends_on:
       - wordpress
     restart: unless-stopped
+
+  redis:
+    image: redis:8.2-alpine
+    container_name: batch-redis
+    ports:
+      - "${REDIS_EXTERNAL_PORT}:${REDIS_INTERNAL_PORT}"
+    volumes:
+      - ${DB_STORAGE}/redis:/data

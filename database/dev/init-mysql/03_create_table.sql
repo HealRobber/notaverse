@@ -41,6 +41,10 @@ CREATE TABLE IF NOT EXISTS pipelines (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- description 컬럼 추가
+ALTER TABLE pipelines
+  ADD COLUMN description TEXT NOT NULL DEFAULT '';
+
 
 -- 확장을 위한 table 생성 추가
 -- 1) 주제(선택): 자유주제면 생략해도 됨
@@ -104,3 +108,32 @@ ALTER TABLE posts
     ADD COLUMN series_id INT NULL,
     ADD COLUMN episode_no INT NULL,
     ADD KEY idx_posts_series (series_id, episode_no);
+
+CREATE TABLE jobs (
+  id            VARCHAR(64) PRIMARY KEY,
+  name          VARCHAR(128) NOT NULL,
+  func_key      VARCHAR(128) NOT NULL,   -- job_registry의 키
+  cron_expr     VARCHAR(64)  NOT NULL,   -- crontab
+  params_json   JSON         NULL,       -- MariaDB면 LONGTEXT JSON alias 허용
+  enabled       TINYINT(1)   NOT NULL DEFAULT 1,
+  coalesce      TINYINT(1)   NOT NULL DEFAULT 1,
+  max_instances INT          NOT NULL DEFAULT 1,
+  misfire_grace INT          NOT NULL DEFAULT 300,
+  lock_key      VARCHAR(128) NULL,       -- 없으면 "lock:{id}" 사용
+  version       BIGINT       NOT NULL DEFAULT 1,  -- 변경 시 +1
+  updated_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE job_runs (
+  id             BIGINT AUTO_INCREMENT PRIMARY KEY,
+  job_id         VARCHAR(64) NOT NULL,
+  scheduled_time DATETIME(6) NULL,
+  start_time     DATETIME(6) NOT NULL,
+  end_time       DATETIME(6) NULL,
+  status         VARCHAR(32) NOT NULL,      -- queued|running|ok|skipped|error
+  result_json    JSON        NULL,
+  error_text     TEXT        NULL,
+  INDEX idx_job_runs_jobid (job_id),
+  CONSTRAINT fk_job_runs_job FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE
+);
