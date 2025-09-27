@@ -1,0 +1,133 @@
+/* 레이아웃 토큰은 tokens.css / base.css 로 분리되어 있다고 가정 */
+
+.wrapper { max-width: 900px; margin: 0 auto; padding: var(--space-4); }
+.title { margin-bottom: var(--space-3); font-size: var(--font-size-lg); font-weight: 700; }
+
+.card {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-card, #fff);
+  box-shadow: var(--shadow-sm);
+}
+
+.list { list-style: none; padding: 0; margin: 0; }
+.listItem {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-card, #fff);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-2);
+}
+
+.header {
+  display: flex; align-items: center; gap: var(--space-2);
+  margin-bottom: var(--space-2); flex-wrap: wrap;
+}
+.idBadge {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  background: var(--color-selection, #eaf2ff);
+  color: var(--color-primary-600, #1d4ed8);
+  border: 1px solid var(--color-selection-border, #bfdbfe);
+  padding: 4px 8px; border-radius: 9999px;
+}
+.meta { font-size: var(--font-size-sm); color: var(--color-subtle); }
+
+.row {
+  display: flex; gap: var(--space-2);
+  align-items: stretch;               /* ← textarea가 높이로 찌그러지지 않게 */
+  margin-bottom: var(--space-2);
+}
+
+/* 좌측 textarea가 데스크톱에서 유연히 확장되도록 */
+.flexGrow { flex: 1 1 0; min-width: 0; }
+
+/* 우측 제어 컬럼 — 데스크톱에서 고정폭, 모바일에선 100% */
+.minCol {
+  display: flex; flex-direction: column; gap: var(--space-2);
+  flex: 0 0 320px;                     /* 고정 폭 */
+  max-width: 320px;
+  min-width: 220px;
+}
+
+/* 입력 요소 공통 */
+.input, .textarea {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--color-input-bg, #fff);
+  color: var(--color-text, #0f172a);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+}
+.input:focus, .textarea:focus {
+  border-color: var(--color-primary, #2563eb);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary, #2563eb) 20%, transparent);
+}
+
+.textarea {
+  min-height: 220px; max-height: 600px;
+  line-height: var(--line-height);
+  overflow: auto; resize: vertical;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-md);
+  white-space: pre-wrap;
+}
+
+.pre {
+  white-space: pre-wrap; min-height: 80px;
+  padding: 10px 12px;
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.actions { display: flex; flex-direction: column; gap: var(--space-2); min-width: 120px; }
+
+.button {
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: #f8fafc;
+  color: var(--color-text, #0f172a);
+  cursor: pointer;
+  transition: filter .15s ease, background-color .15s ease, border-color .15s ease;
+}
+.button:hover { filter: brightness(0.98); }
+.button:disabled { opacity: .6; cursor: not-allowed; }
+
+.buttonPrimary {
+  background: var(--color-primary, #2563eb);
+  border-color: var(--color-primary, #2563eb);
+  color: #fff;
+}
+.buttonPrimary:hover { background: var(--color-primary-600, #1d4ed8); }
+
+.buttonDanger {
+  background: #fee2e2;
+  border-color: #fecaca;
+  color: var(--color-danger-600, #dc2626);
+}
+.buttonDanger:hover { background: #fecaca; border-color: #fca5a5; }
+
+.helper { font-size: var(--font-size-sm); color: var(--color-subtle); }
+.mb8 { margin-bottom: var(--space-2); }
+.mb14 { margin-bottom: var(--space-3); }
+
+/* ---------- 반응형 처리 ---------- */
+@media (max-width: 768px) {
+  .row { flex-direction: column; }            /* 세로 스택 */
+  .minCol {
+    flex: 0 0 auto;
+    width: 100%; max-width: 100%; min-width: 0;
+  }
+  .textarea { min-height: 160px; }            /* 모바일에서 너무 크지 않게 */
+}
+
+/* 아주 작은 화면(아이폰 SE 등) 대응 */
+@media (max-width: 400px) {
+  .textarea { min-height: 140px; }
+  .button { padding: 9px 12px; }
+}

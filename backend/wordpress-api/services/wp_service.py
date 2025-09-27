@@ -16,7 +16,7 @@ class WordPressService:
     AUTH = HTTPBasicAuth(WORDPRESS_USER_NAME, WORDPRESS_API_PASSWORD)
 
     CF_HEADERS = {
-        "Host": "www.notaverse.org",
+        "Host": "notaverse.org",
         "X-Forwarded-Proto": "https",
     }
 

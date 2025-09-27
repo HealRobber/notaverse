@@ -1,8 +1,10 @@
+// src/main.jsx  (Vite 기준. CRA면 index.js 형태)
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import "./styles/tokens.css";     // 전역 토큰 import (이미 하셨다면 생략)
+import "./styles/tokens.css";  // 전역 토큰
+import "./styles/base.css"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

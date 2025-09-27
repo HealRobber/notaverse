@@ -6,7 +6,6 @@ from sqlalchemy import String, Integer, Boolean, JSON, BigInteger, Text, TIMESTA
 
 from db import Base
 
-
 class Job(Base):
     __tablename__ = "jobs"
     id: Mapped[str] = mapped_column(String(64), primary_key=True)

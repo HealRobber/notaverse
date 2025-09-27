@@ -1,0 +1,11 @@
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body{
+  margin: 0;
+  background: var(--color-page-bg);
+  color: var(--color-text);
+  font: var(--font-size-md) / var(--line-height) var(--font-sans);
+}
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, pre { font-family: var(--font-mono); }

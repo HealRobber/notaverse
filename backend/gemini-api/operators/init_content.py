@@ -1,266 +1,176 @@
-# operators/init_content.py
 from __future__ import annotations
 import asyncio
 import logging
 import json
-import os
-import mimetypes
-from pathlib import Path
-from typing import Any, Optional, List
-import httpx
-import log_config  # noqa: F401
+from typing import Any, Optional, List, Dict
 from sqlalchemy.orm import Session
-from services.create_article_service import CreateArticleService
+
+import log_config  # noqa: F401
+from settings import settings
 from services.db_service import get_db
+from services.create_article_service import CreateArticleService
 from services.content_generate_service import ContentGenerateService
 from models.content_request import ContentRequest
 from utils.html_parser import HtmlParser
 from utils.validators import safe_parse_and_validate
 
+from common.llm import generate_text_with_retry, generate_images_with_retry
+from common.text import strip_code_fence_to_json
+from common.http import robust_post_form, robust_upload_images
+
 logger = logging.getLogger(__name__)
+DEFAULT_TARGET_CHARS = 2000  # 없을 때 사용할 기본 글자 수
 
-# ---- 환경설정 (필요 시 환경변수로 조절) ----
-WORDPRESS_API_BASE = os.getenv("WORDPRESS_API_BASE", "http://wordpressapi:32552")
-STEP_MAX_RETRIES = int(os.getenv("STEP_MAX_RETRIES", "3"))
-STEP_MAX_BACKOFF = int(os.getenv("STEP_MAX_BACKOFF", "20"))  # 초 단위 최대 백오프
-
-# ---------------- 공통 유틸 ----------------
-def _jittered_backoff(attempt: int, max_backoff: int = STEP_MAX_BACKOFF) -> float:
-    import random
-    return min(2 ** attempt, max_backoff) + random.uniform(0.1, 0.9)
-
-def to_text(raw: Any) -> str:
-    """google.genai 응답 객체를 문자열로 안전 변환"""
+# ──────────────────────────────────────────────────────────────────────────────
+# 내부 유틸
+# ──────────────────────────────────────────────────────────────────────────────
+def _parse_prompt_ids(raw: str | List[int]) -> List[str]:
+    """DB Text(JSON/CSV) → 문자열 ID 리스트"""
     if raw is None:
-        return ""
-    if isinstance(raw, str):
-        return raw
-    # 공식 클라이언트 호환
-    if hasattr(raw, "text") and isinstance(getattr(raw, "text"), str):
-        return raw.text
-    # candidates → content.parts[*].text
-    try:
-        cands = getattr(raw, "candidates", None)
-        if cands:
-            chunks = []
-            for c in cands:
-                content = getattr(c, "content", None)
-                if content:
-                    parts = getattr(content, "parts", None)
-                    if parts:
-                        for p in parts:
-                            t = getattr(p, "text", None)
-                            if isinstance(t, str):
-                                chunks.append(t)
-            if chunks:
-                return "\n\n".join(chunks)
-    except Exception:
-        pass
-    # 최후의 수단
-    return str(raw)
-
-def strip_code_fence_to_json(text: str) -> str:
-    """
-    ```json ... ``` / ``` ... ``` 케이스 제거 후 순수 JSON 텍스트 반환
-    """
-    t = text.strip()
-    if not t:
-        return t
-    if t.startswith("```"):
-        # 앞쪽 ```json 또는 ``` 제거
-        t = t[3:].lstrip()  # 백틱 제거 후 공백
-        if t.lower().startswith("json"):
-            t = t[4:].lstrip()
-        # 뒤쪽 ``` 제거
-        if t.endswith("```"):
-            t = t[:-3]
-        t = t.strip()
-    return t
-
-async def robust_post_form(url: str, data: dict, *, max_retries: int = STEP_MAX_RETRIES) -> dict:
-    """
-    application/x-www-form-urlencoded POST를 재시도와 함께 수행
-    """
-    last_err: Optional[Exception] = None
-    for attempt in range(max_retries):
+        return []
+    if isinstance(raw, list):
+        return [str(int(x)) for x in raw]
+    s = str(raw).strip()
+    if not s:
+        return []
+    if s.startswith("[") and s.endswith("]"):
         try:
-            async with httpx.AsyncClient(timeout=httpx.Timeout(180.0)) as client:
-                r = await client.post(url, data=data)
-                if r.status_code == 200:
-                    return r.json()
-                logger.warning(f"[POST] {url} non-200 {r.status_code}: {r.text[:300]}")
-        except Exception as e:
-            last_err = e
-            logger.warning(f"[POST] {url} failed attempt {attempt+1}/{max_retries}: {e}")
-        await asyncio.sleep(_jittered_backoff(attempt))
-    raise last_err or RuntimeError(f"POST failed for {url}")
+            arr = json.loads(s)
+            return [str(int(x)) for x in arr]
+        except Exception:
+            pass
+    return [p.strip() for p in s.split(",") if p.strip()]
 
-async def robust_upload_images(image_paths: List[str], url: str, *, max_retries: int = STEP_MAX_RETRIES) -> List[dict]:
-    """
-    파일 업로드(멀티파트) 재시도
-    """
-    results: List[dict] = []
-    async with httpx.AsyncClient(timeout=httpx.Timeout(180.0)) as client:
-        for p in image_paths:
-            full_path = os.path.abspath(p)
-            # 멀티파트 filename에 디렉터리 구분자가 들어가면 서버/프록시가 싫어할 수 있어 POSIX 형태 권장
-            filename_for_multipart = Path(full_path).as_posix()
+def _pick_model(req: ContentRequest, override: Optional[str]) -> Optional[str]:
+    """요청으로 들어온 llm_model이 우선, 없으면 ContentRequest.model"""
+    return override or getattr(req, "model", None)
 
-            mime = mimetypes.guess_type(p)[0] or "application/octet-stream"
-            logger.info(f"[POST] {filename_for_multipart} mime type: {mime}")
-            last_err: Optional[Exception] = None
-            for attempt in range(max_retries):
-                try:
-                    with open(filename_for_multipart, "rb") as f:
-                        files = {"image": (filename_for_multipart, f, mime)}
-                        r = await client.post(url, files=files)
-                        r.raise_for_status()
-                        results.append(r.json())
-                        break
-                except Exception as e:
-                    last_err = e
-                    logger.warning(f"[upload] {filename_for_multipart} failed attempt {attempt+1}/{max_retries}: {e}")
-                    await asyncio.sleep(_jittered_backoff(attempt))
-            else:
-                raise last_err or RuntimeError(f"upload failed: {filename_for_multipart}")
-    return results
-
-# --------------- 스텝 래퍼 ---------------
-async def step_generate_text(service: ContentGenerateService, model: str, prompt: str) -> str:
-    """
-    텍스트 생성(서비스는 응답 객체를 반환하므로 문자열로 표준화)
-    """
-    last_err: Optional[Exception] = None
-    for attempt in range(STEP_MAX_RETRIES):
-        try:
-            resp = await service.generate_content(model, prompt)
-            text = to_text(resp)
-            if not text:
-                raise RuntimeError("empty text")
-            return text
-        except Exception as e:
-            last_err = e
-            logger.warning(f"[step_generate_text] attempt {attempt+1}/{STEP_MAX_RETRIES} failed: {e}")
-            await asyncio.sleep(_jittered_backoff(attempt))
-    raise last_err or RuntimeError("step_generate_text failed")
-
-async def step_generate_images(service: ContentGenerateService, image_model: Optional[str], prompt: str) -> List[str]:
-    """
-    이미지 생성 → (서비스가 로컬 경로 리스트 반환)
-    """
-    last_err: Optional[Exception] = None
-    for attempt in range(STEP_MAX_RETRIES):
-        try:
-            paths = await service.generate_image(image_model, prompt)
-            if not paths:
-                raise RuntimeError("empty image list")
-            # 파일 존재/크기 로그
-            for p in paths:
-                try:
-                    sz = os.path.getsize(p)
-                    logger.info(f"[image] saved: {p} ({sz} bytes)")
-                except Exception as e:
-                    logger.warning(f"[image] cannot stat {p}: {e}")
-            return paths
-        except Exception as e:
-            last_err = e
-            logger.warning(f"[step_generate_images] attempt {attempt+1}/{STEP_MAX_RETRIES} failed: {e}")
-            await asyncio.sleep(_jittered_backoff(attempt))
-    raise last_err or RuntimeError("step_generate_images failed")
-
-# --------------- 메인 파이프라인 ---------------
-async def main():
-    pipeline_id = 1  # 조회할 pipeline ID
-    topic = "포항시 천원주택에 관한 소개와 기대효과에 대한 전망 분석"
-
-    wordpress_api_base = WORDPRESS_API_BASE.rstrip("/")
+# ──────────────────────────────────────────────────────────────────────────────
+# 단일 진입점: FastAPI/CLI 공용
+# ──────────────────────────────────────────────────────────────────────────────
+async def run_init_content_with_db(
+    db: Session,
+    *,
+    topic: str,
+    photo_count: int = 1,
+    llm_model: Optional[str] = None,
+    pipeline_id: int = 1,
+    target_chars: Optional[int] = None,
+) -> Dict[str, Any]:
     create_article_service = CreateArticleService()
     content_generate_service = ContentGenerateService()
 
-    # DB 세션 획득
-    db_gen = get_db()
-    db: Session = next(db_gen)
+    pipeline = create_article_service.fetch_pipeline(db, pipeline_id)
+    prompt_ids = _parse_prompt_ids(pipeline.prompt_array)
 
-    try:
-        pipeline = create_article_service.fetch_pipeline(db, pipeline_id)
-        # 공백 제거해 분기 누락 방지
-        prompt_ids = [p.strip() for p in pipeline.prompt_array.split(",")]
+    generated_content: Optional[str] = None
+    fact_checked_text: Optional[str] = None
+    html_result_text: Optional[str] = None
+    first_image_id: Optional[int] = None
+    uploaded_results: List[dict] = []
+    tags: List[str] = []
+    categories: List[str] = []
+    post_resp: Optional[Dict[str, Any]] = None
+    step_log: Dict[str, str] = {}
 
-        generated_content: Optional[str] = None
-        fact_checked_text: Optional[str] = None
-        uploaded_results: List[dict] = []
-        tags: List[str] = []
-        categories: List[str] = []
+    tc = target_chars or DEFAULT_TARGET_CHARS
 
-        for pid in prompt_ids:
-            prompt_obj = create_article_service.fetch_prompt(db, int(pid))
-            logger.debug(prompt_obj)
-            tmpl = prompt_obj.prompt
+    for pid in prompt_ids:
+        prompt_obj = create_article_service.fetch_prompt(db, int(pid))
+        tmpl = prompt_obj.prompt
 
+        try:
             if pid == "1":
-                req = ContentRequest(content=tmpl.format(topic=topic))
-                generated_content = await step_generate_text(content_generate_service, req.model, req.content)
-                logger.info("[1] generated_content len=%s", len(generated_content))
+                # 1) 초안 생성
+                req = ContentRequest(content=tmpl.format(topic=topic, target_chars=tc))
+                model = _pick_model(req, llm_model)
+                if not model:
+                    raise RuntimeError("No LLM model specified for step 1")
+                generated_content = await generate_text_with_retry(
+                    content_generate_service, model, req.content
+                )
+                step_log[pid] = f"generated_content_len={len(generated_content)}"
 
             elif pid == "2":
+                # 2) 사실 검증
                 if not generated_content:
-                    raise RuntimeError("[2] generated_content is empty")
+                    raise RuntimeError("generated_content is empty")
                 req = ContentRequest(content=tmpl.format(generated_content=generated_content))
-                fact_checked_text = await step_generate_text(content_generate_service, req.model, req.content)
-                logger.info("[2] fact_checked_text =%s", fact_checked_text)
-                logger.info("[2] fact_checked_text len=%s", len(fact_checked_text))
+                model = _pick_model(req, llm_model)
+                if not model:
+                    raise RuntimeError("No LLM model specified for step 2")
+                fact_checked_text = await generate_text_with_retry(
+                    content_generate_service, model, req.content
+                )
+                step_log[pid] = f"fact_checked_text_len={len(fact_checked_text)}"
 
             elif pid == "3":
+                # 3) 이미지 생성 → 업로드
                 if not fact_checked_text:
-                    raise RuntimeError("[3] fact_checked_text is empty")
-                # n 값은 프롬프트 내부 지시로 반영
-                req = ContentRequest(content=tmpl.format(n=1, fact_checked_text=fact_checked_text))
-                saved_image_paths = await step_generate_images(content_generate_service, req.image_model, req.content)
-                logger.info("[3] saved_image_paths=%s", saved_image_paths)
-
-                upload_url = f"{wordpress_api_base}/posts/upload-image/"
-                logger.info("[3] upload_url=%s", upload_url)
+                    raise RuntimeError("fact_checked_text is empty")
+                req = ContentRequest(content=tmpl.format(n=photo_count, fact_checked_text=fact_checked_text))
+                saved_image_paths = await generate_images_with_retry(
+                    content_generate_service, getattr(req, "image_model", None), req.content
+                )
+                upload_url = f"{settings.wordpress_base}/posts/upload-image/"
                 uploaded_results = await robust_upload_images(saved_image_paths, upload_url)
-                logger.info("[3] uploaded_results=%s", uploaded_results)
+                step_log[pid] = f"uploaded_images={len(uploaded_results)}"
 
             elif pid == "4":
+                # 4) 태그/카테고리 추출(JSON)
                 if not fact_checked_text:
-                    raise RuntimeError("[4] fact_checked_text is empty")
+                    raise RuntimeError("fact_checked_text is empty")
                 req = ContentRequest(content=tmpl.format(fact_checked_text=fact_checked_text))
-                raw_json_text = await step_generate_text(content_generate_service, req.model, req.content)
-
-                # 코드펜스 제거 후 JSON 파싱
+                model = _pick_model(req, llm_model)
+                if not model:
+                    raise RuntimeError("No LLM model specified for step 4")
+                raw_json_text = await generate_text_with_retry(
+                    content_generate_service, model, req.content
+                )
                 clean = strip_code_fence_to_json(raw_json_text)
                 try:
                     data = json.loads(clean)
                 except Exception as e:
-                    logger.warning("[4] JSON parse failed; fallback to empty. err=%s", e)
+                    logger.warning("[4] JSON parse failed; fallback empty: %s", e)
                     data = {}
                 tags = data.get("tags", []) or []
                 categories = data.get("categories", []) or []
-                logger.info("[4] tags=%s categories=%s", tags, categories)
+                step_log[pid] = f"tags={len(tags)}, categories={len(categories)}"
 
             elif pid == "5":
+                # 5) HTML 구성
                 if not fact_checked_text:
-                    raise RuntimeError("[5] fact_checked_text is empty")
-
+                    raise RuntimeError("fact_checked_text is empty")
                 image_urls = [r.get("image_url") for r in uploaded_results if isinstance(r, dict) and r.get("image_url")]
-                image_ids = [r.get("image_id") for r in uploaded_results if isinstance(r, dict) and r.get("image_id")]
+                image_ids  = [r.get("image_id") for r in uploaded_results if isinstance(r, dict) and r.get("image_id")]
                 first_image_id = image_ids[0] if image_ids else None
 
                 req = ContentRequest(content=tmpl.format(fact_checked_text=fact_checked_text, image_urls=image_urls))
-                html_result_text = await step_generate_text(content_generate_service, req.model, req.content)
-                logger.info("[5] html_result_text=%s", html_result_text)
-                logger.info("[5] html_result len=%s", len(html_result_text))
+                model = _pick_model(req, llm_model)
+                if not model:
+                    raise RuntimeError("No LLM model specified for step 5")
+                html_result_text = await generate_text_with_retry(
+                    content_generate_service, model, req.content
+                )
+
+            elif pid == "8":
+
+                if not html_result_text:
+                    raise RuntimeError("html_result_text is empty")
+
+                req = ContentRequest(content=tmpl.format(input_html_content=html_result_text))
+                model = _pick_model(req, llm_model)
+                if not model:
+                    raise RuntimeError("No LLM model specified for step 8")
+                extended_html_result_text = await generate_text_with_retry(
+                    content_generate_service, model, req.content
+                )
 
                 parser = HtmlParser()
-                parsed = safe_parse_and_validate(html_result_text, parser)
+                parsed = safe_parse_and_validate(extended_html_result_text, parser)
                 if not parsed:
-                    # 포스팅 건너뛰고 상위 로직에 '스킵' 처리만 남깁니다.
-                    # 예: return {"status":"skipped","reason":"invalid parse"}
                     raise RuntimeError("Parsed result invalid. Skip posting.")
                 title, content = parsed
-                logger.info(f"[5] title={title}, content={content}")
 
                 post_data = {
                     "title": title,
@@ -269,20 +179,53 @@ async def main():
                     "tags": tags,
                     "image_id": first_image_id,
                 }
-                create_url = f"{wordpress_api_base}/posts/create-post/"
-                resp = await robust_post_form(create_url, post_data)
-                logger.info("[5] create_post resp=%s", resp)
+                create_url = f"{settings.wordpress_base}/posts/create-post/"
+                post_resp = await robust_post_form(create_url, post_data)
+                step_log[pid] = "post_done"
 
             else:
-                logger.warning(f"[pipeline] unknown step id={pid}")
+                step_log[pid] = "unknown_step_skipped"
 
+        except Exception as e:
+            logger.exception("[step %s] failed: %s", pid, e)
+            step_log[pid] = f"error:{e}"
+            # 필요시 raise로 전체 중단하도록 변경 가능
+
+    safe_post_summary = None
+    if isinstance(post_resp, dict):
+        safe_post_summary = {k: post_resp.get(k) for k in ("id", "link", "slug", "status") if k in post_resp}
+
+    return {
+        "pipeline_id": pipeline_id,
+        "topic": topic,
+        "photo_count": photo_count,
+        "llm_model": llm_model,
+        "steps": step_log,
+        "tags": tags,
+        "categories": categories,
+        "uploaded_images": len(uploaded_results),
+        "post": safe_post_summary,
+    }
+
+# ──────────────────────────────────────────────────────────────────────────────
+# CLI 용 래퍼(옵션): 동일 로직 재사용
+# ──────────────────────────────────────────────────────────────────────────────
+async def run_init_content(*, topic: str, photo_count: int = 1, llm_model: Optional[str] = None) -> Dict[str, Any]:
+    db_gen = get_db()
+    db: Session = next(db_gen)
+    try:
+        return await run_init_content_with_db(db, topic=topic, photo_count=photo_count, llm_model=llm_model)
     finally:
-        # DB 세션 종료
         try:
             next(db_gen)
         except StopIteration:
             pass
 
-
 if __name__ == "__main__":
-    asyncio.run(main())
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--topic", required=True)
+    parser.add_argument("--photo-count", type=int, default=1)
+    parser.add_argument("--llm-model", type=str, default=None)
+    args = parser.parse_args()
+    asyncio.run(run_init_content(topic=args.topic, photo_count=args.photo_count, llm_model=args.llm_model))

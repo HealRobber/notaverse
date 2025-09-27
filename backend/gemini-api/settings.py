@@ -1,11 +1,11 @@
+# settings.py (추가/수정)
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Optional, Dict, Any
 from urllib.parse import quote_plus
 
-
 class Settings(BaseSettings):
     # === Scheduler / Misc ===
-    schedule_cron: str = "0 * * * *"   # 필요 시 기본값
+    schedule_cron: str = "0 * * * *"
     run_token: str = "itengz"
     redis_url: Optional[str] = None
 
@@ -24,10 +24,16 @@ class Settings(BaseSettings):
     DB_POOL_PRE_PING: bool = True
     DB_POOL_TIMEOUT_SEC: int = 30
 
-    # (선택) 드라이버 레벨 타임아웃
+    # 드라이버 타임아웃
     DB_CONNECT_TIMEOUT_SEC: int = 10
     DB_READ_TIMEOUT_SEC: int = 30
     DB_WRITE_TIMEOUT_SEC: int = 30
+
+    # === HTTP/외부 API 공통 ===
+    WORDPRESS_API_BASE: str = "http://wordpressapi:32552"
+    STEP_MAX_RETRIES: int = 3
+    STEP_MAX_BACKOFF: int = 20
+    HTTP_TIMEOUT_SEC: float = 180.0
 
     model_config = SettingsConfigDict(
         env_prefix="",
@@ -35,6 +41,10 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         case_sensitive=False,
     )
+
+    @property
+    def wordpress_base(self) -> str:
+        return self.WORDPRESS_API_BASE.rstrip("/")
 
     @property
     def database_url_sync(self) -> str:
@@ -52,10 +62,7 @@ class Settings(BaseSettings):
     def database_url_async(self) -> str:
         user = quote_plus(self.DB_USER)
         pwd = quote_plus(self.DB_PASSWORD)
-        return (
-            f"mysql+aiomysql://{user}:{pwd}@{self.DB_HOST}:{self.DB_INTERNAL_PORT}/{self.MANAGER_DB_NAME}"
-            f"?charset=utf8mb4"
-        )
+        return f"mysql+aiomysql://{user}:{pwd}@{self.DB_HOST}:{self.DB_INTERNAL_PORT}/{self.MANAGER_DB_NAME}?charset=utf8mb4"
 
     def sync_engine_kwargs(self) -> Dict[str, Any]:
         return {
@@ -75,6 +82,5 @@ class Settings(BaseSettings):
             "pool_recycle": self.DB_POOL_RECYCLE_SEC,
             "future": True,
         }
-
 
 settings = Settings()

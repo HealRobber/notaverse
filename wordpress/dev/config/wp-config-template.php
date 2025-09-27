@@ -152,8 +152,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         define( 'ABSPATH', __DIR__ . '/' );
 }
 
-define('WP_HOME',    'https://www.notaverse.org');
-define('WP_SITEURL', 'https://www.notaverse.org');
+define('WP_HOME',    'https://notaverse.org');
+define('WP_SITEURL', 'https://notaverse.org');
 
 // 프록시(CloudFront) 뒤 HTTPS 인식
 if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO']==='https') $_SERVER['HTTPS']='on';

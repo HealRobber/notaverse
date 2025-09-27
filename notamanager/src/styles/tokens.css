@@ -1,31 +1,44 @@
-:root {
-  /* 색상 */
-  --color-bg: #ffffff;
-  --color-border: #e5e7eb;
-  --color-text: #111827;
-  --color-subtle: #6b7280;
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
+:root{
+  /* Colors (Light) */
+  --color-page-bg: #f8fafc;       /* 페이지 배경 */
+  --color-card: #ffffff;          /* 카드/컨테이너 배경 */
+  --color-text: #0f172a;          /* 본문 텍스트 */
+  --color-subtle: #64748b;        /* 보조 텍스트 */
+  --color-border: #e2e8f0;        /* 경계선 */
+  --color-input-bg: #ffffff;      /* 입력 배경 */
 
-  /* 간격/라운드/그림자 */
+  --color-primary: #2563eb;       /* 버튼/포커스/액티브 */
+  --color-primary-600: #1d4ed8;   /* hover */
+  --color-selection: #eaf2ff;     /* 선택 하이라이트(탭/배지) */
+  --color-selection-border: #bfdbfe;
+
+  --color-danger: #ef4444;
+  --color-danger-600: #dc2626;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 6px 18px rgba(0,0,0,.08);
+
+  /* Spacing */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --space-5: 20px;
+  --space-6: 24px;
 
-  /* 폰트 */
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  /* Typography */
+  --font-sans: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Sans KR",sans-serif;
+  --font-mono: ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
   --font-size-sm: 12px;
   --font-size-md: 14px;
-  --line-height: 1.5;
-}
+  --font-size-lg: 18px;
 
-/* 유틸 (선택) */
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: var(--space-4);
+  --line-height: 1.55;
 }
