@@ -8,5 +8,7 @@ COPY . .
 # 필요한 라이브러리 설치
 RUN pip install --no-cache-dir -r requirements.txt
 
+ENV TZ=${TZ:-Asia/Seoul}
+
 # FastAPI 앱 실행 (Uvicorn)
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "32552", "--reload"]

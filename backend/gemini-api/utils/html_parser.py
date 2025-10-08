@@ -80,32 +80,57 @@ class HtmlParser:
         # 마지막 수단
         return str(raw)
 
+    # --- 추가: 마크다운 코드펜스 언랩 ---
+    def _unwrap_markdown_fence(self, text: str) -> str:
+        """
+        ```html ...``` 또는 ``` ...``` 로 감싼 블록이 있으면 내부만 추출.
+        html 지정이 있으면 그 블록을 우선 사용.
+        """
+        m_html = re.search(r"^\s*```(?:html|HTML)\s*\n([\s\S]*?)\n```", text, re.MULTILINE)
+        if m_html:
+            return m_html.group(1).strip()
+
+        m_any = re.search(r"^\s*```[a-zA-Z0-9_-]*\s*\n([\s\S]*?)\n```", text, re.MULTILINE)
+        if m_any:
+            return m_any.group(1).strip()
+
+        return text
+
     def _extract_html_block(self, raw_text_like: Any) -> str:
         """
-        SDK 응답(객체/문자열)을 받아서 <html>...</html> 블록만 추출.
-        없으면 원문 전체를 반환.
+        SDK 응답(객체/문자열)을 받아서 HTML 본문 후보를 추출.
+        1) 코드펜스 언랩
+        2) <html>...</html>가 있으면 그 블록
+        3) <body>...</body>가 있으면 내부
+        4) 그렇지 않으면 전체 텍스트
         """
         text = self._to_text(raw_text_like)
+        text = self._unwrap_markdown_fence(text)
 
-        # 가장 먼저 진짜 HTML 루트 요소를 찾음
+        # 2) 진짜 HTML 루트
         m = re.search(r"<html[\s\S]*?</html>", text, re.IGNORECASE)
         if m:
             return m.group(0).strip()
 
-        # 과거 정규식 호환(느슨한 패턴): 'html' 이후 전체
-        m2 = re.search(r"html(.*?)", text, re.DOTALL | re.IGNORECASE)
+        # 3) 바디만이라도 있으면 내부
+        m2 = re.search(r"<body[^>]*>([\s\S]*?)</body>", text, re.IGNORECASE)
         if m2:
             return m2.group(1).strip()
 
-        # 아무 매치가 없으면 전체 반환
+        # 4) HTML 태그가 하나라도 있으면 그대로 반환
+        if re.search(r"<[a-zA-Z][^>]*>", text):
+            return text.strip()
+
+        # 최종 폴백
         return text
 
     def _sanitize_for_wp(self, html_fragment: str) -> str:
         """
-        워드프레스 업로드용으로 보수적으로 정화.
+        워드프레스 업로드용 정화.
         - 허용 태그/속성만 유지
         - 링크 target 있으면 rel 보강
         - img 인라인 style 제거
+        - 결과는 '본문 fragment(innerHTML)'만 반환
         """
         cleaned = bleach.clean(
             html_fragment,
@@ -131,7 +156,9 @@ class HtmlParser:
             if "style" in img.attrs:
                 del img["style"]
 
-        return str(soup)
+        # ※ fragment만 반환 (BeautifulSoup는 fragment도 <html><body>로 감싸므로 innerHTML만 추출)
+        container = soup.body or soup
+        return container.decode_contents()
 
     def parse_for_wp_content(
         self,
@@ -143,7 +170,7 @@ class HtmlParser:
         입력: SDK 응답 전체(객체/문자열 모두 허용)
         출력: (title, content_html)
         - title: <title> 또는 본문 첫 h1/h2(타이틀 비었거나 짧으면 대체)
-        - content_html: <body> 내부(innerHTML)만, 필요 시 sanitize 적용
+        - content_html: 본문 fragment(innerHTML), 필요 시 sanitize 적용
         """
         html = self._extract_html_block(raw_sdk_text)
 
@@ -160,7 +187,7 @@ class HtmlParser:
         # 제목 후보: <title>
         title_text = (soup.title.get_text(strip=True) if soup.title else "").strip()
 
-        # body 기준으로 추출(없으면 문서 전체 사용)
+        # body 기준(없으면 문서 전체)
         body = soup.body or soup
 
         # 본문 첫 h1/h2를 제목 대체 후보로 사용
@@ -172,7 +199,7 @@ class HtmlParser:
             if remove_first_heading_in_body:
                 first_heading.decompose()  # 본문 중복 방지
 
-        # 최종 본문(innerHTML)
+        # 최종 본문 fragment(innerHTML)
         body_inner_html = body.decode_contents()
 
         # 타이틀 백업

@@ -1,0 +1,407 @@
+1번 프롬프트
+###########################################################
+[워드프레스 블로그 포스팅 생성 마스터 프롬프트]
+당신은 사용자가 제공한 이슈 토픽에 대해 심층적인 연구와 분석을 통해, 스토리텔링 기법이 적용된 고품질 블로그 포스팅을 생성하는 전문 AI 어시스턴트입니다. 포스팅은 사실 기반의 정확한 정보를 제공하고, 특정 독자층의 니즈에 최적화된 가독성과 디자인을 갖추며, Yoast SEO 및 SNS 공유에 최적화된 HTML 형식으로 완성되어야 합니다.
+
+다음 10단계 파이프라인을 순차적으로 진행하며 각 단계별 지시사항에 따라 정확하고 창의적인 결과물을 생성해주세요. 각 단계의 아웃풋은 다음 단계의 입력으로 활용됩니다. 최종 목표는 사용자 경험을 극대화하고 정보 전달력을 높이는, 워드프레스 게시 가능한 완벽한 블로그 포스팅을 만드는 것입니다.
+
+---
+
+다음 이슈 토픽에 대해 심층적으로 이해하고, 해당 포스팅을 읽게 될 주요 독자층을 분석해주세요. **응답은 아래 제시된 JSON 형식으로만 해주세요.**
+
+**[지시사항]**
+1.  **주요 독자층 가정:** 이 주제를 읽게 될 주요 독자층(예: 일반 대중, 업계 전문가, 투자자, 정책 담당자 등)을 구체적으로 가정하고 설명해주세요.
+2.  **독자별 톤앤매너 및 깊이:** 가정한 독자층에 가장 적합한 포스팅의 톤(예: 친근하고 설명적, 전문적이고 분석적, 설득적)과 내용의 깊이(예: 개괄적 소개, 심층 분석, 실용적 가이드)를 제안해주세요.
+3.  **핵심 질문(궁금해할 포인트):** 해당 독자층이 이 이슈에 대해 가장 궁금해할 만한 핵심 질문 또는 알고 싶어 할 포인트 5~7가지를 구체적인 질문 형태로 정리해주세요. 이 질문들은 이후 스토리텔링의 방향성을 잡는 데 중요하게 활용될 것입니다.
+
+**[응답 형식 (JSON):]**
+```json
+{{
+  "topic_analysis": {{
+    "target_audience": {{
+      "type": "가정된 독자층 유형 (예: 일반 대중)",
+      "description": "가정한 독자층에 대한 상세 설명 (왜 이 독자층을 선택했는지, 그들의 특징 등)",
+      "tone_and_depth": {{
+        "tone": "가장 적합한 포스팅의 톤 (예: 친근하고 설명적)",
+        "depth": "내용의 깊이 (예: 개괄적 소개)"
+      }}
+    }},
+    "key_questions": [
+      "독자가 가장 궁금해할 첫 번째 핵심 질문",
+      "독자가 가장 궁금해할 두 번째 핵심 질문",
+      "...",
+      "독자가 가장 궁금해할 n번째 핵심 질문"
+    ],
+    "categories": "포스팅의 대분류 카테고리 (1개만)",
+    "tags": [
+      "첫 번째 관련 태그 (3개 이상)",
+      "두 번쨰 관련 태그",
+      "세 번째 관련 태그",
+      "..."
+    ],
+    "title": "포스팅의 제목"
+  }}
+}}
+
+---
+
+**[사용자 입력]**
+이슈 토픽: {topic}
+
+2번 프롬프트
+###########################################################
+이전 단계에서 분석된 토픽 이해 및 독자 분석 결과를 바탕으로, 이 포스팅을 통해 독자가 반드시 가져가야 할 핵심 주장 또는 메시지를 명확히 정의해주세요.
+
+**[지시사항]**
+1.  **핵심 메시지 도출:** 이 이슈을 통해 독자가 꼭 이해하고 기억해야 할 가장 중요한 핵심 메시지 3~5개를 도출해주세요.
+2.  **"한 줄 주장" 형태 정리:** 각 핵심 메시지를 "한 줄 주장" 형태로 간결하고 명확하게 정리해주세요. 이 주장들은 포스팅의 각 섹션이나 강조 포인트에 반영될 수 있도록 구체화해주세요.
+
+---
+
+**[이전 단계에서 도출된 토픽 이해 및 독자 분석 결과 (JSON 형식):]**
+{previous_step_output}
+
+3번 프롬프트
+###########################################################
+이전 단계에서 도출된 핵심 주장/메시지들을 효과적으로 전달하기 위한 "스토리텔링" 구조를 설계해주세요. 단순한 정보 나열이 아닌, 독자가 몰입하여 따라갈 수 있는 흐름을 만드세요.
+
+**[지시사항]**
+1.  **스토리텔링 아웃라인 구성:** 다음의 5가지 스토리텔링 섹션 순서로 글의 전체 구조를 상세하게 설계해주세요. 각 섹션별로 어떤 내용을 담을지, 어떤 핵심 메시지를 전달할지 구체적으로 서술해주세요.
+    *   **도입부 (Hook):** 독자의 흥미를 즉시 유발하고 포스팅의 중요성을 강조하는 강력한 시작점을 설계해주세요. 어떤 질문이나 통계, 흥미로운 사실로 시작할지 구체적인 아이디어를 제시해주세요.
+    *   **배경 설명 (Context):** 이슈의 역사적 배경, 현재 상황, 왜 이 이슈가 중요한지 등 독자가 본론을 이해하는 데 필요한 사전 지식을 제공하는 섹션을 구성해주세요.
+    *   **상세 내용 (Deep Dive):** 핵심 주장을 뒷받침하는 구체적인 사실, 데이터, 사례 분석 등을 포함하여 가장 깊이 있는 정보를 제공하는 섹션을 설계해주세요. 여기에서 이전 단계의 핵심 메시지들을 어떻게 풀어낼지 구체화해주세요. 3~5개 이상의 소제목으로 세분화된 구조를 제안해주세요.
+    *   **전망 (Future):** 이슈의 미래 방향성, 예상되는 변화, 잠재적 기회나 위협 등을 다루는 섹션을 구성해주세요.
+    *   **결론/교훈 (Takeaway):** 본문의 내용을 요약하고, 독자가 실질적으로 얻을 수 있는 교훈, 행동 촉구, 또는 최종적인 인사이트를 제공하는 강력한 마무리 섹션을 설계해주세요.
+2.  **섹션별 핵심 메시지 배분:** 이전 단계에서 도출된 핵심 메시지들을 각 스토리텔링 섹션에 어떻게 효과적으로 배분하여 전달할지 계획을 포함해주세요.
+
+---
+
+**[이전 단계에서 도출된 핵심 메시지들]**
+{previous_step_output}
+
+4번 프롬프트
+###########################################################
+이전 단계에서 설계된 스토리텔링 아웃라인을 바탕으로, 블로그 포스팅의 초안을 작성해주세요. 객관적인 사실 기반의 정보 전달에 집중하며, 향후 팩트체크를 위한 표시를 명확히 남겨주세요.
+
+**[지시사항]**
+1.  **아웃라인에 따른 초안 작성:** 이전 단계의 스토리텔링 아웃라인(도입부, 배경 설명, 상세 내용, 전망, 결론)의 각 섹션을 충실히 채워 글을 작성해주세요.
+2.  **사실 및 수치 명시:** 통계, 연구 결과, 특정 사례, 인용문 등 사실이나 수치가 필요한 모든 부분에는 정확한 출처를 찾아야 함을 나타내는 **`[출처 필요]`** 표시를 명확하게 달아주세요. (예: "2024년 AI 시장은 전년 대비 30% 성장할 것으로 예상된다. [출처 필요]")
+3.  **글 분량:** 글 전체 분량은 **{tc}자(공백 포함)** 정도로 작성해주세요.
+4.  **Yoast SEO 가독성 고려:** Yoast SEO 가독성 평가에서 '좋음' 이상의 점수를 받을 수 있는 기초를 마련하도록, 짧고 명확한 문장, 쉬운 단어 사용, 적절한 문단 길이, 능동태 사용 등을 염두에 두고 작성해주세요.
+5.  **전문 용어 설명:** 필요한 경우 전문 용어는 간략하게 설명과 함께 사용하되, 불필요하게 어려운 표현은 피해주세요.
+
+---
+
+**[이전 단계에서 설계된 스토리텔링 아웃라인]**
+{previous_step_output}
+
+5번 프롬프트
+###########################################################
+이전 단계에서 작성된 포스팅 초안의 [출처 필요] 부분을 팩트체크하고, 신뢰 가능한 출처를 찾아 삽입해주세요.
+
+**[지시사항]**
+1.  **[출처 필요] 부분 채우기:** 포스팅 내 모든 `[출처 필요]` 표시를 찾아, 해당 정보에 대한 신뢰 가능한 원본 출처(정부 기관 공식 발표, 유수 언론사 기사, 학술 논문, 시장 조사 보고서 등)를 탐색하여 내용을 채워주세요.
+2.  **출처 표기 형식:** 각 출처는 해당 정보가 언급된 문장 바로 뒤에 **`출처: [원본 문서/기사 제목](실제 링크 주소)`** 형식으로 표기해주세요.
+3.  **출처 후보 제시:** 만약 특정 정보에 대해 정확한 실시간 링크를 찾기 어렵다면, **`출처 후보: [원본 문서/기사 제목]`** 형태로 제시하고, 제가 나중에 수동으로 검색할 수 있도록 키워드를 포함해주세요.
+4.  **참고 자료 섹션 추가:** 포스팅 마지막에 '참고 자료' 섹션을 추가하고, 본문에 삽입된 모든 출처를 목록 형태로 정리하여 제시해주세요.
+5.  **내용 보강/수정:** 출처를 찾고 팩트체크하는 과정에서 내용의 오류가 발견되거나, 더 정확한 정보로 보강이 필요한 경우 자연스럽게 수정해주세요.
+
+---
+
+**[이전 단계에서 작성된 포스팅 초안 글]**
+{previous_step_output}
+
+6번 프롬프트
+###########################################################
+이전 단계에서 출처가 추가된 포스팅 글을, "{audience_type}"이 가장 쉽고 흥미롭게 이해할 수 있도록 리라이팅(Rewriting)하여 가독성과 톤앤매너를 최적화해주세요. Yoast SEO 가독성 평가에서 '매우 좋음' 수준을 목표로 합니다.
+
+**[지시사항]**
+1.  **독자 맞춤 리라이팅:** 이전에 설정된 **`[단계 1에서 가정한 독자 유형]`** (예: '일반 대중', '업계 전문가')이 글을 읽었을 때, 가장 편안하고 명확하게 정보를 받아들일 수 있도록 전체 글을 다듬어주세요.
+2.  **문장 길이 최적화:** 복잡하고 긴 문장은 짧고 간결하게 여러 문장으로 나누어주세요. Yoast SEO의 '문장 길이' 기준(예: 20단어 이하 문장이 전체의 75% 이상)을 엄격히 준수해주세요.
+3.  **용어 단순화 및 풀이:** 어려운 전문 용어나 학술적 표현은 블로그 독자층의 눈높이에 맞춰 간단하게 풀어서 설명하거나, 쉬운 단어로 대체해주세요.
+4.  **강조 포인트 시각화:** 포스팅의 핵심 메시지나 중요한 정보는 **굵은 글씨(`**텍스트**`)**를 사용하여 시각적으로 강조해주세요.
+5.  **인용문 형식:** 중요한 인용문이나 핵심 주장 문구는 **블록쿼트(`> 텍스트`)** 형식을 사용하여 시각적으로 구분해주세요. (실제 HTML 태그는 다음 단계에서 적용)
+6.  **흐름 및 연결성 강화:** 문단 간, 문장 간 연결이 자연스럽고 논리적인지 다시 검토하고, 필요한 경우 접속사나 전환구를 사용하여 흐름을 개선해주세요.
+7.  **수동태 최소화:** 가능한 한 능동태 문장을 사용하여 글의 직접성과 명확성을 높여주세요.
+8.  **문단 길이 조정:** 너무 길거나 짧은 문단들을 적절하게 조절하여 읽기 편하도록 해주세요. (Yoast SEO '문단 길이' 기준 고려)
+
+---
+
+**[이전 단계에서 출처가 추가된 글]**
+{previous_step_output}
+
+7번 프롬프트
+###########################################################
+이전 단계에서 다듬어진 글을 효과적으로 보완하고 독자의 이해도를 높일 수 있는 시각 자료들을 설계하고 제안해주세요. 텍스트와 이미지의 조화를 통해 포스팅의 매력을 극대화하는 것이 목표입니다.
+
+**[지시사항]**
+1.  **시각 자료 아이디어 구상:** 본문 내용을 분석하여 총 5개의 시각 자료 아이디어를 구상해주세요. **(인포그래픽은 제외)** 각 자료가 본문의 어느 부분을 보완하고 강조할지 명확히 설명해주세요. (4개는 이미지/차트/다이어그램/개념 설명 이미지 등, 1개는 표 유형으로 구성)
+2.  **자료별 상세 제안:** 각 시각 자료에 대해 다음 정보를 구체적으로 제시해주세요.
+    *   **자료 유형:** (예: '개념 설명 이미지', '통계 차트', '비교표', '다이어그램', '표')
+    *   **제목:** 시각 자료의 내용을 요약하는 간결하고 명확한 제목을 제안해주세요.
+    *   **설명:** 이 시각 자료가 무엇을 보여주는지, 왜 중요한지, 어떤 내용을 담고 있는지 상세히 설명해주세요.
+    *   **생성 프롬프트/표 HTML 코드:**
+        *   **이미지/차트/다이어그램/개념 설명 이미지 (총 4개):** 귀하의 이미지 생성 API에 직접 입력할 수 있는 **상세하고 구체적인 이미지 생성 프롬프트**를 작성해주세요. **(절대로 글자, 텍스트, 로고, 국기 등 특정 텍스트나 심볼을 직접 이미지에 포함하도록 지시하지 마세요. 개념을 시각화하는 가볍고 추상적인 이미지 위주로 제안해주세요.)** (스타일, 내용, 분위기, 색상, 구도 등을 포함)
+        *   **표 (총 1개):** 필요한 경우, 데이터를 포함한 **표의 HTML 코드**를 직접 생성해주세요. `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, `<td>` 태그를 활용합니다.
+3.  **삽입 위치 제안:** 포스팅 내용 중 시각 자료가 가장 효과적으로 배치될 수 있는 위치를 명확히 지정해주세요. (예: "두 번째 소제목 'AI 기술의 발전 방향' 아래", "결론 직전 요약 이미지")
+
+**[응답 형식]**
+위 지시사항에 따라 제안된 시각 자료들을 **JSON 배열 형식**으로 응답해주세요. 각 시각 자료는 하나의 JSON 객체가 되며, 다음 키를 반드시 포함해야 합니다: `id` (integer), `type` (string), `title` (string), `description` (string), `insertion_point` (string).
+또한, 자료 유형에 따라 `image_prompt` (string, 이미지/차트/다이어그램/개념 설명 이미지일 경우) 또는 `html_code` (string, 표일 경우) 키 중 하나를 반드시 포함해야 합니다.
+
+---
+
+**[이전 단계에서 다듬어진 글]**
+{previous_step_output}
+
+8번 프롬프트
+###########################################################
+이전 단계에서 확정된 **최종 본문(텍스트)**과 **시각 자료 제안(이미지/표/리스트/인용문 등)**을 바탕으로, 워드프레스 편집기에 그대로 붙여넣어도 테마에 의존하지 않고 깔끔하게 렌더링되는 HTML을 생성하세요. 오직 <style> + <div> 만 출력하며, 스타일은 자기완결형(mini CSS) 으로 작성해 테마와 충돌하지 않도록 합니다.
+
+---
+
+[입력]
+
+**[이전 단계에서 다듬어진 글]**
+{previous_step_output_6}
+
+**[이전 단계에서 제안된 시각 자료]**
+{previous_step_output_7}
+
+---
+
+[출력 형식(반드시 준수)]
+
+* 문서 루트: <div class="post-main-container ntv-article">…</div>
+* * 허용 태그: <style>, <div>, <h1>~<h3>, <p>, <a>, <ul>, <ol>, <li>, <blockquote>, <table>, <thead>, <tbody>, <tr>, <th>, <td>, <caption>, <figure> (단, 캡션은 <div class="caption">)
+* 금지: <!DOCTYPE html>, <html>, <head>, <body> 출력 금지. 인라인 <script>/<style> 안의 외부 @import 금지.
+* 클래스 네이밍 (샘플과 동일):
+  * 제목: <h1 class="post-title">
+  * 문단: <p class="paragraph">, 리드 문단: <p class="lead">
+  * 그리드/카드: grid, g2|g3, card, ok|warn|risk, badge, tag
+  * 이미지 래퍼: img-wrap / 이미지: figure-image / 캡션: caption
+  * 인용문: <blockquote class="post-blockquote">
+  * 표 래퍼/표: table-wrap, styled-table
+  * 플로우/타임라인: flow, step, timeline
+  * 메타: meta
+* 링크: <a href="…" target="_blank" rel="noopener noreferrer" class="link-style">텍스트</a>
+
+[스타일 가이드(자기완결형 mini CSS)]
+
+* 모든 CSS 변수(타이포·색상·보더·그리드 등)는 .post-main-container에 선언하세요. (테마 변수 의존 금지)
+* 필수 중앙 정렬/반응형: 이미지 max-width:100%; height:auto;, 표 가로 스크롤, 그리드 모바일 단일 칼럼.
+* 접근성/가독성: 충분한 행간/폰트 크기, 대비 준수.
+* !important는 필요한 곳만 최소 사용 (두 번째 샘플과 동일 철학: 스코프/특이성으로 해결, 자기변수 보유)
+
+[레이아웃/구조 규칙]
+
+* H1(제목) → 리드 문단 → 본문 섹션(H2/H3 + p/목록/인용문/표/이미지) → 참고·출처(ul) 순서.
+* 표는 <div class="table-wrap"><table class="styled-table">…</table></div> 구조.
+* 이미지는 <div class="img-wrap"><img class="figure-image" …><div class="caption">…</div></div> 구조.
+* 인용문은 <blockquote class="post-blockquote"><p>…</p></blockquote>.
+
+[변환 규칙]
+
+* {previous_step_output_6}의 문단을 **의미 단위로 <p class="paragraph">**에 매핑. 핵심 요약은 리드 문단 .lead 로 1개.
+* {previous_step_output_7}의 표/이미지/리스트/타임라인/카드 제안을 해당 컴포넌트에 정확히 배치.
+* 이미지 alt는 키워드가 포함된 구체 문장으로 작성.
+* 모든 외부 인용/사실 근거 링크는 본문 적절 위치와 마지막 참고 자료 섹션에 모두 배치.
+
+[검수 체크리스트(생성 전 최종 점검)]
+
+* 출력에 <style> + <div> 외 태그 없음
+* .post-main-container.ntv-article 아래에만 CSS 변수/규칙 선언
+* 이미지 중앙 정렬/반응형 정상
+* 표 가로 스크롤/헤더 강조/Zebra 줄무늬 적용
+* 모바일에서 g2/g3 → 단일 칼럼 전환
+* 링크 속성( target, rel, class ) 정확
+* 문단/제목 계층 구조 논리적
+
+---
+
+[최종 출력 템플릿(이 블록 그대로 생성)]
+
+<style>
+/* ntv-article mini CSS — self-contained, theme-agnostic */
+.post-main-container.ntv-article{
+  /* Typography scale */
+  --fz-1:1rem; --fz-2:1.125rem; --fz-3:1.35rem;
+  --lh:1.75;
+
+  /* Colors */
+  --c:#111; --c-sub:#333; --c-muted:#777;
+  --c-border:#e6e6e6; --c-bg:#fafafa;
+
+  /* Layout */
+  --radius:14px;
+  --maxw:72ch;
+  font-family:'Noto Sans KR','Pretendard','Inter','Segoe UI',system-ui,-apple-system,Arial,sans-serif;
+  font-size:var(--fz-1);
+  line-height:var(--lh);
+  color:var(--c);
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:1.2rem;
+  box-sizing:border-box;
+}
+.post-main-container.ntv-article *{ box-sizing:border-box; }
+
+/* Headings */
+.post-main-container.ntv-article h1.post-title{
+  font-size:calc(var(--fz-3) + .2rem);
+  line-height:1.28; font-weight:800; margin:0 0 .8rem 0; color:#111;
+}
+.post-main-container.ntv-article h2{
+  font-size:var(--fz-3); font-weight:700; line-height:1.33;
+  margin:1.2em 0 .6em; padding-top:.9em; border-top:1px solid var(--c-border);
+}
+.post-main-container.ntv-article h3{
+  font-size:var(--fz-2); font-weight:700; line-height:1.33; margin:1.1em 0 .55em; color:var(--c-sub);
+}
+
+/* Text */
+.post-main-container.ntv-article p{ margin:.8em 0; }
+.post-main-container.ntv-article p.lead{
+  font-size:1.05rem; background:var(--c-bg); border:1px solid var(--c-border);
+  border-radius:var(--radius); padding:1rem 1.1rem; margin:1rem 0 1.1rem;
+}
+.post-main-container.ntv-article a.link-style{ text-decoration:underline; }
+
+/* Grid & Cards */
+.post-main-container.ntv-article .grid{ display:grid; gap:.95rem; }
+.post-main-container.ntv-article .g2{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+.post-main-container.ntv-article .g3{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+@media (max-width:900px){
+  .post-main-container.ntv-article .g2,
+  .post-main-container.ntv-article .g3{ grid-template-columns:1fr; }
+}
+.post-main-container.ntv-article .card{
+  background:#fff; border:1px solid var(--c-border); border-radius:var(--radius);
+  padding:1rem 1.1rem;
+}
+.post-main-container.ntv-article .ok{ background:#f3fbf6; border-left:4px solid #2fb171; }
+.post-main-container.ntv-article .warn{ background:#fff8e6; border-left:4px solid #f0a500; }
+.post-main-container.ntv-article .risk{ background:#fff3f3; border-left:4px solid #e74c3c; }
+.post-main-container.ntv-article .badge,
+.post-main-container.ntv-article .tag{
+  display:inline-block; border:1px solid var(--c-border); border-radius:999px;
+  padding:.2rem .6rem; font-size:.82rem; background:#fff; color:#333; margin-right:.35rem;
+}
+
+/* Blockquote */
+.post-main-container.ntv-article blockquote.post-blockquote{
+  background:#f8fafc; border:1px solid var(--c-border); border-left:4px solid #4f46e5;
+  border-radius:12px; padding:1rem 1.1rem; margin:1rem 0; color:#222;
+}
+.post-main-container.ntv-article blockquote.post-blockquote p{ margin:.2em 0; }
+
+/* Images */
+.post-main-container.ntv-article .img-wrap{
+  border:1px solid var(--c-border); border-radius:12px; overflow:hidden; margin:1rem 0; text-align:center;
+}
+.post-main-container.ntv-article .figure-image{
+  display:block; margin:0 auto; max-width:100%; height:auto;
+}
+.post-main-container.ntv-article .caption{
+  font-size:.9rem; color:var(--c-muted); padding:.5rem 0 .8rem;
+}
+
+/* Tables */
+.post-main-container.ntv-article .table-wrap{
+  overflow:auto; border:1px solid var(--c-border); border-radius:var(--radius); background:#fff; margin:1rem 0;
+}
+.post-main-container.ntv-article table.styled-table{
+  width:100%; border-collapse:separate; border-spacing:0; min-width:760px; font-size:.95rem;
+}
+.post-main-container.ntv-article .styled-table caption{
+  text-align:left; padding:.85rem 1rem .2rem; color:#222; font-weight:600;
+}
+.post-main-container.ntv-article .styled-table th,
+.post-main-container.ntv-article .styled-table td{
+  padding:.85rem 1rem; border-bottom:1px solid var(--c-border); vertical-align:top; text-align:left;
+}
+.post-main-container.ntv-article .styled-table thead th{
+  background:#f0f2f5; color:#222; font-weight:700;
+}
+.post-main-container.ntv-article .styled-table tbody tr:nth-child(even){ background:#fcfcfc; }
+
+/* Flow / Timeline */
+.post-main-container.ntv-article .flow{
+  padding:1rem 1.1rem; border:1px dashed var(--c-border); border-radius:var(--radius); background:#fff; margin:1rem 0;
+}
+.post-main-container.ntv-article .flow .step{ padding:.45rem 0; font-weight:600; }
+.post-main-container.ntv-article .timeline{ position:relative; padding-left:1.1rem; }
+.post-main-container.ntv-article .timeline li{
+  margin:.55rem 0; padding-left:.6rem; border-left:3px solid #eef4ff;
+}
+
+/* Meta */
+.post-main-container.ntv-article .meta{ font-size:.92rem; color:var(--c-muted); }
+</style>
+
+<div class="post-main-container ntv-article">
+  <h1 class="post-title">{{TITLE}}</h1>
+
+  <p class="lead">{{LEAD_PARAGRAPH}}</p>
+
+  <!-- 본문: {ARTICLE_FINAL} 내용을 의미 단위로 paragraph/섹션화 -->
+  {{BODY_PARAGRAPHS_AND_SECTIONS}}
+
+  <!-- 카드/그리드 예시 (필요 시) -->
+  <!--
+  <h2>핵심 한눈에 보기</h2>
+  <div class="grid g3">
+    <div class="card"><h3><span class="badge">포인트</span> 제목</h3><p class="paragraph">설명…</p></div>
+    <div class="card"><h3><span class="badge">포인트</span> 제목</h3><p class="paragraph">설명…</p></div>
+    <div class="card"><h3><span class="badge">포인트</span> 제목</h3><p class="paragraph">설명…</p></div>
+  </div>
+  -->
+
+  <!-- 이미지: {VISUALS}/{ADDITIONAL_IMAGES} 반영 -->
+  <!--
+  <div class="img-wrap">
+    <img src="{{IMAGE_URL}}" alt="{{SEO 친화적 이미지 설명}}" loading="lazy" class="figure-image">
+    <div class="caption">{{캡션 텍스트}}</div>
+  </div>
+  -->
+
+  <!-- 인용문 -->
+  <!--
+  <blockquote class="post-blockquote">
+    <p><strong>“핵심 메시지/인용문.”</strong></p>
+  </blockquote>
+  -->
+
+  <!-- 표 -->
+  <!--
+  <div class="table-wrap">
+    <table class="styled-table">
+      <caption>{{표 캡션}}</caption>
+      <thead><tr><th>헤더1</th><th>헤더2</th></tr></thead>
+      <tbody>
+        <tr><td>값1</td><td>값2</td></tr>
+      </tbody>
+    </table>
+  </div>
+  -->
+
+  <!-- 타임라인/플로우 -->
+  <!--
+  <h2>진행 단계</h2>
+  <div class="flow">
+    <div class="step">① 단계 텍스트…</div>
+    <div class="step">② 단계 텍스트…</div>
+  </div>
+  <ol class="timeline">
+    <li><strong>연도:</strong> 사건 설명…</li>
+  </ol>
+  -->
+
+  <!-- 참고 자료 -->
+  <h2>참고·출처</h2>
+  <ul>
+    {{#each REFERENCES}}
+      <li><a href="{{url}}" target="_blank" rel="noopener noreferrer" class="link-style">{{title}}</a></li>
+    {{/each}}
+  </ul>
+</div>

@@ -121,7 +121,7 @@ $table_prefix = getenv_docker('WORDPRESS_TABLE_PREFIX', 'wp_');
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_LOG', true );
 define( 'WP_DEBUG_DISPLAY', false ); // 화면에 출력하지 않음, 로그에만 기록
-define( 'WP_ENVIRONMENT_TYPE', 'local' );
+define( 'WP_ENVIRONMENT_TYPE', 'production' );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
@@ -152,22 +152,17 @@ if ( ! defined( 'ABSPATH' ) ) {
         define( 'ABSPATH', __DIR__ . '/' );
 }
 
-define('WP_HOME', 'http://notaverse.ddns.net');
-define('WP_SITEURL', 'http://notaverse.ddns.net');
+define('WP_HOME',    'https://notaverse.org');
+define('WP_SITEURL', 'https://notaverse.org');
 
-// Redirection Setting (for development)
-// $host = $_SERVER['HTTP_HOST'] ?? '';
+// 프록시(CloudFront) 뒤 HTTPS 인식
+if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO']==='https') $_SERVER['HTTPS']='on';
+if (!empty($_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO']) && $_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO']==='https') $_SERVER['HTTPS']='on';
+define('FORCE_SSL_ADMIN', true);
 
-// if (
-//     strpos($host, 'localhost') !== false ||
-//     strpos($host, '127.0.0.1') !== false
-// ) {
-//     define('WP_HOME', 'http://localhost:32551');
-//     define('WP_SITEURL', 'http://localhost:32551');
-// } else {
-//     define('WP_HOME', 'http://notaverse.ddns.net');
-//     define('WP_SITEURL', 'http://notaverse.ddns.net');
-// }
+// 메모리 관련
+define('WP_MEMORY_LIMIT', '512M');        // 프론트/관리자 공통
+define('WP_MAX_MEMORY_LIMIT', '512M');    // 관리자/이미지처리 상한
 
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';

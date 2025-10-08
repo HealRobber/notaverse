@@ -15,6 +15,11 @@ class WordPressService:
     # API AUTH 세팅
     AUTH = HTTPBasicAuth(WORDPRESS_USER_NAME, WORDPRESS_API_PASSWORD)
 
+    CF_HEADERS = {
+        "Host": "notaverse.org",
+        "X-Forwarded-Proto": "https",
+    }
+
     # CATEGORY LIST 생성
     def create_category(self, categories: List[str]) -> Tuple[List[int], List[str]]:
         category_ids = []
@@ -23,7 +28,7 @@ class WordPressService:
         for category in categories:
             print(category)
             url = f'{self.WP_SITE}/wp-json/wp/v2/categories'
-            res = requests.post(url, json={'name': category}, auth=self.AUTH)
+            res = requests.post(url, json={'name': category}, auth=self.AUTH, headers=self.CF_HEADERS)
             if res.status_code == 201:
                 category_ids.append(res.json()['id'])
             elif res.status_code == 400 and 'term_id' in res.json()['data']:
@@ -42,7 +47,7 @@ class WordPressService:
         for tag in tags:
             print(tag)
             url = f'{self.WP_SITE}/wp-json/wp/v2/tags'
-            res = requests.post(url, json={'name': tag}, auth=self.AUTH)
+            res = requests.post(url, json={'name': tag}, auth=self.AUTH, headers=self.CF_HEADERS)
             if res.status_code == 201:
                 tag_ids.append(res.json()['id'])
             elif res.status_code == 400 and 'term_id' in res.json()['data']:
@@ -60,10 +65,14 @@ class WordPressService:
             'file': (file.filename, file.file, file.content_type)
         }
         res = requests.post(
-            url,
-            files=files,
-            auth=self.AUTH
-        )
+                    url,
+                    files=files,
+                    auth=self.AUTH,
+                    headers=self.CF_HEADERS
+                )
+        print("has Authorization header?:", "Authorization" in res.request.headers)
+        print("status:", res.status_code)
+        print("body:", res.text)
         if res.status_code == 201:
             media = res.json()
             return media['source_url']  # 이미지 URL만 반환
@@ -83,7 +92,7 @@ class WordPressService:
 
         url = f'{self.WP_SITE}/wp-json/wp/v2/media'
 
-        response = requests.get(url, params=params, auth=self.AUTH)
+        response = requests.get(url, params=params, auth=self.AUTH, headers=self.CF_HEADERS)
         if response.status_code != 200:
             print(f"Failed to fetch media: {response.status_code} {response.text}")
             return None
@@ -113,7 +122,7 @@ class WordPressService:
 
         print(f"data: {data}")
 
-        res = requests.post(url, json=data, auth=self.AUTH)
+        res = requests.post(url, json=data, auth=self.AUTH, headers=self.CF_HEADERS)
         if res.status_code == 201:
             return res.json()
         else:
