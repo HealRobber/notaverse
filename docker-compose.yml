@@ -92,3 +92,28 @@ services:
       - "${REDIS_EXTERNAL_PORT}:${REDIS_INTERNAL_PORT}"
     volumes:
       - ${DB_STORAGE}/redis:/data
+
+  collector-run-once:
+    build:
+      context: ./backend/issue-collector
+      dockerfile: Dockerfile
+    container_name: issue-collector-once
+    env_file:
+      - .env
+    depends_on:
+      - database
+    volumes:
+      - ./backend/issue-collector:/app
+    command: ["python", "-m", "cli", "run-once"]
+
+  collector-scheduler:
+    build:
+      context: ./backend/issue-collector
+      dockerfile: Dockerfile
+    container_name: issue-collector-scheduler
+    env_file:
+      - .env
+    depends_on:
+      - database
+    command: ["python", "-m", "cli", "schedule"]
+    restart: unless-stopped

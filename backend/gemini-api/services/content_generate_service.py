@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import httpx
 import socket
-
 import os
 import uuid
 import base64
@@ -11,38 +10,44 @@ import random
 import logging
 from io import BytesIO
 from pathlib import Path
+from typing import Optional, Any, List
 
-import log_config  # logger 설정 모듈 (사용 중)
+import log_config  # logger 설정 모듈
 from google import genai
-from google.genai import types, errors as genai_errors
+from google.genai import errors as genai_errors
+from google.genai import types as gatypes
 from PIL import Image
 
-# 맨 위 import 근처에 추가
-from typing import Optional, Any
+# 내부 유틸 (SDK 타입 변환기)
+from utils.genai_payload import to_ga_contents
 
 try:
-    # 경로는 사용하시는 위치에 맞게 조정 (예: models.content_request 또는 app.models.content_request)
     from models.content_request import ContentRequest
 except Exception:
     ContentRequest = None  # 타입 체크 회피용
 
-
 logger = logging.getLogger(__name__)
 
-# 동시성 제한(환경변수 조절 가능)
+# ──────────────────────────────────────────────────────────────
+# 설정
+# ──────────────────────────────────────────────────────────────
 GENAI_MAX_CONCURRENCY = int(os.getenv("GENAI_MAX_CONCURRENCY", "3"))
-_genai_sem = asyncio.Semaphore(GENAI_MAX_CONCURRENCY)
-
-# 재시도/백오프(환경변수 조절 가능)
 GENAI_MAX_ATTEMPTS = int(os.getenv("GENAI_MAX_ATTEMPTS", "6"))
 GENAI_MAX_BACKOFF = float(os.getenv("GENAI_MAX_BACKOFF", "20.0"))
-
-# 이미지 저장 경로(컨테이너에서 쓰기 가능한 디렉터리 권장)
 IMG_OUT_DIR = os.getenv("IMG_OUT_DIR", "/app/images")
 
+_genai_sem = asyncio.Semaphore(GENAI_MAX_CONCURRENCY)
 
+ClientErr = getattr(genai_errors, "ClientError", Exception)
+ServerErr = getattr(genai_errors, "ServerError", Exception)
+APIErr = getattr(genai_errors, "APIError", Exception)
+
+
+# ──────────────────────────────────────────────────────────────
+# 유틸
+# ──────────────────────────────────────────────────────────────
 def _jittered_backoff(attempt: int, max_backoff: float = GENAI_MAX_BACKOFF) -> float:
-    # 2^n + [0.1, 0.9] 무작위 지터
+    """2^n + [0.1, 0.9] 무작위 지터"""
     return min(2 ** attempt, max_backoff) + random.uniform(0.1, 0.9)
 
 
@@ -53,10 +58,7 @@ def _ensure_dir(path: str | Path) -> Path:
 
 
 def _decode_inline_data(data: Any) -> Optional[bytes]:
-    """
-    Gemini inline_data.data 는 bytes 또는 base64 str 일 수 있음.
-    둘 다 안전하게 bytes로 변환.
-    """
+    """Gemini inline_data.data → bytes로 안전 변환"""
     if data is None:
         return None
     if isinstance(data, (bytes, bytearray)):
@@ -71,51 +73,101 @@ def _decode_inline_data(data: Any) -> Optional[bytes]:
 
 def _save_image_bytes(bin_: bytes, out_dir: Path, ext: str = "png") -> str:
     img = Image.open(BytesIO(bin_))
-    img.load()  # PIL lazy-load 방지
+    img.load()  # lazy-load 방지
     fpath = out_dir / f"{uuid.uuid4()}.{ext}"
     img.save(fpath)
     return str(fpath)
 
 
+def _assert_non_empty_contents(contents: List[gatypes.Content]) -> None:
+    """빈 입력 방지용 검증"""
+    if not contents:
+        raise RuntimeError("contents is empty")
+    any_text = False
+    for m in contents:
+        for p in (m.parts or []):
+            txt = getattr(p, "text", None)
+            if isinstance(txt, str) and txt.strip():
+                any_text = True
+                break
+        if any_text:
+            break
+    if not any_text:
+        raise RuntimeError("contents has no non-empty text parts")
+
+
+def _is_retryable_error(e: Exception) -> bool:
+    """429, 5xx, 타임아웃 등 재시도 가능 에러"""
+    status = getattr(e, "status", None) or getattr(e, "http_status", None)
+    code = getattr(e, "code", None)
+
+    if isinstance(status, int) and (status == 429 or 500 <= status < 600):
+        return True
+    if isinstance(code, int) and (code == 429 or 500 <= code < 600):
+        return True
+
+    txt = repr(e).lower()
+    if any(k in txt for k in [
+        "429", "rate limit", "resource exhausted", "too many requests",
+        "unavailable", "temporarily", "retry", "server error",
+        "deadline", "timeout"
+    ]):
+        return True
+
+    if isinstance(e, (TimeoutError, socket.timeout, httpx.ReadTimeout, httpx.ConnectTimeout)):
+        return True
+
+    return False
+
+
+# ──────────────────────────────────────────────────────────────
+# 메인 클래스
+# ──────────────────────────────────────────────────────────────
 class ContentGenerateService:
     client = genai.Client()
 
     # ============== TEXT ==============
-    async def generate_content(self, model_or_req: Any, contents: Optional[str] = None):
+    async def generate_content(self, model_or_req: Any, contents: Optional[Any] = None):
         """
         지원 형태:
-          - generate_content(model, contents="...")  ← 기존 방식
-          - generate_content(ContentRequest(...))    ← 새 방식
+          - generate_content(model, contents="...")                 ← 문자열
+          - generate_content(model, contents=[ContentMessage...])   ← 메시지 리스트
+          - generate_content(ContentRequest(...))                   ← ContentRequest 전체
         """
         # --- 인자 정규화 ---
         if ContentRequest is not None and isinstance(model_or_req, ContentRequest):
             model = model_or_req.model
-            contents = model_or_req.content
+            raw_contents = model_or_req.content
         elif hasattr(model_or_req, "content") and hasattr(model_or_req, "model") and contents is None:
-            # ContentRequest duck-typing (임포트 실패 대비)
             model = getattr(model_or_req, "model", None)
-            contents = getattr(model_or_req, "content", None)
+            raw_contents = getattr(model_or_req, "content", None)
         else:
-            model = model_or_req  # 기존 방식
-            # contents 는 두 번째 인자에서 받음
+            model = model_or_req
+            raw_contents = contents
 
-        if not contents:
-            raise TypeError("generate_content() requires 'contents' text")
+        if not raw_contents:
+            raise TypeError("generate_content() requires non-empty 'contents'")
         if not model:
-            # ContentRequest validator가 기본값을 넣지만, 안전망
             model = os.getenv("GEMINI_TEXT_MODEL", "gemini-2.5-flash")
 
+        # --- SDK 타입으로 변환 ---
+        ga_contents = to_ga_contents(raw_contents)
+        _assert_non_empty_contents(ga_contents)
+
         last_exc: Optional[Exception] = None
+
         for attempt in range(GENAI_MAX_ATTEMPTS):
             try:
                 async with _genai_sem:
                     def _call():
                         return self.client.models.generate_content(
                             model=model,
-                            contents=contents
+                            contents=ga_contents,  # List[gatypes.Content]
                         )
+
                     response = await asyncio.to_thread(_call)
                 return response
+
             except (ServerErr, APIErr, ClientErr, httpx.HTTPError, TimeoutError, socket.timeout) as e:
                 if _is_retryable_error(e):
                     last_exc = e
@@ -132,14 +184,15 @@ class ContentGenerateService:
                 last_exc = e
                 logger.exception(f"[genai:text] unexpected error: {e}")
                 raise
+
         raise last_exc or RuntimeError("generate_content failed after retries")
 
     # ============== IMAGE ==============
     async def generate_image(self, image_model_or_req: Any, contents: Optional[str] = None):
         """
         지원 형태:
-          - generate_image(image_model, contents="...")  ← 기존 방식
-          - generate_image(ContentRequest(...))          ← 새 방식
+          - generate_image(image_model, contents="...")  ← 문자열
+          - generate_image(ContentRequest(...))          ← ContentRequest 전체
         """
         # --- 인자 정규화 ---
         if ContentRequest is not None and isinstance(image_model_or_req, ContentRequest):
@@ -166,10 +219,11 @@ class ContentGenerateService:
                         return self.client.models.generate_content(
                             model=image_model,
                             contents=contents,
-                            config=types.GenerateContentConfig(
+                            config=gatypes.GenerateContentConfig(
                                 response_modalities=['TEXT', 'IMAGE']
-                            )
+                            ),
                         )
+
                     response = await asyncio.to_thread(_call)
 
                 saved_image_paths: list[str] = []
@@ -231,31 +285,3 @@ class ContentGenerateService:
                 raise
 
         raise last_exc or RuntimeError("generate_image failed after retries")
-
-ClientErr = getattr(genai_errors, "ClientError", Exception)
-ServerErr = getattr(genai_errors, "ServerError", Exception)
-APIErr    = getattr(genai_errors, "APIError", Exception)
-
-def _is_retryable_error(e: Exception) -> bool:
-    """429, 5xx, 타임아웃/일시적 네트워크 오류면 True"""
-    status = getattr(e, "status", None) or getattr(e, "http_status", None)
-    code   = getattr(e, "code", None)
-
-    if isinstance(status, int) and (status == 429 or 500 <= status < 600):
-        return True
-    if isinstance(code, int) and (code == 429 or 500 <= code < 600):
-        return True
-
-    txt = repr(e).lower()
-    if any(k in txt for k in [
-        "429", "rate limit", "resource exhausted", "too many requests",
-        "unavailable", "temporarily", "retry", "server error",
-        "deadline", "timeout"
-    ]):
-        return True
-
-    # 네트워크 계열
-    if isinstance(e, (TimeoutError, socket.timeout, httpx.ReadTimeout, httpx.ConnectTimeout)):
-        return True
-
-    return False
