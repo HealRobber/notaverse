@@ -117,3 +117,27 @@ services:
       - database
     command: ["python", "-m", "cli", "schedule"]
     restart: unless-stopped
+
+  screener-once:
+    build:
+      context: ./backend/issue-screener
+      dockerfile: Dockerfile
+    container_name: issue-screener-once
+    env_file:
+      - .env
+    depends_on:
+      - database
+    command: ["python", "-m", "cli", "--once"]
+
+  screener-service:
+    build:
+      context: ./backend/issue-screener
+      dockerfile: Dockerfile
+    container_name: issue-screener-service
+    env_file:
+      - .env
+    depends_on:
+      - database
+    ports:
+      - ${ISSUE_POSTER_PORT}:${ISSUE_POSTER_PORT}
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "32555", "--reload"]

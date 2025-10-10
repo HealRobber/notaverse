@@ -9,17 +9,14 @@ gen_service = ContentGenerateService()
 @router.post("/generate-content/")
 async def generate_content(request: ContentRequest):
     print(f"request : {request}")
-    # result = await gen_service.generate_content(model=request.model, topic=request.topic, keyqords=request.keywords)
-    result = await gen_service.generate_content(model=request.model, contents=request.content)
+    # 가장 간단: 요청 객체 그대로 전달
+    result = await gen_service.generate_content(request)
     print(f"result : {result}")
-    return ContentResponse(
-        # title=result["title"],
-        body=result.text
-    )
+    return ContentResponse(body=result.text)
 
 @router.post("/generate-image/")
 async def generate_image(request: ContentRequest):
-    result = await gen_service.generate_image(image_model=request.image_model, contents=request.content) 
+    result = await gen_service.generate_image(request)
     return ContentResponse(
         body="Image generated."
     )

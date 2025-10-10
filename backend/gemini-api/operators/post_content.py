@@ -3,8 +3,9 @@ from __future__ import annotations
 import asyncio
 import logging
 import json
-from typing import Any, Optional, List, Dict
+import re
 
+from typing import Any, Optional, List, Dict
 from sqlalchemy.orm import Session
 
 import log_config
@@ -14,7 +15,6 @@ from services.create_article_service import CreateArticleService
 from services.content_generate_service import ContentGenerateService
 from models.content_request import ContentRequest, ContentMessage
 from settings import settings
-from utils.extract_html import extract_html_from_finalized_content
 from utils.visual_merge import process_visual_components_from_str
 
 from common.llm import generate_text_with_retry, generate_images_with_retry
@@ -27,6 +27,45 @@ DEFAULT_TARGET_CHARS = 2000  # 없을 때 사용할 기본 글자 수
 # ──────────────────────────────────────────────────────────────────────────────
 # 내부 유틸
 # ──────────────────────────────────────────────────────────────────────────────
+FENCE_START_RE = re.compile(
+    r"""^\s*(?P<fence>```|'''|~~~)\s*(?P<lang>[A-Za-z0-9_\-]*)\s*\r?\n""",
+    re.DOTALL,
+)
+
+def extract_inner_if_fenced(text: str) -> str:
+    """
+    If the given text starts with a fenced code block (``` / ''' / ~~~),
+    return ONLY the inner content of the first such block.
+    Otherwise, return the original text unchanged.
+
+    Examples:
+      "''' html\\n<style>...</style>\\n'''"  -> "<style>...</style>"
+      "```html\\n<style>...</style>\\n```"   -> "<style>...</style>"
+      "<style>...</style>"                    -> "<style>...</style>" (unchanged)
+    """
+    if not isinstance(text, str):
+        return text
+
+    s = text.lstrip("\ufeff")  # trim BOM if present
+    m = FENCE_START_RE.match(s)
+    if not m:
+        # doesn't start with a fence → return as-is
+        return text
+
+    fence = m.group("fence")
+    # position right after the first line (the fence line)
+    start_idx = m.end()
+    # find the matching closing fence
+    close_pat = re.compile(rf"\r?\n{re.escape(fence)}\s*$", re.DOTALL)
+    close_m = close_pat.search(s, pos=start_idx)
+
+    if not close_m:
+        # no closing fence → fail-safe: return original
+        return text
+
+    inner = s[start_idx:close_m.start()]
+    return inner.strip()
+
 def _parse_prompt_ids(raw: str | List[int]) -> List[str]:
     """DB Text(JSON/CSV) → 문자열 ID 리스트"""
     if raw is None:
@@ -389,10 +428,11 @@ async def run_post_content_with_db(
                 # upload_content = extract_html_from_finalized_content(designed_text)
                 # if upload_content is None:
                 #     raise ValueError("HTML 코드 블록을 찾지 못했습니다.")
+                upload_content = extract_inner_if_fenced(designed_text)
 
                 post_data = {
                     "title": title,
-                    "content": designed_text,
+                    "content": upload_content,
                     "categories": categories,
                     "tags": tags,
                     "image_id": first_id,
@@ -451,7 +491,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     # parser.add_argument("--topic", required=True)
-    parser.add_argument("--topic", type=str, default="Senator Hirono mocks Bondi for acting like Trump's personal lawyer: It's very clear to me that when the president posts something like that, that he considers the DOJ to be his law firm and you his lawyer.")
+    parser.add_argument("--topic", type=str, default="Affordable housing developer sues City of Sioux Falls")
     parser.add_argument("--visual-component-count", type=int, default=3)
     parser.add_argument("--llm-model", type=str, default=None)
     parser.add_argument("--pipeline-id", type=int, default=2)

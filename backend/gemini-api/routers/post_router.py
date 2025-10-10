@@ -8,7 +8,7 @@ import traceback
 
 from services.db_service import get_db
 from models.RunInitContent import RunInitContentReq, RunInitContentResp
-from operators.init_content import run_init_content_with_db
+from operators.post_content import run_post_content_with_db
 from operators.job_store import job_store
 
 router = APIRouter()
@@ -16,10 +16,10 @@ router = APIRouter()
 @router.post("/run", response_model=RunInitContentResp)
 async def run_sync(payload: RunInitContentReq, db: Session = Depends(get_db)):
     try:
-        result = await run_init_content_with_db(
+        result = await run_post_content_with_db(
             db,
             topic=payload.topic,
-            photo_count=payload.photo_count,
+            visual_component_count=payload.photo_count,
             llm_model=payload.llm_model,
             target_chars=payload.target_chars,
         )
@@ -39,10 +39,10 @@ async def run_async(payload: RunInitContentReq) -> Dict[str, Any]:
         db_gen = get_db()
         db2: Session = next(db_gen)
         try:
-            result = await run_init_content_with_db(
+            result = await run_post_content_with_db(
                 db2,
                 topic=payload.topic,
-                photo_count=payload.photo_count,
+                visual_component_count=payload.photo_count,
                 llm_model=payload.llm_model,
                 target_chars=payload.target_chars,
             )
